@@ -1,0 +1,93 @@
+%  -*- coding: utf-8 -*-
+\documentclass{article}
+\usepackage[a4paper,margin=2cm]{geometry}
+
+\usepackage{codehigh}
+%\usepackage{arev}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  urlcolor=blue3,
+}
+
+\newcommand*{\myversion}{2021A}
+\newcommand*{\mydate}{\the\year/\mylpad\month/\mylpad\day\ (v\myversion)}
+\newcommand*{\mylpad}[1]{\ifnum#1<10 0\the#1\else\the#1\fi}
+
+\begin{document}
+
+\title{\textsf{\color{green3}Codehigh Package: Highlight Codes and Demos with LaTeX3}%
+       \footnote{\url{https://github.com/lvjr/codehigh}}}
+\author{Jianrui Lyu (tolvjr@163.com)}
+\date{\mydate}
+\maketitle
+
+\verb!Codehigh! package uses \verb!l3regex! package in \LaTeX3 Programming Layer
+to parse and highlight source codes and demos.
+In theory it would be more powerful than \verb!listings! package,
+and more easy to use than \verb!minted! package.
+At present, this package is in \underline{\color{red3}\textbf{experimental}} status.
+Don’t use it in important documents, unless you have time
+to update them for the newer versions of \verb!codehigh! package in the future.
+
+\bigskip
+\hrule
+\bigskip
+
+The following is typeset with \verb!verbatim! environment.
+
+\begin{verbatim}
+\begin{tabular}[b]{|lc|r|}
+\hline
+One   &  Two  & Three \\ %[4pt]
+%\hline
+Four  & Five  &   Six \\
+\hline%\hline\hline
+Seven & Eight &  Nine \\  %*  [1em]
+\hline
+\end{tabular}
+\end{verbatim}
+
+\bigskip
+\hrule
+\bigskip
+
+The following is typeset with \verb!codehigh! environment.
+
+\begin{codehigh}
+\begin{tabular}[b]{|lc|r|}
+\hline
+One   &  Two  & Three \\ %[4pt]
+%\hline
+Four  & Five  &   Six \\
+\hline%\hline\hline
+Seven & Eight &  Nine \\  %*  [1em]
+\hline
+\end{tabular}
+\end{codehigh}
+
+\bigskip
+\hrule
+\bigskip
+
+The following is typeset with \verb!demohigh! environment.
+
+\begin{demohigh}
+\begin{tabular}[b]{|lc|r|}
+\hline
+One   &  Two  & Three \\ %[4pt]
+%\hline
+Four  & Five  &   Six \\
+\hline%\hline\hline
+Seven & Eight &  Nine \\  %*  [1em]
+\hline
+\end{tabular}
+\end{demohigh}
+
+\bigskip
+\hrule
+\bigskip
+
+Please read the source file \verb!codehigh.tex! of this document for reference.
+
+\end{document}

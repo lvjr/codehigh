@@ -1,0 +1,220 @@
+%%%  -*- coding: utf-8 -*-
+%%% ----------------------------------------------------------------------------
+%%% Codehigh  : Highlight codes and demos with LaTeX3
+%%% Author    : Jianrui Lyu <tolvjr@163.com>
+%%% Repository: https://github.com/lvjr/codehigh
+%%% License   : The LaTeX Project Public License 1.3c
+%%% ----------------------------------------------------------------------------
+
+\NeedsTeXFormat{LaTeX2e}
+\RequirePackage{expl3}
+\ProvidesExplPackage{codehigh}{2021-04-11}{2021A}
+  {Highlight codes and demos with LaTeX3}
+
+%\RequirePackage{xparse}
+\RequirePackage{xcolor}
+\RequirePackage{ninecolors}
+
+\ExplSyntaxOn
+
+\int_new:N \l__codehigh_a_int
+\int_new:N \l__codehigh_b_int
+\tl_new:N \l__codehigh_a_tl
+\tl_new:N \l__codehigh_b_tl
+\tl_new:N \l__codehigh_c_tl
+\tl_new:N \l__codehigh_d_tl
+\tl_new:N \l__codehigh_m_tl
+
+\cs_generate_variant:Nn \regex_set:Nn { cn }
+\cs_generate_variant:Nn \str_remove_once:Nn { NV }
+\cs_generate_variant:Nn \tl_set_rescan:Nnn { NnV }
+
+%\prg_generate_conditional_variant:Nnn \regex_extract_once:nnN { vVN } { TF }
+\prg_generate_conditional_variant:Nnn \regex_extract_once:NnN { cVN } { T, TF }
+\prg_generate_conditional_variant:Nnn \regex_split:NnN { cVN } { T, TF }
+
+\NewDocumentEnvironment { codehigh } { }
+  {
+    \bgroup
+    \__codehigh_do_specials:
+    \begin{codehigh@aux}
+  }
+  {
+    \end{codehigh@aux}
+    \egroup
+    \__codehigh_typeset_code:
+  }
+
+\NewDocumentEnvironment { demohigh } { }
+  {
+    \bgroup
+    \__codehigh_do_specials:
+    \begin{codehigh@aux}
+  }
+  {
+    \end{codehigh@aux}
+    \egroup
+    \__codehigh_typeset_code:
+    \__codehigh_typeset_demo:
+  }
+
+\cs_new_protected:Npn \__codehigh_do_specials:
+  {
+    \obeylines
+    \obeyspaces
+    \catcode `\% = 12
+  }
+
+\tl_new:N \g__codehigh_code_tl
+
+\NewDocumentEnvironment { codehigh@aux } { +b }
+  {
+    \tl_gset:Nn \g__codehigh_code_tl { #1 }
+    \tl_log:N \g__codehigh_code_tl
+  }
+  { }
+
+\cs_new_protected:Npn \__codehigh_typeset_code:
+  {
+    \tl_set_eq:NN  \l_tmpa_tl \g__codehigh_code_tl
+    \regex_replace_all:nnN { . } { \c{string} \0 } \l_tmpa_tl
+    \tl_set:Nx  \l_tmpa_tl { \l_tmpa_tl }
+    \tl_set_eq:NN \l_tmpb_tl \l_tmpa_tl
+    %\__codehigh_typeset_code_plain:N \l_tmpa_tl
+    \group_begin:
+    \setlength { \parindent } { 0pt }
+    \ttfamily
+    \__codehigh_parse_code:nN { latex } \l_tmpb_tl
+    \group_end:
+  }
+
+\cs_new_protected:Npn \__codehigh_typeset_code_plain:N #1
+  {
+    \group_begin:
+    \regex_replace_all:nnN { \^^M } { \c{par} } #1
+    \setlength { \parindent } { 0pt }
+    \ttfamily
+    \tl_use:N #1
+    \group_end:
+  }
+
+\cs_new_protected:Npn \__codehigh_typeset_demo:
+  {
+    \tl_set_eq:NN \l_tmpb_tl \g__codehigh_code_tl
+    \tl_set_rescan:NnV \l_tmpb_tl
+      {
+        \catcode `\% = 14 \relax
+        \catcode `\^^M = 10 \relax
+      }
+      \l_tmpb_tl
+    \tl_log:N \l_tmpb_tl
+    \par
+    \tl_use:N \l_tmpb_tl
+  }
+
+\int_new:N \l__codehigh_latex_syntax_count_int
+
+%% #1: language name, #2: regex, #3: style name
+\cs_new_protected:Npn \__codehigh_add_syntax:nnn #1 #2 #3
+  {
+    \int_incr:c { l__codehigh_ #1 _syntax_count_int }
+    \regex_set:cn
+      { l__codehigh_ #1 _ \int_use:c { l__codehigh_ #1 _syntax_count_int } _regex }
+      { #2 }
+    \tl_set:cn
+      { l__codehigh_ #1 _ \int_use:c { l__codehigh_ #1 _syntax_count_int } _tl }
+      { #3 }
+  }
+
+\__codehigh_add_syntax:nnn { latex } { \% .*? \^^M } { Comment }
+\__codehigh_add_syntax:nnn { latex } { \& } { Alignment }
+\__codehigh_add_syntax:nnn { latex } { \\ (begin|end) } { BeginEnd }
+\__codehigh_add_syntax:nnn { latex } { \\ \\ } { Newline }
+\__codehigh_add_syntax:nnn { latex } { \\ [A-Za-z]+ } { Command }
+
+%% #1: style name, #2: commands
+\cs_new_protected:Npn \__codehigh_add_style:nn #1 #2
+  {
+    \tl_set:cn { l__codehigh_style_ #1 _tl } { #2 }
+  }
+
+\__codehigh_add_style:nn { Default } { \color{black} }
+\__codehigh_add_style:nn { Alignment } { \color{brown3} }
+\__codehigh_add_style:nn { BeginEnd } { \color{blue3} }
+\__codehigh_add_style:nn { Command } { \color{teal3} }
+\__codehigh_add_style:nn { Comment } { \color{gray3} }
+\__codehigh_add_style:nn { Newline } { \color{purple3} }
+
+\int_new:N \l__codehigh_item_count_int
+\tl_new:N \l__codehigh_code_to_parse_tl
+\tl_new:N \l__codehigh_regex_match_name_tl
+\tl_new:N \l__codehigh_regex_match_text_tl
+\tl_new:N \l__codehigh_regex_before_text_tl
+
+\cs_new_protected:Npn \__codehigh_parse_code:nN #1 #2
+  {
+    \tl_set_eq:NN \l__codehigh_code_to_parse_tl #2
+    \bool_do_until:nn { \tl_if_empty_p:N \l__codehigh_code_to_parse_tl }
+      {
+        \__codehigh_parse_code_once:nN { #1 } \l__codehigh_code_to_parse_tl
+        \int_compare:nNnTF { \l__codehigh_item_count_int } = { -1 }
+          {
+            \__codehigh_typeset_text:nN { Default }  \l__codehigh_code_to_parse_tl
+            \tl_clear:N \l__codehigh_code_to_parse_tl
+          }
+          {
+            \tl_concat:NNN \l__codehigh_a_tl
+              \l__codehigh_regex_before_text_tl \l__codehigh_regex_match_text_tl
+            \str_remove_once:NV \l__codehigh_code_to_parse_tl \l__codehigh_a_tl
+            \tl_log:N \l__codehigh_code_to_parse_tl
+            \__codehigh_typeset_text:nN { Default } \l__codehigh_regex_before_text_tl
+            \__codehigh_typeset_text:VN \l__codehigh_regex_match_name_tl \l__codehigh_regex_match_text_tl
+          }
+      }
+  }
+
+\cs_new_protected:Npn \__codehigh_parse_code_once:nN #1 #2
+  {
+    \int_set:Nn \l__codehigh_item_count_int { -1 }
+    \tl_clear:N \l__codehigh_regex_match_text_tl
+    \tl_clear:N \l__codehigh_regex_before_text_tl
+    \int_step_inline:nn { \l__codehigh_latex_syntax_count_int }
+      {
+        \regex_extract_once:cVNT { l__codehigh_ #1 _ ##1 _regex } #2 \l_tmpa_seq
+          {
+            \seq_get:NN \l_tmpa_seq \l__codehigh_m_tl
+            \regex_split:cVNT { l__codehigh_ #1 _ ##1 _regex } #2 \l_tmpb_seq
+              {
+                \seq_get:NN \l_tmpb_seq \l__codehigh_b_tl
+                \tl_set:Nx \l__codehigh_c_tl { \str_count:N \l__codehigh_b_tl }
+                \bool_lazy_or:nnT
+                  { \int_compare_p:nNn { \l__codehigh_item_count_int } = { -1 } }
+                  {
+                    \int_compare_p:nNn
+                      { \l__codehigh_item_count_int } > { \l__codehigh_c_tl }
+                  }
+                  {
+                    \int_set:Nn \l__codehigh_item_count_int { \l__codehigh_c_tl }
+                    \tl_set_eq:NN \l__codehigh_regex_before_text_tl \l__codehigh_b_tl
+                    \tl_set_eq:NN \l__codehigh_regex_match_text_tl \l__codehigh_m_tl
+                    \tl_set_eq:Nc \l__codehigh_regex_match_name_tl { l__codehigh_ #1 _ ##1 _tl }
+                  }
+              }
+          }
+      }
+  }
+
+%% #1: style name, #2: text
+\cs_new_protected:Npn \__codehigh_typeset_text:nN #1 #2
+  {
+    \group_begin:
+      \regex_replace_all:nnN { \^^M } { \c{par} } #2
+      \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #2
+      \tl_use:c { l__codehigh_ style_ #1 _tl }
+      #2
+    \group_end:
+  }
+\cs_generate_variant:Nn \__codehigh_typeset_text:nN { VN }
+
+\ExplSyntaxOff
+
