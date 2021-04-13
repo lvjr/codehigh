@@ -210,7 +210,7 @@
 \cs_new_protected:Npn \__codehigh_typeset_text:nN #1 #2
   {
     \group_begin:
-      \regex_replace_all:nnN { \^^M } { \c{par} } #2
+      \regex_replace_all:nnN { \^^M } { \c{par} \c{leavevmode} } #2
       \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #2
       \tl_use:c { l__codehigh_ style_ #1 _tl }
       #2
