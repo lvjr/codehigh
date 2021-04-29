@@ -130,6 +130,7 @@
 \cs_new_protected:Npn \__codehigh_prepare_code:N #1
   {
     \tl_set_eq:NN #1 \g__codehigh_code_tl
+    \regex_replace_once:nnN {^ \^^M} {} #1
     \regex_replace_once:nnN {\^^M $} {} #1
     \regex_replace_all:nnN { . } { \c{string} \0 } #1
     \tl_set:Nx #1 { #1 }
@@ -171,7 +172,8 @@
 
 \cs_new_protected:Npn \__codehigh_parse_code_lite:N #1
   {
-    \regex_replace_all:nnN { \^^M } { \c{par} } #1
+    \regex_replace_all:nnN { \^^M } { \c{par} \c{leavevmode} } #1
+    \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #1
     \tl_use:N #1
   }
 
