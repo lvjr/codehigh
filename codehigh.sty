@@ -42,8 +42,18 @@
   \tl_gset:Nn \g__codehigh_par_par_tl {^^M^^M}
 \group_end:
 
-\NewDocumentEnvironment { codehigh } { }
+\bool_new:N \l__codehigh_lite_bool
+\bool_new:N \l__codehigh_long_bool
+
+\keys_define:nn {codehigh}
   {
+    lite .bool_set:N = \l__codehigh_lite_bool,
+    long .bool_set:N = \l__codehigh_long_bool,
+  }
+
+\NewDocumentEnvironment {codehigh} {O{}}
+  {
+    \keys_set:nn {codehigh} {#1}
     \bgroup
     \__codehigh_do_specials:
     \begin{codehigh@aux}
@@ -54,8 +64,9 @@
     \__codehigh_typeset_code:
   }
 
-\NewDocumentEnvironment { demohigh } { }
+\NewDocumentEnvironment {demohigh} {O{}}
   {
+    \keys_set:nn {codehigh} {#1}
     \bgroup
     \__codehigh_do_specials:
     \begin{codehigh@aux}
@@ -75,7 +86,7 @@
 
 \tl_new:N \g__codehigh_code_tl
 
-\NewDocumentEnvironment { codehigh@aux } { +b }
+\NewDocumentEnvironment {codehigh@aux} {+b}
   {
     \tl_gset:Nn \g__codehigh_code_tl { #1 }
     %\tl_log:N \g__codehigh_code_tl
@@ -85,15 +96,6 @@
 \NewDocumentCommand \CodeHigh {O{} m}
   {
     \keys_set:nn {codehigh} {#2}
-  }
-
-\bool_new:N \l__codehigh_lite_bool
-\bool_new:N \l__codehigh_long_bool
-
-\keys_define:nn {codehigh}
-  {
-    lite .bool_set:N = \l__codehigh_lite_bool,
-    long .bool_set:N = \l__codehigh_long_bool,
   }
 
 \box_new:N \g__codehigh_code_box
@@ -338,10 +340,13 @@
 \tl_new:N \l__codehigh_doc_tl
 \seq_new:N \l__codehigh_doc_seq
 
-\NewDocumentCommand \dochighinput {m}
+\NewDocumentCommand \dochighinput {O{} m}
   {
-    \CatchFileDef \l__codehigh_doc_tl {#1} { \__codehigh_do_specials: }
+    \group_begin:
+    \keys_set:nn {codehigh} {#1}
+    \CatchFileDef \l__codehigh_doc_tl {#2} { \__codehigh_do_specials: }
     \__codehigh_typeset_doc:N \l__codehigh_doc_tl
+    \group_end:
   }
 
 \cs_new_protected:Npn \__codehigh_typeset_doc:N #1
