@@ -82,6 +82,18 @@
   }
   { }
 
+\NewDocumentCommand \CodeHigh {O{} m}
+  {
+    \keys_set:nn {codehigh} {#2}
+  }
+
+\bool_new:N \g__codehigh_lite_bool
+
+\keys_define:nn {codehigh}
+  {
+    lite .bool_gset:N = \g__codehigh_lite_bool,
+  }
+
 \box_new:N \g__codehigh_code_box
 \box_new:N \g__codehigh_demo_box
 
@@ -106,7 +118,6 @@
     \regex_replace_all:nnN { . } { \c{string} \0 } \l_tmpa_tl
     \tl_set:Nx \l_tmpa_tl { \l_tmpa_tl }
     \tl_set_eq:NN \l_tmpb_tl \l_tmpa_tl
-    %\__codehigh_typeset_code_plain:N \l_tmpa_tl
     \__codehigh_get_code_box:nN \l_tmpb_tl \g__codehigh_code_box
   }
 
@@ -119,19 +130,17 @@
           \setlength \parindent {0pt}
           \linespread {1}
           \ttfamily
-          \__codehigh_parse_code:nN {latex} #1
+          \bool_if:NTF \g__codehigh_lite_bool
+            {\__codehigh_parse_code_lite:N #1}
+            {\__codehigh_parse_code:nN {latex} #1}
         \end{varwidth}
       }
   }
 
-\cs_new_protected:Npn \__codehigh_typeset_code_plain:N #1
+\cs_new_protected:Npn \__codehigh_parse_code_lite:N #1
   {
-    \group_begin:
     \regex_replace_all:nnN { \^^M } { \c{par} } #1
-    \setlength { \parindent } { 0pt }
-    \ttfamily
     \tl_use:N #1
-    \group_end:
   }
 
 \cs_new_protected:Npn \__codehigh_typeset_demo:
