@@ -87,11 +87,13 @@
     \keys_set:nn {codehigh} {#2}
   }
 
-\bool_new:N \g__codehigh_lite_bool
+\bool_new:N \l__codehigh_lite_bool
+\bool_new:N \l__codehigh_long_bool
 
 \keys_define:nn {codehigh}
   {
-    lite .bool_gset:N = \g__codehigh_lite_bool,
+    lite .bool_set:N = \l__codehigh_lite_bool,
+    long .bool_set:N = \l__codehigh_long_bool,
   }
 
 \box_new:N \g__codehigh_code_box
@@ -99,8 +101,40 @@
 
 \cs_new_protected:Npn \__codehigh_typeset_code:
   {
-    \__codehigh_build_code:
     \par\addvspace{0.5em}\noindent
+    \bool_if:NTF \l__codehigh_long_bool
+      {\__codehigh_typeset_code_text:} {\__codehigh_typeset_code_box:}
+    \par\addvspace{0.5em}
+  }
+
+\cs_new_protected:Npn \__codehigh_typeset_code_text:
+  {
+    \__codehigh_prepare_code:N \l_tmpa_tl
+    \__codehigh_get_code_text:n \l_tmpa_tl
+  }
+
+\cs_new_protected:Npn \__codehigh_typeset_code_box:
+  {
+    \__codehigh_build_code:
+    \__codehigh_put_code_box:
+  }
+
+\cs_new_protected:Npn \__codehigh_build_code:
+  {
+    \__codehigh_prepare_code:N \l_tmpa_tl
+    \__codehigh_get_code_box:nN \l_tmpa_tl \g__codehigh_code_box
+  }
+
+\cs_new_protected:Npn \__codehigh_prepare_code:N #1
+  {
+    \tl_set_eq:NN #1 \g__codehigh_code_tl
+    \regex_replace_once:nnN {\^^M $} {} #1
+    \regex_replace_all:nnN { . } { \c{string} \0 } #1
+    \tl_set:Nx #1 { #1 }
+  }
+
+\cs_new_protected:Npn \__codehigh_put_code_box:
+  {
     \colorbox{gray9}
       {
         \hbox_to_wd:nn {\linewidth-4\fboxsep}
@@ -108,17 +142,6 @@
             \colorbox{gray9}{\box_use:N \g__codehigh_code_box}
           }
       }
-    \par\addvspace{0.5em}
-  }
-
-\cs_new_protected:Npn \__codehigh_build_code:
-  {
-    \tl_set_eq:NN \l_tmpa_tl \g__codehigh_code_tl
-    \regex_replace_once:nnN {\^^M $} {} \l_tmpa_tl
-    \regex_replace_all:nnN { . } { \c{string} \0 } \l_tmpa_tl
-    \tl_set:Nx \l_tmpa_tl { \l_tmpa_tl }
-    \tl_set_eq:NN \l_tmpb_tl \l_tmpa_tl
-    \__codehigh_get_code_box:nN \l_tmpb_tl \g__codehigh_code_box
   }
 
 %% #1: text to parse; #2: resulting box
@@ -127,14 +150,21 @@
     \hbox_gset:Nn #2
       {
         \begin{varwidth}{\linewidth}
-          \setlength \parindent {0pt}
-          \linespread {1}
-          \ttfamily
-          \bool_if:NTF \g__codehigh_lite_bool
-            {\__codehigh_parse_code_lite:N #1}
-            {\__codehigh_parse_code:nN {latex} #1}
+          \__codehigh_get_code_text:n {#1}
         \end{varwidth}
       }
+  }
+
+\cs_new_protected:Npn \__codehigh_get_code_text:n #1
+  {
+    \group_begin:
+      \setlength \parindent {0pt}
+      \linespread {1}
+      \ttfamily
+      \bool_if:NTF \l__codehigh_lite_bool
+        {\__codehigh_parse_code_lite:N #1}
+        {\__codehigh_parse_code:nN {latex} #1}
+    \group_end:
   }
 
 \cs_new_protected:Npn \__codehigh_parse_code_lite:N #1
@@ -308,7 +338,7 @@
 \tl_new:N \l__codehigh_doc_tl
 \seq_new:N \l__codehigh_doc_seq
 
-\NewDocumentCommand \DochighInput { m }
+\NewDocumentCommand \dochighinput {m}
   {
     \CatchFileDef \l__codehigh_doc_tl {#1} { \__codehigh_do_specials: }
     \__codehigh_typeset_doc:N \l__codehigh_doc_tl
