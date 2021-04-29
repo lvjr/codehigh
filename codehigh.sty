@@ -33,9 +33,14 @@
 \cs_generate_variant:Nn \str_remove_once:Nn { NV }
 \cs_generate_variant:Nn \tl_set_rescan:Nnn { NnV }
 
-%\prg_generate_conditional_variant:Nnn \regex_extract_once:nnN { vVN } { TF }
 \prg_generate_conditional_variant:Nnn \regex_extract_once:NnN { cVN } { T, TF }
 \prg_generate_conditional_variant:Nnn \regex_split:NnN { cVN } { T, TF }
+
+\group_begin:
+  \obeylines
+  \tl_gset:Nn \g__codehigh_par_tl {^^M}
+  \tl_gset:Nn \g__codehigh_par_par_tl {^^M^^M}
+\group_end:
 
 \NewDocumentEnvironment { codehigh } { }
   {
@@ -73,7 +78,7 @@
 \NewDocumentEnvironment { codehigh@aux } { +b }
   {
     \tl_gset:Nn \g__codehigh_code_tl { #1 }
-    \tl_log:N \g__codehigh_code_tl
+    %\tl_log:N \g__codehigh_code_tl
   }
   { }
 
@@ -96,9 +101,10 @@
 
 \cs_new_protected:Npn \__codehigh_build_code:
   {
-    \tl_set_eq:NN  \l_tmpa_tl \g__codehigh_code_tl
+    \tl_set_eq:NN \l_tmpa_tl \g__codehigh_code_tl
+    \regex_replace_once:nnN {\^^M $} {} \l_tmpa_tl
     \regex_replace_all:nnN { . } { \c{string} \0 } \l_tmpa_tl
-    \tl_set:Nx  \l_tmpa_tl { \l_tmpa_tl }
+    \tl_set:Nx \l_tmpa_tl { \l_tmpa_tl }
     \tl_set_eq:NN \l_tmpb_tl \l_tmpa_tl
     %\__codehigh_typeset_code_plain:N \l_tmpa_tl
     \__codehigh_get_code_box:nN \l_tmpb_tl \g__codehigh_code_box
@@ -134,7 +140,7 @@
     \__codehigh_build_demo:
     \dim_set:Nn \l_tmpa_dim { \box_wd:N \g__codehigh_code_box }
     \dim_set:Nn \l_tmpb_dim { \box_wd:N \g__codehigh_demo_box }
-    \tl_log:x { \dim_use:N \l_tmpa_dim + \dim_use:N \l_tmpb_dim  }
+    %\tl_log:x { \dim_use:N \l_tmpa_dim + \dim_use:N \l_tmpb_dim  }
     \par\addvspace{0.5em}\noindent
     \colorbox{gray9}
       {
@@ -169,7 +175,7 @@
         \catcode `\^^M = 10 \relax
       }
       \l_tmpb_tl
-    \tl_log:N \l_tmpb_tl
+    %\tl_log:N \l_tmpb_tl
     \__codehigh_get_demo_box:nN \l_tmpb_tl \g__codehigh_demo_box
   }
 
@@ -299,14 +305,9 @@
     \__codehigh_typeset_doc:N \l__codehigh_doc_tl
   }
 
-\group_begin:
-  \obeylines
-  \tl_gset:Nn \g__codehigh_par_tl {^^M^^M}
-\group_end:
-
 \cs_new_protected:Npn \__codehigh_typeset_doc:N #1
   {
-    \seq_set_split:NVV \l__codehigh_doc_seq \g__codehigh_par_tl #1
+    \seq_set_split:NVV \l__codehigh_doc_seq \g__codehigh_par_par_tl #1
     \seq_map_inline:Nn \l__codehigh_doc_seq
       {
         \tl_gset:Nn \g__codehigh_code_tl {##1}
