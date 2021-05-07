@@ -111,22 +111,25 @@
 \NewCodeHighEnv {codehigh} {}
 \NewCodeHighEnv {demohigh} {demo}
 
-\tl_new:N \l__codehigh_doc_tl
-\seq_new:N \l__codehigh_doc_seq
+\tl_new:N \l__codehigh_input_tl
+\seq_new:N \l__codehigh_input_seq
 
-\NewDocumentCommand \dochighinput {O{} m}
+\NewDocumentCommand \NewCodeHighInput {mm}
   {
-    \group_begin:
-    \keys_set:nn {codehigh} {#1}
-    \CatchFileDef \l__codehigh_doc_tl {#2} { \__codehigh_do_specials: }
-    \__codehigh_typeset_doc:N \l__codehigh_doc_tl
-    \group_end:
+    \NewDocumentCommand #1 {O{}m}
+      {
+        \group_begin:
+        \keys_set:nn {codehigh} {#2, ##1}
+        \CatchFileDef \l__codehigh_input_tl {##2} {\__codehigh_do_specials:}
+        \__codehigh_typeset_input:N \l__codehigh_input_tl
+        \group_end:
+      }
   }
 
-\cs_new_protected:Npn \__codehigh_typeset_doc:N #1
+\cs_new_protected:Npn \__codehigh_typeset_input:N #1
   {
-    \seq_set_split:NVV \l__codehigh_doc_seq \g__codehigh_par_par_tl #1
-    \seq_map_inline:Nn \l__codehigh_doc_seq
+    \seq_set_split:NVV \l__codehigh_input_seq \g__codehigh_par_par_tl #1
+    \seq_map_inline:Nn \l__codehigh_input_seq
       {
         \tl_gset:Nn \g__codehigh_code_tl {##1}
         \__codehigh_typeset_code:
@@ -134,6 +137,8 @@
         \medskip
       }
   }
+
+\NewCodeHighInput \dochighinput {long}
 
 %~%% -------------------------------------------------------
 %~%  \section{Typeset CodeHign Code}
