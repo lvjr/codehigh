@@ -144,7 +144,8 @@
 %~%  \section{Typeset CodeHign Code}
 %~%% -------------------------------------------------------
 
-\tl_new:N \l__codehigh_main_bg_tl
+\tl_new:N  \l__codehigh_main_bg_tl
+\dim_new:N \l__codehigh_main_boxsep_dim
 \tl_new:N \l__codehigh_codebox_bg_tl
 \tl_new:N \l__codehigh_demobox_bg_tl
 
@@ -152,6 +153,8 @@
   {
     bg .tl_set:N = \l__codehigh_main_bg_tl,
     bg .initial:n = gray9,
+    boxsep .dim_set:N = \l__codehigh_main_boxsep_dim,
+    boxsep .initial:n = 3pt,
     codebox / bg .tl_set:N = \l__codehigh_codebox_bg_tl,
     codebox / bg .initial:n = gray9,
     demobox / bg .tl_set:N = \l__codehigh_demobox_bg_tl,
@@ -197,6 +200,7 @@
 
 \cs_new_protected:Npn \__codehigh_put_code_box:
   {
+    \setlength \fboxsep {\l__codehigh_main_boxsep_dim}
     \colorbox{\l__codehigh_main_bg_tl}
       {
         \hbox_to_wd:nn {\linewidth-2\fboxsep}
@@ -244,6 +248,7 @@
     \dim_set:Nn \l_tmpb_dim { \box_wd:N \g__codehigh_demo_box }
     %\tl_log:x { \dim_use:N \l_tmpa_dim + \dim_use:N \l_tmpb_dim  }
     \par\addvspace{0.5em}\noindent
+    \setlength \fboxsep {\l__codehigh_main_boxsep_dim}
     \colorbox{\l__codehigh_main_bg_tl}
       {
         \dim_compare:nNnTF {\l_tmpa_dim + \l_tmpb_dim + 6\fboxsep} > {\linewidth}
