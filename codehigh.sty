@@ -308,11 +308,11 @@
 %~%  \section{Add CodeHign Syntax}
 %~%% -------------------------------------------------------
 
-\int_new:N \l__codehigh_latex_syntax_count_int
-
 %% #1: language name; #2: syntax rank; #3: syntax name; #4: syntax regex
 \NewDocumentCommand \CodeHighAddSyntax {m m m m}
   {
+    \int_if_exist:cF {l__codehigh_#1_syntax_count_int}
+      {\int_new:c {l__codehigh_#1_syntax_count_int}}
     \int_incr:c {l__codehigh_#1_syntax_count_int}
     \tl_set:cn
       {l__codehigh_#1_ \int_use:c {l__codehigh_#1_syntax_count_int} _rank_tl} {#2}
