@@ -335,16 +335,16 @@
 \CodeHighAddSyntax {latex} {5} {Comment}   { \% .*? \^^M }
 
 %~%% -------------------------------------------------------
-%~%  \section{Add CodeHigh Styles}
+%~%  \section{Add CodeHigh Themes}
 %~%% -------------------------------------------------------
 
 \keys_define:nn {codehigh}
   {
-    style .tl_set:N = \l__codehigh_style_name_tl,
+    style .tl_set:N = \l__codehigh_theme_name_tl,
     style .initial:n = default,
   }
 
-%% #1: style name; #2: syntax rank; #3: sytle commands
+%% #1: theme name; #2: syntax rank; #3: sytle commands
 \NewDocumentCommand \CodeHighAddStyle {m m m}
   {
     \tl_set:cn {l__codehigh_style_#1_#2_tl} {#3}
@@ -432,7 +432,7 @@
     \group_begin:
       \regex_replace_all:nnN { \^^M } { \c{par} \c{leavevmode} } #2
       \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #2
-      \tl_use:c { l__codehigh_style_ \l__codehigh_style_name_tl _#1_tl }
+      \tl_use:c { l__codehigh_style_ \l__codehigh_theme_name_tl _#1_tl }
       #2
     \group_end:
   }
