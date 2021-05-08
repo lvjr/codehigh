@@ -305,7 +305,7 @@
   }
 
 %~%% -------------------------------------------------------
-%~%  \section{Parse and Highlight Code}
+%~%  \section{Add CodeHign Syntax}
 %~%% -------------------------------------------------------
 
 \int_new:N \l__codehigh_latex_syntax_count_int
@@ -328,18 +328,32 @@
 \CodeHighAddSyntax {latex} {4} {Command}   { \\ [A-Za-z]+ }
 \CodeHighAddSyntax {latex} {5} {Comment}   { \% .*? \^^M }
 
-%% #1: syntax rank, #2: sytle commands
-\cs_new_protected:Npn \__codehigh_add_style:nn #1 #2
+%~%% -------------------------------------------------------
+%~%  \section{Add CodeHigh Styles}
+%~%% -------------------------------------------------------
+
+\keys_define:nn {codehigh}
   {
-    \tl_set:cn {l__codehigh_style_#1_tl} {#2}
+    style .tl_set:N = \l__codehigh_style_name_tl,
+    style .initial:n = default,
   }
 
-\__codehigh_add_style:nn {0} {\color{black}}
-\__codehigh_add_style:nn {1} {\color{purple3}}
-\__codehigh_add_style:nn {2} {\color{brown3}}
-\__codehigh_add_style:nn {3} {\color{blue3}}
-\__codehigh_add_style:nn {4} {\color{teal3}}
-\__codehigh_add_style:nn {5} {\color{gray3}}
+%% #1: style name; #2: syntax rank; #3: sytle commands
+\NewDocumentCommand \CodeHighAddStyle {m m m}
+  {
+    \tl_set:cn {l__codehigh_style_#1_#2_tl} {#3}
+  }
+
+\CodeHighAddStyle {default} {0} {\color{black}}
+\CodeHighAddStyle {default} {1} {\color{purple3}}
+\CodeHighAddStyle {default} {2} {\color{brown3}}
+\CodeHighAddStyle {default} {3} {\color{blue3}}
+\CodeHighAddStyle {default} {4} {\color{teal3}}
+\CodeHighAddStyle {default} {5} {\color{gray3}}
+
+%~%% -------------------------------------------------------
+%~%  \section{Parse and Highlight Code}
+%~%% -------------------------------------------------------
 
 \int_new:N \l__codehigh_item_count_int
 \tl_new:N \l__codehigh_code_to_parse_tl
@@ -405,13 +419,13 @@
       }
   }
 
-%% #1: style name, #2: text
+%% #1: syntax rank, #2: text
 \cs_new_protected:Npn \__codehigh_typeset_text:nN #1 #2
   {
     \group_begin:
       \regex_replace_all:nnN { \^^M } { \c{par} \c{leavevmode} } #2
       \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #2
-      \tl_use:c { l__codehigh_ style_ #1 _tl }
+      \tl_use:c { l__codehigh_style_ \l__codehigh_style_name_tl _#1_tl }
       #2
     \group_end:
   }
