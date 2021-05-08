@@ -311,7 +311,7 @@
 \int_new:N \l__codehigh_latex_syntax_count_int
 
 %% #1: language name; #2: syntax rank; #3: syntax name; #4: syntax regex
-\cs_new_protected:Npn \__codehigh_add_syntax:nnnn #1 #2 #3 #4
+\NewDocumentCommand \CodeHighAddSyntax {m m m m}
   {
     \int_incr:c {l__codehigh_#1_syntax_count_int}
     \tl_set:cn
@@ -322,11 +322,11 @@
       {l__codehigh_#1_ \int_use:c {l__codehigh_#1_syntax_count_int} _regex} {#4}
   }
 
-\__codehigh_add_syntax:nnnn {latex} {1} {Newline}   { \\ \\ }
-\__codehigh_add_syntax:nnnn {latex} {2} {Alignment} { \& }
-\__codehigh_add_syntax:nnnn {latex} {3} {BeginEnd}  { \\ (begin|end) }
-\__codehigh_add_syntax:nnnn {latex} {4} {Command}   { \\ [A-Za-z]+ }
-\__codehigh_add_syntax:nnnn {latex} {5} {Comment}   { \% .*? \^^M }
+\CodeHighAddSyntax {latex} {1} {Newline}   { \\ \\ }
+\CodeHighAddSyntax {latex} {2} {Alignment} { \& }
+\CodeHighAddSyntax {latex} {3} {BeginEnd}  { \\ (begin|end) }
+\CodeHighAddSyntax {latex} {4} {Command}   { \\ [A-Za-z]+ }
+\CodeHighAddSyntax {latex} {5} {Comment}   { \% .*? \^^M }
 
 %% #1: syntax rank, #2: sytle commands
 \cs_new_protected:Npn \__codehigh_add_style:nn #1 #2
