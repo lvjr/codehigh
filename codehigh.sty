@@ -328,11 +328,29 @@
       {l__codehigh_#1_ \int_use:c {l__codehigh_#1_syntax_count_int} _regex} {#4}
   }
 
-\CodeHighAddSyntax {latex} {1} {Newline}   { \\ \\ }
-\CodeHighAddSyntax {latex} {2} {Alignment} { \& }
+\CodeHighAddSyntax {latex} {1} {MathMode}  { \$ }
+\CodeHighAddSyntax {latex} {2} {LeftRight} { \\ (left|right) }
 \CodeHighAddSyntax {latex} {3} {BeginEnd}  { \\ (begin|end) }
 \CodeHighAddSyntax {latex} {4} {Command}   { \\ [A-Za-z]+ }
 \CodeHighAddSyntax {latex} {5} {Comment}   { \% .*? \^^M }
+
+\CodeHighAddSyntax {latex2} {1} {Argument}   { \# + \d }
+\CodeHighAddSyntax {latex2} {2} {NewCommand} { \\ (|e|g|x)def }
+\CodeHighAddSyntax {latex2} {3} {SetCommand} { \\ set [A-Za-z]+ }
+\CodeHighAddSyntax {latex2} {4} {Command}    { \\ [A-Za-z@]+ }
+\CodeHighAddSyntax {latex2} {5} {Comment}    { \% .*? \^^M }
+
+\CodeHighAddSyntax {latex3} {1} {Alignment}  { \# + \d }
+\CodeHighAddSyntax {latex3} {2} {NewCommand} { \\ cs_new[A-Za-z_:]+ }
+\CodeHighAddSyntax {latex3} {3} {SetCommand} { \\ [A-Za-z]+_(|g)set[A-Za-z_:]+ }
+\CodeHighAddSyntax {latex3} {4} {Command}    { \\ [A-Za-z@_:]+ }
+\CodeHighAddSyntax {latex3} {5} {Comment}    { \% .*? \^^M }
+
+\CodeHighAddSyntax {latex/table} {1} {Newline}   { \\ \\ }
+\CodeHighAddSyntax {latex/table} {2} {Alignment} { \& }
+\CodeHighAddSyntax {latex/table} {3} {BeginEnd}  { \\ (begin|end) }
+\CodeHighAddSyntax {latex/table} {4} {Command}   { \\ [A-Za-z]+ }
+\CodeHighAddSyntax {latex/table} {5} {Comment}   { \% .*? \^^M }
 
 %~%% -------------------------------------------------------
 %~%  \section{Add CodeHigh Themes}
