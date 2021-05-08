@@ -230,7 +230,7 @@
       \ttfamily
       \bool_if:NTF \l__codehigh_lite_bool
         {\__codehigh_parse_code_lite:N #1}
-        {\__codehigh_parse_code:nN {latex} #1}
+        {\__codehigh_parse_code:VN \l__codehigh_language_name_tl #1}
     \group_end:
   }
 
@@ -305,8 +305,14 @@
   }
 
 %~%% -------------------------------------------------------
-%~%  \section{Add CodeHign Syntax}
+%~%  \section{Add CodeHign Languages}
 %~%% -------------------------------------------------------
+
+\keys_define:nn {codehigh}
+  {
+    language .tl_set:N = \l__codehigh_language_name_tl,
+    language .initial:n = latex,
+  }
 
 %% #1: language name; #2: syntax rank; #3: syntax name; #4: syntax regex
 \NewDocumentCommand \CodeHighAddSyntax {m m m m}
@@ -384,6 +390,7 @@
           }
       }
   }
+\cs_generate_variant:Nn \__codehigh_parse_code:nN {VN}
 
 \cs_new_protected:Npn \__codehigh_parse_code_once:nN #1 #2
   {
