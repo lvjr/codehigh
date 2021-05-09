@@ -315,7 +315,7 @@
   }
 
 %% #1: language name; #2: syntax rank; #3: syntax name; #4: syntax regex
-\NewDocumentCommand \CodeHighAddSyntax {m m m m}
+\NewDocumentCommand \AddCodeHighSyntax {m m m m}
   {
     \int_if_exist:cF {l__codehigh_#1_syntax_count_int}
       {\int_new:c {l__codehigh_#1_syntax_count_int}}
@@ -328,29 +328,29 @@
       {l__codehigh_#1_ \int_use:c {l__codehigh_#1_syntax_count_int} _regex} {#4}
   }
 
-\CodeHighAddSyntax {latex} {1} {MathMode}  { \$ }
-\CodeHighAddSyntax {latex} {2} {LeftRight} { \\ (left|right) }
-\CodeHighAddSyntax {latex} {3} {BeginEnd}  { \\ (begin|end) }
-\CodeHighAddSyntax {latex} {4} {Command}   { \\ [A-Za-z]+ }
-\CodeHighAddSyntax {latex} {5} {Comment}   { \% .*? \^^M }
+\AddCodeHighSyntax {latex} {1} {MathMode}  { \$ }
+\AddCodeHighSyntax {latex} {2} {LeftRight} { \\ (left|right) }
+\AddCodeHighSyntax {latex} {3} {BeginEnd}  { \\ (begin|end) }
+\AddCodeHighSyntax {latex} {4} {Command}   { \\ [A-Za-z]+ }
+\AddCodeHighSyntax {latex} {5} {Comment}   { \% .*? \^^M }
 
-\CodeHighAddSyntax {latex2} {1} {Argument}   { \# + \d }
-\CodeHighAddSyntax {latex2} {2} {NewCommand} { \\ (|e|g|x)def }
-\CodeHighAddSyntax {latex2} {3} {SetCommand} { \\ set [A-Za-z]+ }
-\CodeHighAddSyntax {latex2} {4} {Command}    { \\ [A-Za-z@]+ }
-\CodeHighAddSyntax {latex2} {5} {Comment}    { \% .*? \^^M }
+\AddCodeHighSyntax {latex2} {1} {Argument}   { \# + \d }
+\AddCodeHighSyntax {latex2} {2} {NewCommand} { \\ (|e|g|x)def }
+\AddCodeHighSyntax {latex2} {3} {SetCommand} { \\ set [A-Za-z]+ }
+\AddCodeHighSyntax {latex2} {4} {Command}    { \\ [A-Za-z@]+ }
+\AddCodeHighSyntax {latex2} {5} {Comment}    { \% .*? \^^M }
 
-\CodeHighAddSyntax {latex3} {1} {Alignment}  { \# + \d }
-\CodeHighAddSyntax {latex3} {2} {NewCommand} { \\ cs_new[A-Za-z_:]+ }
-\CodeHighAddSyntax {latex3} {3} {SetCommand} { \\ [A-Za-z]+_(|g)set[A-Za-z_:]+ }
-\CodeHighAddSyntax {latex3} {4} {Command}    { \\ [A-Za-z@_:]+ }
-\CodeHighAddSyntax {latex3} {5} {Comment}    { \% .*? \^^M }
+\AddCodeHighSyntax {latex3} {1} {Alignment}  { \# + \d }
+\AddCodeHighSyntax {latex3} {2} {NewCommand} { \\ cs_new[A-Za-z_:]+ }
+\AddCodeHighSyntax {latex3} {3} {SetCommand} { \\ [A-Za-z]+_(|g)set[A-Za-z_:]+ }
+\AddCodeHighSyntax {latex3} {4} {Command}    { \\ [A-Za-z@_:]+ }
+\AddCodeHighSyntax {latex3} {5} {Comment}    { \% .*? \^^M }
 
-\CodeHighAddSyntax {latex/table} {1} {Newline}   { \\ \\ }
-\CodeHighAddSyntax {latex/table} {2} {Alignment} { \& }
-\CodeHighAddSyntax {latex/table} {3} {BeginEnd}  { \\ (begin|end) }
-\CodeHighAddSyntax {latex/table} {4} {Command}   { \\ [A-Za-z]+ }
-\CodeHighAddSyntax {latex/table} {5} {Comment}   { \% .*? \^^M }
+\AddCodeHighSyntax {latex/table} {1} {Newline}   { \\ \\ }
+\AddCodeHighSyntax {latex/table} {2} {Alignment} { \& }
+\AddCodeHighSyntax {latex/table} {3} {BeginEnd}  { \\ (begin|end) }
+\AddCodeHighSyntax {latex/table} {4} {Command}   { \\ [A-Za-z]+ }
+\AddCodeHighSyntax {latex/table} {5} {Comment}   { \% .*? \^^M }
 
 %~%% -------------------------------------------------------
 %~%  \section{Add CodeHigh Themes}
@@ -363,17 +363,17 @@
   }
 
 %% #1: theme name; #2: syntax rank; #3: sytle commands
-\NewDocumentCommand \CodeHighAddStyle {m m m}
+\NewDocumentCommand \AddCodeHighStyle {m m m}
   {
     \tl_set:cn {l__codehigh_style_#1_#2_tl} {#3}
   }
 
-\CodeHighAddStyle {default} {0} {\color{black}}
-\CodeHighAddStyle {default} {1} {\color{purple3}}
-\CodeHighAddStyle {default} {2} {\color{brown3}}
-\CodeHighAddStyle {default} {3} {\color{blue3}}
-\CodeHighAddStyle {default} {4} {\color{teal3}}
-\CodeHighAddStyle {default} {5} {\color{gray3}}
+\AddCodeHighStyle {default} {0} {\color{black}}
+\AddCodeHighStyle {default} {1} {\color{purple3}}
+\AddCodeHighStyle {default} {2} {\color{brown3}}
+\AddCodeHighStyle {default} {3} {\color{blue3}}
+\AddCodeHighStyle {default} {4} {\color{teal3}}
+\AddCodeHighStyle {default} {5} {\color{gray3}}
 
 %~%% -------------------------------------------------------
 %~%  \section{Parse and Highlight Code}
