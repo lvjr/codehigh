@@ -322,29 +322,51 @@
       {l__codehigh_#1_ \int_use:c {l__codehigh_#1_syntax_count_int} _regex} {#4}
   }
 
-\AddCodeHighSyntax[latex]{1}{MathMode}{ \$ }
-\AddCodeHighSyntax[latex]{2}{LeftRight}{ \\ (left|right) }
-\AddCodeHighSyntax[latex]{3}{BeginEnd}{ \\ (begin|end) }
-\AddCodeHighSyntax[latex]{4}{Command}{ \\ [A-Za-z]+ }
-\AddCodeHighSyntax[latex]{9}{Comment}{ \% .*? \^^M }
+\AddCodeHighSyntax[latex]{1}{Package}   {\\(documentclass|usepackage)}
+\AddCodeHighSyntax[latex]{2}{NewCommand}{\\newcommand}
+\AddCodeHighSyntax[latex]{3}{SetCommand}{\\set[A-Za-z]+}
+\AddCodeHighSyntax[latex]{4}{BeginEnd}  {\\(begin|end)}
+\AddCodeHighSyntax[latex]{5}{Section}   {\\(part|chapter|section|subsection)}
+\AddCodeHighSyntax[latex]{6}{Command}   {\\[A-Za-z]+}
+\AddCodeHighSyntax[latex]{7}{Brace}     {[\{\}]}
+\AddCodeHighSyntax[latex]{8}{MathMode}  {\$}
+\AddCodeHighSyntax[latex]{9}{Comment}   {\%.*?\^^M}
 
-\AddCodeHighSyntax[latex/latex2]{1}{Argument}{ \# + \d }
-\AddCodeHighSyntax[latex/latex2]{2}{NewCommand}{ \\ (|e|g|x)def }
-\AddCodeHighSyntax[latex/latex2]{3}{SetCommand}{ \\ set [A-Za-z]+ }
-\AddCodeHighSyntax[latex/latex2]{4}{Command}{ \\ [A-Za-z@]+ }
-\AddCodeHighSyntax[latex/latex2]{9}{Comment}{ \% .*? \^^M }
+\AddCodeHighSyntax[latex/math]{1}{LeftRight}  {\\(left|right)}
+\AddCodeHighSyntax[latex/math]{2}{Command}    {\\[A-Za-z]+}
+\AddCodeHighSyntax[latex/math]{3}{MathMode}   {\$}
+\AddCodeHighSyntax[latex/math]{4}{Script}     {[\_\^]}
+\AddCodeHighSyntax[latex/math]{5}{Number}     {\d+}
+\AddCodeHighSyntax[latex/math]{6}{Brace}      {[\{\}]}
+\AddCodeHighSyntax[latex/math]{7}{Braket}     {[\[\]]}
+\AddCodeHighSyntax[latex/math]{8}{parenthesis}{[\(\)]}
+\AddCodeHighSyntax[latex/math]{9}{Comment}    {\%.*?\^^M}
 
-\AddCodeHighSyntax[latex/latex3]{1}{Alignment}{ \# + \d }
-\AddCodeHighSyntax[latex/latex3]{2}{NewCommand}{ \\ cs_new[A-Za-z_:]+ }
-\AddCodeHighSyntax[latex/latex3]{3}{SetCommand}{ \\ [A-Za-z]+_(|g)set[A-Za-z_:]+ }
-\AddCodeHighSyntax[latex/latex3]{4}{Command}{ \\ [A-Za-z@_:]+ }
-\AddCodeHighSyntax[latex/latex3]{9}{Comment}{ \% .*? \^^M }
+\AddCodeHighSyntax[latex/table]{1}{Newline}  {\\\\}
+\AddCodeHighSyntax[latex/table]{2}{Alignment}{\&}
+\AddCodeHighSyntax[latex/table]{3}{BeginEnd} {\\(begin|end)}
+\AddCodeHighSyntax[latex/table]{4}{Command}  {\\[A-Za-z]+}
+\AddCodeHighSyntax[latex/table]{5}{Brace}    {[\{\}]}
+\AddCodeHighSyntax[latex/table]{6}{Braket}   {[\[\]]}
+\AddCodeHighSyntax[latex/table]{9}{Comment}  {\%.*?\^^M}
 
-\AddCodeHighSyntax[latex/table]{1}{Newline}{ \\ \\ }
-\AddCodeHighSyntax[latex/table]{2}{Alignment}{ \& }
-\AddCodeHighSyntax[latex/table]{3}{BeginEnd}{ \\ (begin|end) }
-\AddCodeHighSyntax[latex/table]{4}{Command}{ \\ [A-Za-z]+ }
-\AddCodeHighSyntax[latex/table]{9}{Comment}{ \% .*? \^^M }
+\AddCodeHighSyntax[latex/latex2]{1}{Argument}  {\#+\d}
+\AddCodeHighSyntax[latex/latex2]{2}{NewCommand}{\\(|e|g|x)def}
+\AddCodeHighSyntax[latex/latex2]{3}{SetCommand}{\\set[A-Za-z]+}
+\AddCodeHighSyntax[latex/latex2]{4}{PrivateCmd}{\\[A-Za-z@]*@[A-Za-z@]*}
+\AddCodeHighSyntax[latex/latex2]{5}{Command}   {\\[A-Za-z]+}
+\AddCodeHighSyntax[latex/latex2]{6}{Brace}     {[\{\}]}
+\AddCodeHighSyntax[latex/latex2]{7}{Braket}    {[\[\]]}
+\AddCodeHighSyntax[latex/latex2]{9}{Comment}   {\%.*?\^^M}
+
+\AddCodeHighSyntax[latex/latex3]{1}{Alignment} {\#+\d}
+\AddCodeHighSyntax[latex/latex3]{2}{NewCommand}{\\cs_new[A-Za-z_:]+}
+\AddCodeHighSyntax[latex/latex3]{3}{SetCommand}{\\[A-Za-z]+_(|g)set[A-Za-z_:]+}
+\AddCodeHighSyntax[latex/latex3]{4}{PrivateCmd}{\\[cgl]?__[A-Za-z_:]+}
+\AddCodeHighSyntax[latex/latex3]{5}{Command}   {\\[A-Za-z@_:]+}
+\AddCodeHighSyntax[latex/latex3]{6}{Brace}     {[\{\}]}
+\AddCodeHighSyntax[latex/latex3]{7}{Braket}    {[\[\]]}
+\AddCodeHighSyntax[latex/latex3]{9}{Comment}   {\%.*?\^^M}
 
 %~%% -------------------------------------------------------
 %~%  \section{Add CodeHigh Themes}
@@ -377,6 +399,10 @@
 \SetCodeHighStyle[default]{2}{brown3}
 \SetCodeHighStyle[default]{3}{blue3}
 \SetCodeHighStyle[default]{4}{teal3}
+\SetCodeHighStyle[default]{5}{yellow3}
+\SetCodeHighStyle[default]{6}{olive3}
+\SetCodeHighStyle[default]{7}{azure3}
+\SetCodeHighStyle[default]{8}{violet3}
 \SetCodeHighStyle[default]{9}{gray3}
 
 %~%% -------------------------------------------------------
