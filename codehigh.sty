@@ -368,12 +368,12 @@
     \tl_set:cn {l__codehigh_style_#1_#2_tl} {#3}
   }
 
-\SetCodeHighStyle[default]{0}{\color{black}}
-\SetCodeHighStyle[default]{1}{\color{purple3}}
-\SetCodeHighStyle[default]{2}{\color{brown3}}
-\SetCodeHighStyle[default]{3}{\color{blue3}}
-\SetCodeHighStyle[default]{4}{\color{teal3}}
-\SetCodeHighStyle[default]{5}{\color{gray3}}
+\SetCodeHighStyle[default]{0}{black}
+\SetCodeHighStyle[default]{1}{purple3}
+\SetCodeHighStyle[default]{2}{brown3}
+\SetCodeHighStyle[default]{3}{blue3}
+\SetCodeHighStyle[default]{4}{teal3}
+\SetCodeHighStyle[default]{5}{gray3}
 
 %~%% -------------------------------------------------------
 %~%  \section{Parse and Highlight Code}
@@ -450,7 +450,7 @@
     \group_begin:
       \regex_replace_all:nnN { \^^M } { \c{par} \c{leavevmode} } #2
       \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #2
-      \tl_use:c { l__codehigh_style_ \l__codehigh_theme_name_tl _#1_tl }
+      \color{\tl_use:c {l__codehigh_style_ \l__codehigh_theme_name_tl _#1_tl}}
       #2
     \group_end:
   }
