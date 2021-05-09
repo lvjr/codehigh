@@ -308,14 +308,14 @@
     language .initial:n = latex,
   }
 
-%% #1: language name; #2: syntax rank; #3: syntax name; #4: syntax regex
+%% #1: language name; #2: syntax type; #3: syntax name; #4: syntax regex
 \NewDocumentCommand \AddCodeHighSyntax {O{latex} m m m}
   {
     \int_if_exist:cF {l__codehigh_#1_syntax_count_int}
       {\int_new:c {l__codehigh_#1_syntax_count_int}}
     \int_incr:c {l__codehigh_#1_syntax_count_int}
     \tl_set:cn
-      {l__codehigh_#1_ \int_use:c {l__codehigh_#1_syntax_count_int} _rank_tl} {#2}
+      {l__codehigh_#1_ \int_use:c {l__codehigh_#1_syntax_count_int} _type_tl} {#2}
     \tl_set:cn
       {l__codehigh_#1_ \int_use:c {l__codehigh_#1_syntax_count_int} _name_tl} {#3}
     \regex_set:cn
@@ -356,7 +356,7 @@
     theme .initial:n = default,
   }
 
-%% #1: theme name; #2: syntax rank; #3: sytles
+%% #1: theme name; #2: syntax type; #3: sytles
 \NewDocumentCommand \SetCodeHighStyle {O{default} m m}
   {
     \tl_set:cn {l__codehigh_style_#1_#2_tl} {#3}
@@ -385,7 +385,7 @@
 
 \int_new:N \l__codehigh_item_count_int
 \tl_new:N \l__codehigh_code_to_parse_tl
-\tl_new:N \l__codehigh_regex_match_rank_tl
+\tl_new:N \l__codehigh_regex_match_type_tl
 \tl_new:N \l__codehigh_regex_match_text_tl
 \tl_new:N \l__codehigh_regex_before_text_tl
 
@@ -407,7 +407,7 @@
             %\tl_log:N \l__codehigh_code_to_parse_tl
             \__codehigh_typeset_text:nN {0}
               \l__codehigh_regex_before_text_tl
-            \__codehigh_typeset_text:VN \l__codehigh_regex_match_rank_tl
+            \__codehigh_typeset_text:VN \l__codehigh_regex_match_type_tl
               \l__codehigh_regex_match_text_tl
           }
       }
@@ -440,15 +440,15 @@
                       \l__codehigh_b_tl
                     \tl_set_eq:NN \l__codehigh_regex_match_text_tl
                       \l__codehigh_m_tl
-                    \tl_set_eq:Nc \l__codehigh_regex_match_rank_tl
-                      {l__codehigh_#1_##1_rank_tl}
+                    \tl_set_eq:Nc \l__codehigh_regex_match_type_tl
+                      {l__codehigh_#1_##1_type_tl}
                   }
               }
           }
       }
   }
 
-%% #1: syntax rank, #2: text
+%% #1: syntax type, #2: text
 \cs_new_protected:Npn \__codehigh_typeset_text:nN #1 #2
   {
     \group_begin:
