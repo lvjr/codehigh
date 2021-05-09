@@ -144,21 +144,12 @@
 %~%  \section{Typeset CodeHign Code}
 %~%% -------------------------------------------------------
 
-\tl_new:N  \l__codehigh_main_bg_tl
 \dim_new:N \l__codehigh_main_boxsep_dim
-\tl_new:N \l__codehigh_codebox_bg_tl
-\tl_new:N \l__codehigh_demobox_bg_tl
 
 \keys_define:nn {codehigh}
   {
-    bg .tl_set:N = \l__codehigh_main_bg_tl,
-    bg .initial:n = gray9,
     boxsep .dim_set:N = \l__codehigh_main_boxsep_dim,
     boxsep .initial:n = 3pt,
-    codebox / bg .tl_set:N = \l__codehigh_codebox_bg_tl,
-    codebox / bg .initial:n = gray9,
-    demobox / bg .tl_set:N = \l__codehigh_demobox_bg_tl,
-    demobox / bg .initial:n = white,
   }
 
 \box_new:N \g__codehigh_code_box
@@ -201,11 +192,13 @@
 \cs_new_protected:Npn \__codehigh_put_code_box:
   {
     \setlength \fboxsep {\l__codehigh_main_boxsep_dim}
-    \colorbox{\l__codehigh_main_bg_tl}
+    \GetCodeHighStyle{main}
+    \colorbox{codehigh@bg}
       {
         \hbox_to_wd:nn {\linewidth-2\fboxsep}
           {
-            \colorbox{\l__codehigh_codebox_bg_tl}
+            \GetCodeHighStyle{code}
+            \colorbox{codehigh@bg}
               {\box_use:N \g__codehigh_code_box}
           }
       }
@@ -249,28 +242,29 @@
     %\tl_log:x { \dim_use:N \l_tmpa_dim + \dim_use:N \l_tmpb_dim  }
     \par\addvspace{0.5em}\noindent
     \setlength \fboxsep {\l__codehigh_main_boxsep_dim}
-    \colorbox{\l__codehigh_main_bg_tl}
+    \GetCodeHighStyle{main}
+    \colorbox{codehigh@bg}
       {
         \dim_compare:nNnTF {\l_tmpa_dim + \l_tmpb_dim + 6\fboxsep} > {\linewidth}
           {
             \vbox:n
               {
                 \dim_set:Nn \hsize {\linewidth-2\fboxsep}
-                \noindent\colorbox{\l__codehigh_codebox_bg_tl}
-                  {\box_use:N \g__codehigh_code_box}
+                \noindent\GetCodeHighStyle{code}
+                \colorbox{codehigh@bg}{\box_use:N \g__codehigh_code_box}
                 \par
-                \noindent\colorbox{\l__codehigh_demobox_bg_tl}
-                  {\box_use:N \g__codehigh_demo_box}
+                \noindent\GetCodeHighStyle{demo}
+                \colorbox{codehigh@bg}{\box_use:N \g__codehigh_demo_box}
               }
           }
           {
           \hbox_to_wd:nn {\linewidth-2\fboxsep}
               {
-                \colorbox{\l__codehigh_codebox_bg_tl}
-                  {\box_use:N \g__codehigh_code_box}
+                \GetCodeHighStyle{code}
+                \colorbox{codehigh@bg}{\box_use:N \g__codehigh_code_box}
                 \hfill
-                \colorbox{\l__codehigh_demobox_bg_tl}
-                  {\box_use:N \g__codehigh_demo_box}
+                \GetCodeHighStyle{demo}
+                \colorbox{codehigh@bg}{\box_use:N \g__codehigh_demo_box}
               }
           }
       }
@@ -362,11 +356,21 @@
     theme .initial:n = default,
   }
 
-%% #1: theme name; #2: syntax rank; #3: sytle commands
+%% #1: theme name; #2: syntax rank; #3: sytles
 \NewDocumentCommand \SetCodeHighStyle {O{default} m m}
   {
     \tl_set:cn {l__codehigh_style_#1_#2_tl} {#3}
   }
+
+\NewDocumentCommand \GetCodeHighStyle {O{default} m}
+  {
+    \colorlet{codehigh@bg}{\tl_use:c {l__codehigh_style_#1_#2_tl}}
+  }
+
+
+\SetCodeHighStyle[default]{main}{gray9}
+\SetCodeHighStyle[default]{code}{gray9}
+\SetCodeHighStyle[default]{demo}{white}
 
 \SetCodeHighStyle[default]{0}{black}
 \SetCodeHighStyle[default]{1}{purple3}
