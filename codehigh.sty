@@ -376,6 +376,9 @@
   {
     theme .tl_set:N = \l__codehigh_theme_name_tl,
     theme .initial:n = default,
+    style/main .code:n = \SetCodeHighStyle{main}{#1},
+    style/code .code:n = \SetCodeHighStyle{code}{#1},
+    style/demo .code:n = \SetCodeHighStyle{demo}{#1},
   }
 
 %% #1: theme name; #2: syntax type; #3: sytles
