@@ -363,17 +363,17 @@
   }
 
 %% #1: theme name; #2: syntax rank; #3: sytle commands
-\NewDocumentCommand \AddCodeHighStyle {m m m}
+\NewDocumentCommand \SetCodeHighStyle {O{default} m m}
   {
     \tl_set:cn {l__codehigh_style_#1_#2_tl} {#3}
   }
 
-\AddCodeHighStyle {default} {0} {\color{black}}
-\AddCodeHighStyle {default} {1} {\color{purple3}}
-\AddCodeHighStyle {default} {2} {\color{brown3}}
-\AddCodeHighStyle {default} {3} {\color{blue3}}
-\AddCodeHighStyle {default} {4} {\color{teal3}}
-\AddCodeHighStyle {default} {5} {\color{gray3}}
+\SetCodeHighStyle[default]{0}{\color{black}}
+\SetCodeHighStyle[default]{1}{\color{purple3}}
+\SetCodeHighStyle[default]{2}{\color{brown3}}
+\SetCodeHighStyle[default]{3}{\color{blue3}}
+\SetCodeHighStyle[default]{4}{\color{teal3}}
+\SetCodeHighStyle[default]{5}{\color{gray3}}
 
 %~%% -------------------------------------------------------
 %~%  \section{Parse and Highlight Code}
