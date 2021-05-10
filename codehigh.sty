@@ -308,65 +308,65 @@
     language .initial:n = latex,
   }
 
-%% #1: language name; #2: syntax type; #3: syntax name; #4: syntax regex
-\NewDocumentCommand \AddCodeHighSyntax {O{latex} m m m}
+%% #1: language name; #2: rule type; #3: rule name; #4: rule regex
+\NewDocumentCommand \AddCodeHighRule {O{latex} m m m}
   {
-    \int_if_exist:cF {l__codehigh_#1_syntax_count_int}
-      {\int_new:c {l__codehigh_#1_syntax_count_int}}
-    \int_incr:c {l__codehigh_#1_syntax_count_int}
+    \int_if_exist:cF {l__codehigh_#1_rule_count_int}
+      {\int_new:c {l__codehigh_#1_rule_count_int}}
+    \int_incr:c {l__codehigh_#1_rule_count_int}
     \tl_set:cn
-      {l__codehigh_#1_ \int_use:c {l__codehigh_#1_syntax_count_int} _type_tl} {#2}
+      {l__codehigh_#1_ \int_use:c {l__codehigh_#1_rule_count_int} _type_tl} {#2}
     \tl_set:cn
-      {l__codehigh_#1_ \int_use:c {l__codehigh_#1_syntax_count_int} _name_tl} {#3}
+      {l__codehigh_#1_ \int_use:c {l__codehigh_#1_rule_count_int} _name_tl} {#3}
     \regex_set:cn
-      {l__codehigh_#1_ \int_use:c {l__codehigh_#1_syntax_count_int} _regex} {#4}
+      {l__codehigh_#1_ \int_use:c {l__codehigh_#1_rule_count_int} _regex} {#4}
   }
 
-\AddCodeHighSyntax[latex]{1}{Package}   {\\(documentclass|usepackage)}
-\AddCodeHighSyntax[latex]{2}{NewCommand}{\\newcommand}
-\AddCodeHighSyntax[latex]{3}{SetCommand}{\\set[A-Za-z]+}
-\AddCodeHighSyntax[latex]{4}{BeginEnd}  {\\(begin|end)}
-\AddCodeHighSyntax[latex]{5}{Section}   {\\(part|chapter|section|subsection)}
-\AddCodeHighSyntax[latex]{6}{Command}   {\\[A-Za-z]+}
-\AddCodeHighSyntax[latex]{7}{Brace}     {[\{\}]}
-\AddCodeHighSyntax[latex]{8}{MathMode}  {\$}
-\AddCodeHighSyntax[latex]{9}{Comment}   {\%.*?\^^M}
+\AddCodeHighRule[latex]{1}{Package}   {\\(documentclass|usepackage)}
+\AddCodeHighRule[latex]{2}{NewCommand}{\\newcommand}
+\AddCodeHighRule[latex]{3}{SetCommand}{\\set[A-Za-z]+}
+\AddCodeHighRule[latex]{4}{BeginEnd}  {\\(begin|end)}
+\AddCodeHighRule[latex]{5}{Section}   {\\(part|chapter|section|subsection)}
+\AddCodeHighRule[latex]{6}{Command}   {\\[A-Za-z]+}
+\AddCodeHighRule[latex]{7}{Brace}     {[\{\}]}
+\AddCodeHighRule[latex]{8}{MathMode}  {\$}
+\AddCodeHighRule[latex]{9}{Comment}   {\%.*?\^^M}
 
-\AddCodeHighSyntax[latex/math]{1}{LeftRight}  {\\(left|right)}
-\AddCodeHighSyntax[latex/math]{2}{Command}    {\\[A-Za-z]+}
-\AddCodeHighSyntax[latex/math]{3}{MathMode}   {\$}
-\AddCodeHighSyntax[latex/math]{4}{Script}     {[\_\^]}
-\AddCodeHighSyntax[latex/math]{5}{Number}     {\d+}
-\AddCodeHighSyntax[latex/math]{6}{Brace}      {[\{\}]}
-\AddCodeHighSyntax[latex/math]{7}{Braket}     {[\[\]]}
-\AddCodeHighSyntax[latex/math]{8}{parenthesis}{[\(\)]}
-\AddCodeHighSyntax[latex/math]{9}{Comment}    {\%.*?\^^M}
+\AddCodeHighRule[latex/math]{1}{LeftRight}  {\\(left|right)}
+\AddCodeHighRule[latex/math]{2}{Command}    {\\[A-Za-z]+}
+\AddCodeHighRule[latex/math]{3}{MathMode}   {\$}
+\AddCodeHighRule[latex/math]{4}{Script}     {[\_\^]}
+\AddCodeHighRule[latex/math]{5}{Number}     {\d+}
+\AddCodeHighRule[latex/math]{6}{Brace}      {[\{\}]}
+\AddCodeHighRule[latex/math]{7}{Braket}     {[\[\]]}
+\AddCodeHighRule[latex/math]{8}{parenthesis}{[\(\)]}
+\AddCodeHighRule[latex/math]{9}{Comment}    {\%.*?\^^M}
 
-\AddCodeHighSyntax[latex/table]{1}{Newline}  {\\\\}
-\AddCodeHighSyntax[latex/table]{2}{Alignment}{\&}
-\AddCodeHighSyntax[latex/table]{3}{BeginEnd} {\\(begin|end)}
-\AddCodeHighSyntax[latex/table]{4}{Command}  {\\[A-Za-z]+}
-\AddCodeHighSyntax[latex/table]{5}{Brace}    {[\{\}]}
-\AddCodeHighSyntax[latex/table]{6}{Braket}   {[\[\]]}
-\AddCodeHighSyntax[latex/table]{9}{Comment}  {\%.*?\^^M}
+\AddCodeHighRule[latex/table]{1}{Newline}  {\\\\}
+\AddCodeHighRule[latex/table]{2}{Alignment}{\&}
+\AddCodeHighRule[latex/table]{3}{BeginEnd} {\\(begin|end)}
+\AddCodeHighRule[latex/table]{4}{Command}  {\\[A-Za-z]+}
+\AddCodeHighRule[latex/table]{5}{Brace}    {[\{\}]}
+\AddCodeHighRule[latex/table]{6}{Braket}   {[\[\]]}
+\AddCodeHighRule[latex/table]{9}{Comment}  {\%.*?\^^M}
 
-\AddCodeHighSyntax[latex/latex2]{1}{Argument}  {\#+\d}
-\AddCodeHighSyntax[latex/latex2]{2}{NewCommand}{\\(|e|g|x)def}
-\AddCodeHighSyntax[latex/latex2]{3}{SetCommand}{\\set[A-Za-z]+}
-\AddCodeHighSyntax[latex/latex2]{4}{PrivateCmd}{\\[A-Za-z@]*@[A-Za-z@]*}
-\AddCodeHighSyntax[latex/latex2]{5}{Command}   {\\[A-Za-z]+}
-\AddCodeHighSyntax[latex/latex2]{6}{Brace}     {[\{\}]}
-\AddCodeHighSyntax[latex/latex2]{7}{Braket}    {[\[\]]}
-\AddCodeHighSyntax[latex/latex2]{9}{Comment}   {\%.*?\^^M}
+\AddCodeHighRule[latex/latex2]{1}{Argument}  {\#+\d}
+\AddCodeHighRule[latex/latex2]{2}{NewCommand}{\\(|e|g|x)def}
+\AddCodeHighRule[latex/latex2]{3}{SetCommand}{\\set[A-Za-z]+}
+\AddCodeHighRule[latex/latex2]{4}{PrivateCmd}{\\[A-Za-z@]*@[A-Za-z@]*}
+\AddCodeHighRule[latex/latex2]{5}{Command}   {\\[A-Za-z]+}
+\AddCodeHighRule[latex/latex2]{6}{Brace}     {[\{\}]}
+\AddCodeHighRule[latex/latex2]{7}{Braket}    {[\[\]]}
+\AddCodeHighRule[latex/latex2]{9}{Comment}   {\%.*?\^^M}
 
-\AddCodeHighSyntax[latex/latex3]{1}{Alignment} {\#+\d}
-\AddCodeHighSyntax[latex/latex3]{2}{NewCommand}{\\cs_new[A-Za-z_:]+}
-\AddCodeHighSyntax[latex/latex3]{3}{SetCommand}{\\[A-Za-z]+_(|g)set[A-Za-z_:]+}
-\AddCodeHighSyntax[latex/latex3]{4}{PrivateCmd}{\\[cgl]?__[A-Za-z_:]+}
-\AddCodeHighSyntax[latex/latex3]{5}{Command}   {\\[A-Za-z@_:]+}
-\AddCodeHighSyntax[latex/latex3]{6}{Brace}     {[\{\}]}
-\AddCodeHighSyntax[latex/latex3]{7}{Braket}    {[\[\]]}
-\AddCodeHighSyntax[latex/latex3]{9}{Comment}   {\%.*?\^^M}
+\AddCodeHighRule[latex/latex3]{1}{Alignment} {\#+\d}
+\AddCodeHighRule[latex/latex3]{2}{NewCommand}{\\cs_new[A-Za-z_:]+}
+\AddCodeHighRule[latex/latex3]{3}{SetCommand}{\\[A-Za-z]+_(|g)set[A-Za-z_:]+}
+\AddCodeHighRule[latex/latex3]{4}{PrivateCmd}{\\[cgl]?__[A-Za-z_:]+}
+\AddCodeHighRule[latex/latex3]{5}{Command}   {\\[A-Za-z@_:]+}
+\AddCodeHighRule[latex/latex3]{6}{Brace}     {[\{\}]}
+\AddCodeHighRule[latex/latex3]{7}{Braket}    {[\[\]]}
+\AddCodeHighRule[latex/latex3]{9}{Comment}   {\%.*?\^^M}
 
 %~%% -------------------------------------------------------
 %~%  \section{Add CodeHigh Themes}
@@ -381,7 +381,7 @@
     style/demo .code:n = \SetCodeHighStyle{demo}{#1},
   }
 
-%% #1: theme name; #2: syntax type; #3: sytles
+%% #1: theme name; #2: rule type; #3: sytles
 \NewDocumentCommand \SetCodeHighStyle {O{default} m m}
   {
     \tl_set:cn {l__codehigh_style_#1_#2_tl} {#3}
@@ -456,7 +456,7 @@
     \int_set:Nn \l__codehigh_item_count_int { -1 }
     \tl_clear:N \l__codehigh_regex_match_text_tl
     \tl_clear:N \l__codehigh_regex_before_text_tl
-    \int_step_inline:nn {\cs:w l__codehigh_#1_syntax_count_int \cs_end:}
+    \int_step_inline:nn {\cs:w l__codehigh_#1_rule_count_int \cs_end:}
       {
         \regex_extract_once:cVNT {l__codehigh_#1_##1_regex} #2 \l_tmpa_seq
           {
@@ -498,7 +498,7 @@
       }
   }
 
-%% #1: syntax type, #2: text
+%% #1: rule type, #2: text
 \cs_new_protected:Npn \__codehigh_typeset_text:nN #1 #2
   {
     \group_begin:
