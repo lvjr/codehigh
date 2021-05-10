@@ -392,7 +392,6 @@
     \colorlet{codehigh@bg}{\tl_use:c {l__codehigh_style_#1_#2_tl}}
   }
 
-
 \SetCodeHighStyle[default]{main}{gray9}
 \SetCodeHighStyle[default]{code}{gray9}
 \SetCodeHighStyle[default]{demo}{white}
@@ -420,6 +419,16 @@
 
 \cs_new_protected:Npn \__codehigh_parse_code:nN #1 #2
   {
+    \ifluatex
+      \__codehigh_parse_code_luatex:nN {#1} #2
+    \else
+      \__codehigh_parse_code_normal:nN {#1} #2
+    \fi
+  }
+\cs_generate_variant:Nn \__codehigh_parse_code:nN {VN}
+
+\cs_new_protected:Npn \__codehigh_parse_code_normal:nN #1 #2
+  {
     \tl_set_eq:NN \l__codehigh_code_to_parse_tl #2
     \bool_do_until:nn {\tl_if_empty_p:N \l__codehigh_code_to_parse_tl}
       {
@@ -441,7 +450,6 @@
           }
       }
   }
-\cs_generate_variant:Nn \__codehigh_parse_code:nN {VN}
 
 \cs_new_protected:Npn \__codehigh_parse_code_once:nN #1 #2
   {
@@ -477,6 +485,19 @@
       }
   }
 
+\ifluatex \directlua{require("codehigh.lua")} \fi
+
+\cs_new_protected:Npn \__codehigh_parse_code_luatex:nN #1 #2
+  {
+    \directlua{ParseCode(token.scan_argument(), token.scan_argument())}{#1}{#2}
+    %\tl_log:N \l__codehigh_parse_code_count_tl
+    \int_step_inline:nn {\l__codehigh_parse_code_count_tl}
+      {
+        \__codehigh_typeset_text:vc
+          {l__codehigh_parse_style_##1_tl} {l__codehigh_parse_code_##1_tl}
+      }
+  }
+
 %% #1: syntax type, #2: text
 \cs_new_protected:Npn \__codehigh_typeset_text:nN #1 #2
   {
@@ -487,7 +508,7 @@
       #2
     \group_end:
   }
-\cs_generate_variant:Nn \__codehigh_typeset_text:nN { VN }
+\cs_generate_variant:Nn \__codehigh_typeset_text:nN { VN, vc }
 
 %~%% -------------------------------------------------------
 %~%  \section{Don't Highlight Code}
