@@ -15,17 +15,63 @@ local language = {}
 
 language["latex"] =
   {
-    {1, "Newline",   "\\\\"},
-    {2, "Alignment", "&" },
-    {3, "Command",   "\\hline"},
+    {1, "Package",    P"\\" * (P"documentclass" + P"usepackage")},
+    {2, "NewCommand", P"\\newcommand"},
+    {3, "SetCommand", P"\\set" * alpha ^ 1},
+    {4, "BeginEnd",   P"\\" * (P"begin" + P"end")},
+    {5, "Section",    P"\\" * (P"part" + P"chapter" + P"section" + P"subsection")},
+    {6, "Command",    P"\\" * alpha ^ 1},
+    {7, "Brace",      S"{}"},
+    {8, "MathMode",   P"$"},
+    {9, "Comment",    P"%" * (P(1) - S"\r\n") ^ 0 * (S"\r\n" + -1)},
+  }
+
+language["latex/math"] =
+  {
+    {1, "LeftRight",   P"\\" * (P"left" + P"right")},
+    {2, "Command",     P"\\" * alpha ^ 1},
+    {3, "MathMode",    P"$"},
+    {4, "Script",      S"_^"},
+    {5, "Number",      digit ^ 1},
+    {6, "Brace",       S"{}"},
+    {7, "Braket",      S"[]"},
+    {8, "Parenthesis", S"()"},
+    {9, "Comment",     P"%" * (P(1) - S"\r\n") ^ 0 * (S"\r\n" + -1)},
   }
 
 language["latex/table"] =
   {
-    {1, "Newline",   "\\\\"},
-    {2, "Alignment", "&" },
+    {1, "Newline",   P"\\\\"},
+    {2, "Alignment", P"&" },
     {3, "BeginEnd",  P"\\" * (P"begin" + P"end")},
     {4, "Command",   P"\\" * alpha ^ 1},
+    {5, "Brace",     S"{}"},
+    {6, "Braket",    S"[]"},
+    {9, "Comment",   P"%" * (P(1) - S"\r\n") ^ 0 * (S"\r\n" + -1)},
+  }
+
+language["latex/latex2"] =
+  {
+    {1, "Argument",   P"#" ^ 1 * digit},
+    {2, "NewCommand", P"\\" * (P"" + S"egx") * P"def"},
+    {3, "SetCommand", P"\\set" * alpha ^ 1},
+    {4, "PrivateCmd", P"\\" * (alpha + P"@") ^ 0 * P"@" * (alpha + P"@") ^ 0},
+    {5, "Command",    P"\\" * alpha ^ 1},
+    {6, "Brace",      S"{}"},
+    {7, "Braket",     S"[]"},
+    {9, "Comment",    P"%" * (P(1) - S"\r\n") ^ 0 * (S"\r\n" + -1)},
+  }
+
+language["latex/latex3"] =
+  {
+    {1, "Argument",   P"#" ^ 1 * digit},
+    {2, "NewCommand", P"\\cs_new" * (alpha + S"_:") ^ 1},
+    {3, "SetCommand", P"\\" * alpha ^ 1 * P"_" * (P"" + P"g") * P"set" * (alpha + S"_:") ^ 1},
+    {4, "PrivateCmd", P"\\" * S"cgl" * P"__" * (alpha + S"_:") ^ 1 },
+    {5, "Command",    P"\\" * (alpha + S"@_:") ^ 1},
+    {6, "Brace",      S"{}"},
+    {7, "Braket",     S"[]"},
+    {9, "Comment",    P"%" * (P(1) - S"\r\n") ^ 0 * (S"\r\n" + -1)},
   }
 
 local function FindMatch(lang, code)
@@ -40,6 +86,7 @@ local function FindMatch(lang, code)
       s = v[1]
     end
   end
+  --print(b, e, s)
   return b, e, s
 end
 
@@ -57,8 +104,10 @@ function ParseCode(lang, code)
   count = 0
   while code ~= "" do
     local b, e, s = FindMatch(lang, code)
-    --texio.write_nl(b)
-    --texio.write_nl(e)
+    --texio.write_nl(code)
+    --texio.write_nl("b = " .. b)
+    --texio.write_nl("e = " .. e)
+    --texio.write_nl("s = " .. s)
     if b == -1 then
       PrintCode(0, code)
       code = ""
