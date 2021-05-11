@@ -21,6 +21,9 @@
 \RequirePackage{xcolor}
 \RequirePackage{ninecolors}
 \RequirePackage{varwidth}
+\ifluatex
+  \RequirePackage{luatexbase}
+\fi
 
 \ExplSyntaxOn
 
@@ -503,8 +506,11 @@
   {
     \group_begin:
       \regex_replace_all:nnN { \^^M } { \c{par} \c{leavevmode} } #2
-      \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #2
+      \ifluatex\else
+        \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #2
+      \fi
       \color{\tl_use:c {l__codehigh_style_ \l__codehigh_theme_name_tl _#1_tl}}
+      %\obeyspaces
       #2
     \group_end:
   }

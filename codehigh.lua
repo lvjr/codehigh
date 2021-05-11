@@ -90,10 +90,15 @@ local function FindMatch(lang, code)
   return b, e, s
 end
 
+---- We don't have "catcodetable@other" inside source2e
+-- local cctab = luatexbase.registernumber("catcodetable@other")
+---- Here is the catcodetable from luatexbase package
+local cctab = luatexbase.catcodetables.CatcodeTableOther
+
 local function PrintCommand(name, content)
   tex.tprint(
     {"\\expandafter\\gdef\\csname " .. name .. "\\endcsname{"},
-    {-2, content}, -- same as \tl_to_str:n function
+    {cctab, content}, -- all characters including spaces have catcode 12
     {"}"}
   )
 end
