@@ -186,8 +186,8 @@
 \cs_new_protected:Npn \__codehigh_prepare_code:N #1
   {
     \tl_set_eq:NN #1 \g__codehigh_code_tl
-    \regex_replace_once:nnN {^ \^^M} {} #1
-    \regex_replace_once:nnN {\^^M $} {} #1
+    \regex_replace_once:nnN {^ \r} {} #1
+    \regex_replace_once:nnN {\r $} {} #1
     \regex_replace_all:nnN { . } { \c{string} \0 } #1
     \tl_set:Nx #1 { #1 }
   }
@@ -333,7 +333,7 @@
 \AddCodeHighRule[latex]{2}{Command}   {\\[A-Za-z]+}
 \AddCodeHighRule[latex]{7}{Brace}     {[\{\}]}
 \AddCodeHighRule[latex]{8}{MathMode}  {\$}
-\AddCodeHighRule[latex]{9}{Comment}   {\%.*?\^^M}
+\AddCodeHighRule[latex]{9}{Comment}   {\%.*?\r}
 
 \AddCodeHighRule[latex/math]{6}{LeftRight}  {\\(left|right)}
 \AddCodeHighRule[latex/math]{2}{Command}    {\\[A-Za-z]+}
@@ -343,7 +343,7 @@
 \AddCodeHighRule[latex/math]{1}{Brace}      {[\{\}]}
 \AddCodeHighRule[latex/math]{7}{Bracket}    {[\[\]]}
 \AddCodeHighRule[latex/math]{3}{Parenthesis}{[\(\)]}
-\AddCodeHighRule[latex/math]{9}{Comment}    {\%.*?\^^M}
+\AddCodeHighRule[latex/math]{9}{Comment}    {\%.*?\r}
 
 \AddCodeHighRule[latex/table]{8}{Newline}  {\\\\}
 \AddCodeHighRule[latex/table]{1}{Alignment}{\&}
@@ -351,7 +351,7 @@
 \AddCodeHighRule[latex/table]{4}{Command}  {\\[A-Za-z]+}
 \AddCodeHighRule[latex/table]{2}{Brace}    {[\{\}]}
 \AddCodeHighRule[latex/table]{3}{Bracket}  {[\[\]]}
-\AddCodeHighRule[latex/table]{9}{Comment}  {\%.*?\^^M}
+\AddCodeHighRule[latex/table]{9}{Comment}  {\%.*?\r}
 
 \AddCodeHighRule[latex/latex2]{1}{Argument}  {\#+\d}
 \AddCodeHighRule[latex/latex2]{6}{NewCommand}{\\(|e|g|x)def}
@@ -360,7 +360,7 @@
 \AddCodeHighRule[latex/latex2]{3}{Command}   {\\[A-Za-z]+}
 \AddCodeHighRule[latex/latex2]{2}{Brace}     {[\{\}]}
 \AddCodeHighRule[latex/latex2]{7}{Bracket}   {[\[\]]}
-\AddCodeHighRule[latex/latex2]{9}{Comment}   {\%.*?\^^M}
+\AddCodeHighRule[latex/latex2]{9}{Comment}   {\%.*?\r}
 
 \AddCodeHighRule[latex/latex3]{1}{Alignment} {\#+\d}
 \AddCodeHighRule[latex/latex3]{6}{NewCommand}{\\cs_new[A-Za-z_:]+}
@@ -369,7 +369,7 @@
 \AddCodeHighRule[latex/latex3]{3}{Command}   {\\[A-Za-z@_:]+}
 \AddCodeHighRule[latex/latex3]{2}{Brace}     {[\{\}]}
 \AddCodeHighRule[latex/latex3]{7}{Bracket}   {[\[\]]}
-\AddCodeHighRule[latex/latex3]{9}{Comment}   {\%.*?\^^M}
+\AddCodeHighRule[latex/latex3]{9}{Comment}   {\%.*?\r}
 
 %~%% -------------------------------------------------------
 %~%  \section{Add CodeHigh Themes}
@@ -505,7 +505,7 @@
 \cs_new_protected:Npn \__codehigh_typeset_text:nN #1 #2
   {
     \group_begin:
-      \regex_replace_all:nnN { \^^M } { \c{par} \c{leavevmode} } #2
+      \regex_replace_all:nnN { \r } { \c{par} \c{leavevmode} } #2
       \ifluatex\else
         \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #2
       \fi
@@ -522,7 +522,7 @@
 
 \cs_new_protected:Npn \__codehigh_parse_code_lite:N #1
   {
-    \regex_replace_all:nnN { \^^M } { \c{par} \c{leavevmode} } #1
+    \regex_replace_all:nnN { \r } { \c{par} \c{leavevmode} } #1
     \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #1
     \tl_use:N #1
   }
