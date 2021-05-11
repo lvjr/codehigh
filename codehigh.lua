@@ -90,14 +90,22 @@ local function FindMatch(lang, code)
   return b, e, s
 end
 
+local function PrintCommand(name, content)
+  tex.tprint(
+    {"\\expandafter\\gdef\\csname " .. name .. "\\endcsname{"},
+    {-2, content}, -- same as \tl_to_str:n function
+    {"}"}
+  )
+end
+
 local count = 0
 
 local function PrintCode(style, code)
   count = count + 1
   local name = "l__codehigh_parse_code_" .. count .. "_tl"
-  tex.tprint({"\\expandafter\\gdef\\csname " .. name .. "\\endcsname{"}, {-2, code}, {"}"})
-  local name = "l__codehigh_parse_style_" .. count .. "_tl"
-  tex.tprint({"\\expandafter\\gdef\\csname " .. name .. "\\endcsname{"}, {-2, style}, {"}"})
+  PrintCommand(name, code)
+  name = "l__codehigh_parse_style_" .. count .. "_tl"
+  PrintCommand(name, style)
 end
 
 function ParseCode(lang, code)
