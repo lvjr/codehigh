@@ -326,49 +326,49 @@
   }
 
 \AddCodeHighRule[latex]{1}{Package}   {\\(documentclass|usepackage)}
-\AddCodeHighRule[latex]{2}{NewCommand}{\\newcommand}
+\AddCodeHighRule[latex]{6}{NewCommand}{\\newcommand}
 \AddCodeHighRule[latex]{3}{SetCommand}{\\set[A-Za-z]+}
 \AddCodeHighRule[latex]{4}{BeginEnd}  {\\(begin|end)}
 \AddCodeHighRule[latex]{5}{Section}   {\\(part|chapter|section|subsection)}
-\AddCodeHighRule[latex]{6}{Command}   {\\[A-Za-z]+}
+\AddCodeHighRule[latex]{2}{Command}   {\\[A-Za-z]+}
 \AddCodeHighRule[latex]{7}{Brace}     {[\{\}]}
 \AddCodeHighRule[latex]{8}{MathMode}  {\$}
 \AddCodeHighRule[latex]{9}{Comment}   {\%.*?\^^M}
 
-\AddCodeHighRule[latex/math]{1}{LeftRight}  {\\(left|right)}
+\AddCodeHighRule[latex/math]{6}{LeftRight}  {\\(left|right)}
 \AddCodeHighRule[latex/math]{2}{Command}    {\\[A-Za-z]+}
-\AddCodeHighRule[latex/math]{3}{MathMode}   {\$}
+\AddCodeHighRule[latex/math]{8}{MathMode}   {\$}
 \AddCodeHighRule[latex/math]{4}{Script}     {[\_\^]}
 \AddCodeHighRule[latex/math]{5}{Number}     {\d+}
-\AddCodeHighRule[latex/math]{6}{Brace}      {[\{\}]}
-\AddCodeHighRule[latex/math]{7}{Braket}     {[\[\]]}
-\AddCodeHighRule[latex/math]{8}{Parenthesis}{[\(\)]}
+\AddCodeHighRule[latex/math]{1}{Brace}      {[\{\}]}
+\AddCodeHighRule[latex/math]{7}{Bracket}    {[\[\]]}
+\AddCodeHighRule[latex/math]{3}{Parenthesis}{[\(\)]}
 \AddCodeHighRule[latex/math]{9}{Comment}    {\%.*?\^^M}
 
-\AddCodeHighRule[latex/table]{1}{Newline}  {\\\\}
-\AddCodeHighRule[latex/table]{2}{Alignment}{\&}
-\AddCodeHighRule[latex/table]{3}{BeginEnd} {\\(begin|end)}
+\AddCodeHighRule[latex/table]{8}{Newline}  {\\\\}
+\AddCodeHighRule[latex/table]{1}{Alignment}{\&}
+\AddCodeHighRule[latex/table]{6}{BeginEnd} {\\(begin|end)}
 \AddCodeHighRule[latex/table]{4}{Command}  {\\[A-Za-z]+}
-\AddCodeHighRule[latex/table]{5}{Brace}    {[\{\}]}
-\AddCodeHighRule[latex/table]{6}{Braket}   {[\[\]]}
+\AddCodeHighRule[latex/table]{2}{Brace}    {[\{\}]}
+\AddCodeHighRule[latex/table]{3}{Bracket}  {[\[\]]}
 \AddCodeHighRule[latex/table]{9}{Comment}  {\%.*?\^^M}
 
 \AddCodeHighRule[latex/latex2]{1}{Argument}  {\#+\d}
-\AddCodeHighRule[latex/latex2]{2}{NewCommand}{\\(|e|g|x)def}
-\AddCodeHighRule[latex/latex2]{3}{SetCommand}{\\set[A-Za-z]+}
+\AddCodeHighRule[latex/latex2]{6}{NewCommand}{\\(|e|g|x)def}
+\AddCodeHighRule[latex/latex2]{5}{SetCommand}{\\set[A-Za-z]+}
 \AddCodeHighRule[latex/latex2]{4}{PrivateCmd}{\\[A-Za-z@]*@[A-Za-z@]*}
-\AddCodeHighRule[latex/latex2]{5}{Command}   {\\[A-Za-z]+}
-\AddCodeHighRule[latex/latex2]{6}{Brace}     {[\{\}]}
-\AddCodeHighRule[latex/latex2]{7}{Braket}    {[\[\]]}
+\AddCodeHighRule[latex/latex2]{3}{Command}   {\\[A-Za-z]+}
+\AddCodeHighRule[latex/latex2]{2}{Brace}     {[\{\}]}
+\AddCodeHighRule[latex/latex2]{7}{Bracket}   {[\[\]]}
 \AddCodeHighRule[latex/latex2]{9}{Comment}   {\%.*?\^^M}
 
 \AddCodeHighRule[latex/latex3]{1}{Alignment} {\#+\d}
-\AddCodeHighRule[latex/latex3]{2}{NewCommand}{\\cs_new[A-Za-z_:]+}
-\AddCodeHighRule[latex/latex3]{3}{SetCommand}{\\[A-Za-z]+_(|g)set[A-Za-z_:]+}
+\AddCodeHighRule[latex/latex3]{6}{NewCommand}{\\cs_new[A-Za-z_:]+}
+\AddCodeHighRule[latex/latex3]{5}{SetCommand}{\\[A-Za-z]+_(|g)set[A-Za-z_:]+}
 \AddCodeHighRule[latex/latex3]{4}{PrivateCmd}{\\[cgl]?__[A-Za-z_:]+}
-\AddCodeHighRule[latex/latex3]{5}{Command}   {\\[A-Za-z@_:]+}
-\AddCodeHighRule[latex/latex3]{6}{Brace}     {[\{\}]}
-\AddCodeHighRule[latex/latex3]{7}{Braket}    {[\[\]]}
+\AddCodeHighRule[latex/latex3]{3}{Command}   {\\[A-Za-z@_:]+}
+\AddCodeHighRule[latex/latex3]{2}{Brace}     {[\{\}]}
+\AddCodeHighRule[latex/latex3]{7}{Bracket}   {[\[\]]}
 \AddCodeHighRule[latex/latex3]{9}{Comment}   {\%.*?\^^M}
 
 %~%% -------------------------------------------------------
@@ -400,14 +400,14 @@
 \SetCodeHighStyle[default]{demo}{white}
 
 \SetCodeHighStyle[default]{0}{black}
-\SetCodeHighStyle[default]{1}{purple3}
-\SetCodeHighStyle[default]{2}{brown3}
-\SetCodeHighStyle[default]{3}{blue3}
+\SetCodeHighStyle[default]{1}{brown3}
+\SetCodeHighStyle[default]{2}{yellow3}
+\SetCodeHighStyle[default]{3}{olive3}
 \SetCodeHighStyle[default]{4}{teal3}
-\SetCodeHighStyle[default]{5}{yellow3}
-\SetCodeHighStyle[default]{6}{olive3}
-\SetCodeHighStyle[default]{7}{azure3}
-\SetCodeHighStyle[default]{8}{violet3}
+\SetCodeHighStyle[default]{5}{azure3}
+\SetCodeHighStyle[default]{6}{blue3}
+\SetCodeHighStyle[default]{7}{violet3}
+\SetCodeHighStyle[default]{8}{purple3}
 \SetCodeHighStyle[default]{9}{gray3}
 
 %~%% -------------------------------------------------------

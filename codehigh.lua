@@ -16,11 +16,11 @@ local language = {}
 language["latex"] =
   {
     {1, "Package",    P"\\" * (P"documentclass" + P"usepackage")},
-    {2, "NewCommand", P"\\newcommand"},
+    {6, "NewCommand", P"\\newcommand"},
     {3, "SetCommand", P"\\set" * alpha ^ 1},
     {4, "BeginEnd",   P"\\" * (P"begin" + P"end")},
     {5, "Section",    P"\\" * (P"part" + P"chapter" + P"section" + P"subsection")},
-    {6, "Command",    P"\\" * alpha ^ 1},
+    {2, "Command",    P"\\" * alpha ^ 1},
     {7, "Brace",      S"{}"},
     {8, "MathMode",   P"$"},
     {9, "Comment",    P"%" * (P(1) - S"\r\n") ^ 0 * (S"\r\n" + -1)},
@@ -28,49 +28,49 @@ language["latex"] =
 
 language["latex/math"] =
   {
-    {1, "LeftRight",   P"\\" * (P"left" + P"right")},
+    {6, "LeftRight",   P"\\" * (P"left" + P"right")},
     {2, "Command",     P"\\" * alpha ^ 1},
-    {3, "MathMode",    P"$"},
+    {8, "MathMode",    P"$"},
     {4, "Script",      S"_^"},
     {5, "Number",      digit ^ 1},
-    {6, "Brace",       S"{}"},
-    {7, "Braket",      S"[]"},
-    {8, "Parenthesis", S"()"},
+    {1, "Brace",       S"{}"},
+    {7, "Bracket",     S"[]"},
+    {3, "Parenthesis", S"()"},
     {9, "Comment",     P"%" * (P(1) - S"\r\n") ^ 0 * (S"\r\n" + -1)},
   }
 
 language["latex/table"] =
   {
-    {1, "Newline",   P"\\\\"},
-    {2, "Alignment", P"&" },
-    {3, "BeginEnd",  P"\\" * (P"begin" + P"end")},
+    {8, "Newline",   P"\\\\"},
+    {1, "Alignment", P"&" },
+    {6, "BeginEnd",  P"\\" * (P"begin" + P"end")},
     {4, "Command",   P"\\" * alpha ^ 1},
-    {5, "Brace",     S"{}"},
-    {6, "Braket",    S"[]"},
+    {2, "Brace",     S"{}"},
+    {3, "Bracket",   S"[]"},
     {9, "Comment",   P"%" * (P(1) - S"\r\n") ^ 0 * (S"\r\n" + -1)},
   }
 
 language["latex/latex2"] =
   {
     {1, "Argument",   P"#" ^ 1 * digit},
-    {2, "NewCommand", P"\\" * (P"" + S"egx") * P"def"},
-    {3, "SetCommand", P"\\set" * alpha ^ 1},
+    {6, "NewCommand", P"\\" * (P"" + S"egx") * P"def"},
+    {5, "SetCommand", P"\\set" * alpha ^ 1},
     {4, "PrivateCmd", P"\\" * (alpha + P"@") ^ 0 * P"@" * (alpha + P"@") ^ 0},
-    {5, "Command",    P"\\" * alpha ^ 1},
-    {6, "Brace",      S"{}"},
-    {7, "Braket",     S"[]"},
+    {3, "Command",    P"\\" * alpha ^ 1},
+    {2, "Brace",      S"{}"},
+    {7, "Bracket",    S"[]"},
     {9, "Comment",    P"%" * (P(1) - S"\r\n") ^ 0 * (S"\r\n" + -1)},
   }
 
 language["latex/latex3"] =
   {
     {1, "Argument",   P"#" ^ 1 * digit},
-    {2, "NewCommand", P"\\cs_new" * (alpha + S"_:") ^ 1},
-    {3, "SetCommand", P"\\" * alpha ^ 1 * P"_" * (P"" + P"g") * P"set" * (alpha + S"_:") ^ 1},
+    {6, "NewCommand", P"\\cs_new" * (alpha + S"_:") ^ 1},
+    {5, "SetCommand", P"\\" * alpha ^ 1 * P"_" * (P"" + P"g") * P"set" * (alpha + S"_:") ^ 1},
     {4, "PrivateCmd", P"\\" * S"cgl" * P"__" * (alpha + S"_:") ^ 1 },
-    {5, "Command",    P"\\" * (alpha + S"@_:") ^ 1},
-    {6, "Brace",      S"{}"},
-    {7, "Braket",     S"[]"},
+    {3, "Command",    P"\\" * (alpha + S"@_:") ^ 1},
+    {2, "Brace",      S"{}"},
+    {7, "Bracket",    S"[]"},
     {9, "Comment",    P"%" * (P(1) - S"\r\n") ^ 0 * (S"\r\n" + -1)},
   }
 
