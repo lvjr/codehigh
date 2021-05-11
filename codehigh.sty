@@ -45,8 +45,8 @@
 
 \group_begin:
   \obeylines
-  \tl_gset:Nn \g__codehigh_par_tl {^^M}
-  \tl_gset:Nn \g__codehigh_par_par_tl {^^M^^M}
+  \tl_gset:Nn \g__codehigh_eol_tl {^^M}
+  \tl_gset:Nn \g__codehigh_eol_eol_tl {^^M^^M}
 \group_end:
 
 %~%% -------------------------------------------------------
@@ -131,7 +131,7 @@
 
 \cs_new_protected:Npn \__codehigh_typeset_input:N #1
   {
-    \seq_set_split:NVV \l__codehigh_input_seq \g__codehigh_par_par_tl #1
+    \seq_set_split:NVV \l__codehigh_input_seq \g__codehigh_eol_eol_tl #1
     \seq_map_inline:Nn \l__codehigh_input_seq
       {
         \tl_gset:Nn \g__codehigh_code_tl {##1}
