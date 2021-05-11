@@ -71,3 +71,5 @@ function ParseCode(lang, code)
   local name = "l__codehigh_parse_code_count_tl"
   tex.sprint("\\expandafter\\gdef\\csname " .. name .. "\\endcsname{" .. count .. "}")
 end
+
+return { FindMatch = FindMatch, PrintCode = PrintCode, ParseCode = ParseCode }
