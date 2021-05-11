@@ -55,7 +55,7 @@ language["latex/latex2"] =
     {1, "Argument",   P"#" ^ 1 * digit},
     {6, "NewCommand", P"\\" * (P"" + S"egx") * P"def"},
     {5, "SetCommand", P"\\set" * alpha ^ 1},
-    {4, "PrivateCmd", P"\\" * (alpha + P"@") ^ 0 * P"@" * (alpha + P"@") ^ 0},
+    {4, "PrivateCmd", P"\\" * alpha ^ 0 * P"@" * (alpha + "@") ^ 0},
     {3, "Command",    P"\\" * alpha ^ 1},
     {2, "Brace",      S"{}"},
     {7, "Bracket",    S"[]"},
