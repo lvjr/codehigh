@@ -66,10 +66,10 @@ language["latex/latex3"] =
   {
     {1, "Argument",   P"#" ^ 1 * digit},
     {2, "PrivateVar", P"\\" * S"cgl" * P"__" * (alpha + S"_:@") ^ 1},
-    {6, "PrivateFun", P"\\" * P"__" * (alpha + S"_:@") ^ 1},
+    {5, "PrivateFun", P"\\" * P"__" * (alpha + S"_:@") ^ 1},
     {4, "PublicVar",  P"\\" * S"cgl" * P"_" * (alpha + S"_:@") ^ 1},
-    {7, "PublicFun",  P"\\" * (alpha + S"_:@") ^ 1},
-    {5, "Brace",      S"{}"},
+    {6, "PublicFun",  P"\\" * (alpha + S"_:@") ^ 1},
+    {8, "Brace",      S"{}"},
     {3, "Bracket",    S"[]"},
     {9, "Comment",    P"%" * (P(1) - S"\r\n") ^ 0 * (S"\r\n" + -1)},
   }
