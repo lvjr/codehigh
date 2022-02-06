@@ -2,6 +2,9 @@
 \documentclass[oneside]{book}
 \usepackage[a4paper,margin=2cm]{geometry}
 
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt plus 1pt minus 1pt}
+
 \usepackage{codehigh}
 \usepackage{hyperref}
 \hypersetup{
@@ -23,7 +26,7 @@
 
 \tableofcontents
 
-\chapter{Package Interface}
+\chapter{Package Interfaces}
 
 \section{Introduction}
 
@@ -35,9 +38,9 @@ Therefore in LuaTeX the package provides another way to highlight code: using \v
 \footnote{\url{http://www.inf.puc-rio.br/~roberto/lpeg/}}.
 \verb!LPeg! is much more powerful and faster than \verb!l3regex!.
 
-At present, this package is in \underline{\color{red3}\textbf{experimental}} status.
-Don’t use it in important documents, unless you have time
-to update them for the newer versions of \verb!codehigh! package in the future.
+%At present, this package is in \underline{\color{red3}\textbf{experimental}} status.
+%Don’t use it in important documents, unless you have time
+%to update them for the newer versions of \verb!codehigh! package in the future.
 
 \section{Highlighting Code}
 
@@ -76,7 +79,7 @@ The following example is typeset by \verb!codehigh! environment with option \ver
 }
 \end{codehigh}
 This language is for highlighting LaTeX2 classes and packages.
-Note that private commands and public commands are highlighted with different colors.
+It highlights private commands and public commands with different colors.
 
 The following example is typeset by \verb!codehigh! environment with option \verb!language=latex/latex3!.
 \begin{codehigh}[language=latex/latex3]
@@ -91,7 +94,7 @@ The following example is typeset by \verb!codehigh! environment with option \ver
   }
 \end{codehigh}
 This language is for highlighting LaTeX3 classes and packages.
-Note that private commands/variables and public commands/variables are highlighted with different colors.
+It highlights private commands/variables and public commands/variables with different colors.
 
 The following example is typeset by \verb!codehigh! environment with option \verb!language=latex/math!.
 \begin{codehigh}[language=latex/math]
@@ -147,6 +150,9 @@ The last chapter of this manual is typeset with the following code line:
 \dochighinput[language=latex/latex3]{codehigh.sty}
 \end{codehigh}
 
+In reading an input file, lines starting wtih \verb!%%%! will be omitted,
+and lines starting with \verb!%%>! will be extracted and typeset as normal text.
+
 \section{Customization}
 
 The following example changes default background colors with \verb!\CodeHigh! command:
@@ -171,7 +177,7 @@ Note that \verb!codehigh! package will load \verb!ninecolors!%
 To modify or add languages and themes, please read the source files
 \verb!codehigh.sty! and \verb!codehigh.lua! for reference.
 
-\chapter{Source Code}
+\chapter{The Source Code}
 
 \dochighinput[language=latex/latex3]{codehigh.sty}
 
