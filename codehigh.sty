@@ -6,9 +6,9 @@
 %%% License   : The LaTeX Project Public License 1.3c
 %%% ----------------------------------------------------------------------------
 
-%~%% -------------------------------------------------------
-%~%  \section{Variables and Functions}
-%~%% -------------------------------------------------------
+%%% -------------------------------------------------------
+%%> \section{Variables and Functions}
+%%% -------------------------------------------------------
 
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
@@ -38,7 +38,8 @@
 \cs_generate_variant:Nn \str_remove_once:Nn {NV}
 \cs_generate_variant:Nn \tl_set_rescan:Nnn {NnV}
 
-\prg_generate_conditional_variant:Nnn \regex_extract_once:NnN {cVN} {T, TF}
+\prg_generate_conditional_variant:Nnn \str_if_eq:nn {en} {T, TF}
+\prg_generate_conditional_variant:Nnn \regex_extract_once:NnN {NVN, cVN} {T, TF}
 \prg_generate_conditional_variant:Nnn \regex_split:NnN {cVN} {T, TF}
 
 \group_begin:
@@ -47,9 +48,9 @@
   \tl_gset:Nn \g__codehigh_eol_eol_tl {^^M^^M}
 \group_end:
 
-%~%% -------------------------------------------------------
-%~%  \section{Set CodeHign Options}
-%~%% -------------------------------------------------------
+%%% -------------------------------------------------------
+%%> \section{Set CodeHign Options}
+%%% -------------------------------------------------------
 
 \bool_new:N \l__codehigh_lite_bool
 \bool_new:N \l__codehigh_long_bool
@@ -67,9 +68,9 @@
     demo .bool_set:N = \l__codehigh_demo_bool,
   }
 
-%~%% -------------------------------------------------------
-%~%  \section{CodeHign Environments and Commands}
-%~%% -------------------------------------------------------
+%%% -------------------------------------------------------
+%%> \section{CodeHign Environments and Commands}
+%%% -------------------------------------------------------
 
 \NewDocumentCommand \NewCodeHighEnv {mm}
   {
@@ -134,17 +135,50 @@
     \seq_map_inline:Nn \l__codehigh_input_seq
       {
         \tl_gset:Nn \g__codehigh_code_tl {##1}
-        \__codehigh_typeset_code:
-        \par
-        \medskip
+        \__codehigh_typeset_comment:N \g__codehigh_code_tl
+        \tl_if_blank:VF \g__codehigh_code_tl
+          {
+            \__codehigh_typeset_code:
+            \par
+            \medskip
+          }
       }
+  }
+
+\regex_const:Nn \l__codehigh_comment_regex { ^ \% \% ( [\%>] ) ( [^\r]+ ) [\r] }
+\tl_new:N \l__codehigh_comment_tl % comment lines that need to be typeset
+\bool_new:N \l__codehigh_comment_bool
+
+%% remove lines starting with %%%, and typeset lines starting with %%>
+\cs_new_protected:Npn \__codehigh_typeset_comment:N #1
+  {
+    \tl_set_eq:NN \l_tmpa_tl #1
+    \tl_put_right:NV \l_tmpa_tl \g__codehigh_eol_tl
+    \tl_clear:N \l__codehigh_comment_tl
+    \bool_set_false:N \l__codehigh_comment_bool
+    \bool_do_until:Nn \l__codehigh_comment_bool
+      {
+        %% Unfortunately we need both \regex_extract_once and \regex_replace_once
+        \regex_extract_once:NVNTF \l__codehigh_comment_regex \l_tmpa_tl \l_tmpa_seq
+          {
+            \regex_replace_once:NnN \l__codehigh_comment_regex {} \l_tmpa_tl
+            \str_if_eq:enT { \seq_item:Nn \l_tmpa_seq {2} } {>}
+              {
+                \tl_put_right:Nx \l__codehigh_comment_tl
+                  { \seq_item:Nn \l_tmpa_seq {3} }
+              }
+          }
+          { \bool_set_true:N \l__codehigh_comment_bool }
+      }
+    \exp_args:NV \scantokens \l__codehigh_comment_tl
+    \tl_gset_eq:NN #1 \l_tmpa_tl
   }
 
 \NewCodeHighInput \dochighinput {long}
 
-%~%% -------------------------------------------------------
-%~%  \section{Typeset CodeHign Code}
-%~%% -------------------------------------------------------
+%%% -------------------------------------------------------
+%%> \section{Typeset CodeHign Code}
+%%% -------------------------------------------------------
 
 \dim_new:N \l__codehigh_main_boxsep_dim
 
@@ -229,9 +263,9 @@
     \group_end:
   }
 
-%~%% -------------------------------------------------------
-%~%  \section{Typeset CodeHign Demo}
-%~%% -------------------------------------------------------
+%%% -------------------------------------------------------
+%%> \section{Typeset CodeHign Demo}
+%%% -------------------------------------------------------
 
 \box_new:N \g__codehigh_demo_box
 
@@ -300,9 +334,9 @@
       }
   }
 
-%~%% -------------------------------------------------------
-%~%  \section{Add CodeHign Languages}
-%~%% -------------------------------------------------------
+%%% -------------------------------------------------------
+%%> \section{Add CodeHign Languages}
+%%% -------------------------------------------------------
 
 \keys_define:nn {codehigh}
   {
@@ -370,9 +404,9 @@
 \AddCodeHighRule[latex/latex3]{3}{Bracket}   {[\[\]]}
 \AddCodeHighRule[latex/latex3]{9}{Comment}   {\%.*?\r}
 
-%~%% -------------------------------------------------------
-%~%  \section{Add CodeHigh Themes}
-%~%% -------------------------------------------------------
+%%% -------------------------------------------------------
+%%> \section{Add CodeHigh Themes}
+%%% -------------------------------------------------------
 
 \keys_define:nn {codehigh}
   {
@@ -409,9 +443,9 @@
 \SetCodeHighStyle[default]{8}{purple3}
 \SetCodeHighStyle[default]{9}{gray3}
 
-%~%% -------------------------------------------------------
-%~%  \section{Parse and Highlight Code}
-%~%% -------------------------------------------------------
+%%% -------------------------------------------------------
+%%> \section{Parse and Highlight Code}
+%%% -------------------------------------------------------
 
 \int_new:N \l__codehigh_item_count_int
 \tl_new:N \l__codehigh_code_to_parse_tl
@@ -515,9 +549,9 @@
   }
 \cs_generate_variant:Nn \__codehigh_typeset_text:nN { VN, vc }
 
-%~%% -------------------------------------------------------
-%~%  \section{Don't Highlight Code}
-%~%% -------------------------------------------------------
+%%% -------------------------------------------------------
+%%> \section{Don't Highlight Code}
+%%% -------------------------------------------------------
 
 \cs_new_protected:Npn \__codehigh_parse_code_lite:N #1
   {
