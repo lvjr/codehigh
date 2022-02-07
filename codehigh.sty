@@ -145,7 +145,7 @@
       }
   }
 
-\regex_const:Nn \l__codehigh_comment_regex { ^ \% \% ( [\%>] ) ( [^\r]+ ) [\r] }
+\regex_const:Nn \l__codehigh_comment_regex { ^ \% \% ( [\%>] ) ( [^\r]+ ) \r }
 \tl_new:N \l__codehigh_comment_tl % comment lines that need to be typeset
 \bool_new:N \l__codehigh_comment_bool
 
