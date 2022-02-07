@@ -2,6 +2,10 @@
 \documentclass[oneside]{book}
 \usepackage[a4paper,margin=2cm]{geometry}
 
+\newcommand*{\myversion}{2022D}
+\newcommand*{\mydate}{Version \myversion\ (\the\year-\mylpad\month-\mylpad\day)}
+\newcommand*{\mylpad}[1]{\ifnum#1<10 0\the#1\else\the#1\fi}
+
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{4pt plus 1pt minus 1pt}
 
@@ -12,10 +16,6 @@
   urlcolor=blue3,
   linkcolor=green3,
 }
-
-\newcommand*{\myversion}{2021C}
-\newcommand*{\mydate}{Version \myversion\ (\the\year-\mylpad\month-\mylpad\day)}
-\newcommand*{\mylpad}[1]{\ifnum#1<10 0\the#1\else\the#1\fi}
 
 \begin{document}
 
