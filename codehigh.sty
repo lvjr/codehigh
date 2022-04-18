@@ -36,6 +36,7 @@
 \cs_generate_variant:Nn \regex_set:Nn {cn}
 \cs_generate_variant:Nn \seq_set_split:Nnn {NVV}
 \cs_generate_variant:Nn \str_remove_once:Nn {NV}
+\cs_generate_variant:Nn \tl_set:Nn {Ne}
 \cs_generate_variant:Nn \tl_set_rescan:Nnn {NnV}
 
 \prg_generate_conditional_variant:Nnn \str_if_eq:nn {en} {T, TF}
@@ -74,36 +75,45 @@
 
 \NewDocumentCommand \NewCodeHighEnv {mm}
   {
-    \NewDocumentEnvironment {#1} {O{}}
+    \exp_args:Nc \NewDocumentCommand {#1} {O{}}
       {
         \keys_set:nn {codehigh} {#2, ##1}
-        \bgroup
+        \tl_set:Ne \__codehigh_collect_end_tl
+          {
+            \@backslashchar end \token_to_str:N { \@currenvir \token_to_str:N }
+          }
+        \exp_last_unbraced:NNNNo
+        \cs_set:Npn \__codehigh_collect:w ####1 \__codehigh_collect_end_tl
+          {
+            \__codehigh_store:n {####1}
+            \exp_args:No \end \@currenvir
+          }
+        \begingroup
         \__codehigh_do_specials:
-        \begin{codehigh@aux}
+        \__codehigh_collect:w
       }
+    \exp_args:Nc \NewDocumentCommand {end#1} {}
       {
-        \end{codehigh@aux}
-        \egroup
+        \endgroup
         \__codehigh_typeset:
       }
   }
 
 \cs_new_protected:Npn \__codehigh_do_specials:
   {
+    \cs_set_eq:NN \do \char_set_catcode_other:N
+    \dospecials
     \obeylines
     \obeyspaces
-    \catcode `\% = 12
-    \catcode `\^ = 12
   }
 
 \tl_new:N \g__codehigh_code_tl
 
-\NewDocumentEnvironment {codehigh@aux} {+b}
+\cs_new_protected:Npn \__codehigh_store:n #1
   {
     \tl_gset:Nn \g__codehigh_code_tl { #1 }
     %\tl_log:N \g__codehigh_code_tl
   }
-  { }
 
 \cs_new_protected:Npn \__codehigh_typeset:
   {
@@ -559,4 +569,3 @@
     \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #1
     \tl_use:N #1
   }
-
