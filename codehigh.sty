@@ -80,7 +80,7 @@
         \keys_set:nn {codehigh} {#2, ##1}
         \tl_set:Ne \__codehigh_collect_end_tl
           {
-            \@backslashchar end \token_to_str:N { \@currenvir \token_to_str:N }
+            \c_backslash_str end \c_left_brace_str \@currenvir \c_right_brace_str
           }
         \exp_last_unbraced:NNNNo
         \cs_set:Npn \__codehigh_collect:w ####1 \__codehigh_collect_end_tl
@@ -88,13 +88,13 @@
             \__codehigh_store:n {####1}
             \exp_args:No \end \@currenvir
           }
-        \begingroup
+        \group_begin:
         \__codehigh_do_specials:
         \__codehigh_collect:w
       }
     \exp_args:Nc \NewDocumentCommand {end#1} {}
       {
-        \endgroup
+        \group_end:
         \__codehigh_typeset:
       }
   }
