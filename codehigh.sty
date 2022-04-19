@@ -73,31 +73,57 @@
 %%> \section{Environments and Commands}
 %%% -------------------------------------------------------
 
+%% Since every codehigh environment has an optional argument,
+%% we need to make ^^M active first to keep the leading spaces in the first line
 \NewDocumentCommand \NewCodeHighEnv {mm}
   {
-    \exp_args:Nc \NewDocumentCommand {#1} {O{}}
+    \exp_args:Nc \NewDocumentCommand {#1} {}
       {
-        \keys_set:nn {codehigh} {#2, ##1}
-        \tl_set:Ne \__codehigh_collect_end_tl
-          {
-            \c_backslash_str end \c_left_brace_str \@currenvir \c_right_brace_str
-          }
-        \exp_last_unbraced:NNNNo
-        \cs_set:Npn \__codehigh_collect:w ####1 \__codehigh_collect_end_tl
-          {
-            \__codehigh_store:n {####1}
-            \exp_args:No \end \@currenvir
-          }
-        \group_begin:
-        \__codehigh_do_specials:
-        \__codehigh_collect:w
+        %% it is \^^M but not `\^^M
+        \char_set_catcode_active:N \^^M
+        \__codehigh_begin:nw {#2}
       }
     \exp_args:Nc \NewDocumentCommand {end#1} {}
       {
-        \group_end:
-        \__codehigh_typeset:
+        \__codehigh_end:
       }
   }
+
+%% Now we need to replace each ^^M with a space character
+\NewDocumentCommand \__codehigh_begin:nw {mO{}}
+  {
+    \char_set_catcode_end_line:N \^^M
+    \tl_set:Nn \l_tmpa_tl {#1,#2}
+    \__codehigh_replace_endlines:N \l_tmpa_tl
+    \keys_set:nV {codehigh} \l_tmpa_tl
+    \tl_set:Ne \__codehigh_collect_end_tl
+      {
+        \c_backslash_str end \c_left_brace_str \@currenvir \c_right_brace_str
+      }
+    \exp_last_unbraced:NNNNo
+    \cs_set:Npn \__codehigh_collect:w ##1 \__codehigh_collect_end_tl
+      {
+        \__codehigh_store:n {##1}
+        \exp_args:No \end \@currenvir
+      }
+    \group_begin:
+    \__codehigh_do_specials:
+    \__codehigh_collect:w
+  }
+
+\cs_new_protected:Npn \__codehigh_end:
+  {
+    \group_end:
+    \__codehigh_typeset:
+  }
+
+\group_begin:
+  \char_set_catcode_active:N \^^M
+  \cs_new_protected:Npn \__codehigh_replace_endlines:N #1
+    {
+      \tl_replace_all:Nnn #1 {^^M} {~}
+    }
+\group_end:
 
 \cs_new_protected:Npn \__codehigh_do_specials:
   {
