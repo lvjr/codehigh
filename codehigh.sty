@@ -21,9 +21,8 @@
 \RequirePackage{xcolor}
 \RequirePackage{ninecolors}
 \RequirePackage{varwidth}
-\ifluatex
-  \RequirePackage{luatexbase}
-\fi
+\RequirePackage{iftex}
+\legacy_if:nT {LuaTeX} {\RequirePackage{luatexbase}}
 
 \int_new:N \l__codehigh_a_int
 \int_new:N \l__codehigh_b_int
@@ -494,11 +493,9 @@
 
 \cs_new_protected:Npn \__codehigh_parse_code:nN #1 #2
   {
-    \ifluatex
-      \__codehigh_parse_code_luatex:nN {#1} #2
-    \else
-      \__codehigh_parse_code_normal:nN {#1} #2
-    \fi
+    \legacy_if:nTF {LuaTeX}
+       { \__codehigh_parse_code_luatex:nN {#1} #2 }
+       { \__codehigh_parse_code_normal:nN {#1} #2 }
   }
 \cs_generate_variant:Nn \__codehigh_parse_code:nN {VN}
 
@@ -561,7 +558,7 @@
       }
   }
 
-\ifluatex \directlua{require("codehigh.lua")} \fi
+\legacy_if:nT {LuaTeX} { \directlua{require("codehigh.lua")} }
 
 \cs_new_protected:Npn \__codehigh_parse_code_luatex:nN #1 #2
   {
@@ -581,9 +578,8 @@
     \__codehigh_tracing:nn {parser} { \tl_log:e { type: #1; ~ text: #2 } }
     \group_begin:
       \regex_replace_all:nnN { \r } { \c{par} \c{leavevmode} } #2
-      \ifluatex\else
-        \regex_replace_all:nnN { \  } { \c{leavevmode} \c{space} } #2
-      \fi
+      \legacy_if:nF {LuaTeX}
+        { \regex_replace_all:nnN { \  } { \c{leavevmode} \c{space} } #2 }
       \color{\tl_use:c {l__codehigh_style_ \l__codehigh_theme_name_tl _#1_tl}}
       %\obeyspaces
       #2
