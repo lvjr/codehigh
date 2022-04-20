@@ -36,6 +36,7 @@
 \cs_generate_variant:Nn \regex_set:Nn {cn}
 \cs_generate_variant:Nn \seq_set_split:Nnn {NVV}
 \cs_generate_variant:Nn \str_remove_once:Nn {NV}
+\cs_generate_variant:Nn \tl_log:n {e}
 \cs_generate_variant:Nn \tl_set:Nn {Ne}
 \cs_generate_variant:Nn \tl_set_rescan:Nnn {NnV}
 
@@ -259,6 +260,7 @@
     \regex_replace_once:nnN {\r $} {} #1
     \regex_replace_all:nnN { . } { \c{string} \0 } #1
     \tl_set:Nx #1 { #1 }
+    \__codehigh_tracing:nn {code} {\__codehigh_log:N #1}
   }
 
 \cs_new_protected:Npn \__codehigh_put_code_box:
@@ -576,10 +578,11 @@
 %% #1: rule type, #2: text
 \cs_new_protected:Npn \__codehigh_typeset_text:nN #1 #2
   {
+    \__codehigh_tracing:nn {parser} { \tl_log:e { type: #1; ~ text: #2 } }
     \group_begin:
       \regex_replace_all:nnN { \r } { \c{par} \c{leavevmode} } #2
       \ifluatex\else
-        \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #2
+        \regex_replace_all:nnN { \  } { \c{leavevmode} \c{space} } #2
       \fi
       \color{\tl_use:c {l__codehigh_style_ \l__codehigh_theme_name_tl _#1_tl}}
       %\obeyspaces
