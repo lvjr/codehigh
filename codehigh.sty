@@ -160,6 +160,7 @@
         \group_begin:
         \keys_set:nn {codehigh} {#2, ##1}
         \CatchFileDef \l__codehigh_input_tl {##2} {\__codehigh_do_specials:}
+        \setlength \parskip {0pt plus 1pt}
         \__codehigh_typeset_input:N \l__codehigh_input_tl
         \group_end:
       }
