@@ -1,0 +1,93 @@
+\documentclass{article}
+\usepackage[b5paper,margin=1cm]{geometry}
+\pagestyle{empty}
+
+\input{regression-test}
+
+\usepackage{codehigh}
+
+\begin{document}
+
+\START
+\hrule\bigskip
+
+\BEGINTEST{codehigh: language=latex}
+\begin{codehigh}
+%  -*- coding: utf-8 -*-
+\documentclass{article}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{codehigh}
+\usepackage{hyperref}
+\newcommand*{\myversion}{2021C}
+\newcommand*{\mydate}{Version \myversion\ (\the\year-\mylpad\month-\mylpad\day)}
+\newcommand*{\mylpad}[1]{\ifnum#1<10 0\the#1\else\the#1\fi}
+\setlength{\abc}{1}
+\begin{document}
+% some comment
+\section{Section Name}
+\subsection*{Suction Name}
+Math $a+b$.
+\end{document}
+\end{codehigh}
+\ENDTEST
+
+\bigskip\hrule\bigskip
+
+\BEGINTEST{codehigh: language=latex/latex2}
+\begin{codehigh}[language=latex/latex2]
+\def\abcd#1#2{
+  % some comment
+  \unskip
+  \setlength{\parindent}{0pt}%
+  \setlength{\parskip}{0pt}%
+  \setcounter{choice}{0}%
+  \let\item=\my@item@temp
+  \settowidth{\my@item@len}{\vbox{\halign{##1\hfil\cr\BODY\crcr}}}%
+  \setcounter{choice}{0}%
+}
+\end{codehigh}
+\ENDTEST
+
+\bigskip\hrule\bigskip
+
+\BEGINTEST{codehigh: language=latex/latex3}
+\begin{codehigh}[language=latex/latex3]
+\cs_new_protected:Npn \__codehigh_typeset_demo:
+  {
+    \__codehigh_build_code:
+    \__codehigh_build_demo:
+    \dim_set:Nn \l_tmpa_dim { \box_wd:N \g__codehigh_code_box }
+    \dim_set:Nn \l_tmpb_dim { \box_wd:N \g__codehigh_demo_box }
+    \par\addvspace{0.5em}\noindent
+    % more code
+  }
+\end{codehigh}
+\ENDTEST
+
+\bigskip\hrule\bigskip
+ 
+\BEGINTEST{codehigh: language=latex/math}
+\begin{codehigh}[language=latex/math]
+\begin{align}
+  \pi\left[\frac13z^3\right]\sin(2x+1)_0^4 = \frac{64}{3}\pi
+\end{align}
+\end{codehigh}
+\ENDTEST
+
+\bigskip\hrule\bigskip
+
+\BEGINTEST{codehigh: language=latex/table}
+\begin{codehigh}[language=latex/table]
+\begin{tabular}[b]{|lc|r|}
+\hline
+One   &  Two  & Three \\
+%\hline
+Four  & Five  &   Six \\
+\hline%\hline\hline
+Seven & Eight &  Nine \\
+\hline
+\end{tabular}
+\end{codehigh}
+\ENDTEST
+
+\end{document}
