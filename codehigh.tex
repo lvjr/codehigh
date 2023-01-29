@@ -16,6 +16,7 @@
   urlcolor=blue3,
   linkcolor=green3,
 }
+\usepackage{tabularx,booktabs}
 
 \begin{document}
 
@@ -176,6 +177,62 @@ Note that \verb!codehigh! package will load \verb!ninecolors!%
 
 To modify or add languages and themes, please read the source files
 \verb!codehigh.sty! and \verb!codehigh.lua! for reference.
+
+\section{Fake Verbatim Command}
+
+\CodeHigh{language=latex/table,style/main=gray9,style/code=gray9,style/demo=white}
+
+To ease the pain of writing verbatim commands
+(such as in \verb|tabularx| and \verb|tabularray| tables),
+This package provides \verb|\fakeverb| command.
+
+This command will remove the backslashes in the following control symbols
+before typesetting its content:
+
+\renewcommand\arraystretch{1.3}
+\begin{center}
+\begin{tabularx}{0.9\linewidth}{llX}
+\toprule
+Input           & Result        & Remark \\
+\midrule
+\fakeverb{\\\\} & \fakeverb{\\} &
+  Only needed to be escaped when typesetting other control symbols in this table \\
+\fakeverb{\\\{}	& \fakeverb{\{} &
+  Only needed to be escaped when left and right curly braces are unmatched \\
+\fakeverb{\\\}}	& \fakeverb{\}} &
+  Only needed to be escaped when left and right curly braces are unmatched \\
+\fakeverb{\\\#}	& \fakeverb{\#} &
+  Always needed to be escaped \\
+\fakeverb{\\\^}	& \fakeverb{\^} &
+  Only needed to be escaped when there are more than one in a row \\
+\texttt{\textbackslash\textvisiblespace} & \texttt{\textvisiblespace} &
+  Only needed to be escaped when more than one in a row or after control words \\
+\fakeverb{\\\%}	& \fakeverb{\%} &
+  Always needed to be escaped \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The argument of \verb|\fakeverb| command need to be enclosed with curly braces.
+Therefore it could be safely used inside \verb|tabularray| tables and other LaTeX commands.
+
+Here is an example of using \verb!\fakeverb! commands inside \verb|tabularx| environment:
+
+\begin{demohigh}[language=latex/table]
+\begin{tabularx}{0.5\textwidth}{lX}
+\hline
+ Alpha & \fakeverb{\abc{}$&^_^uvw 123} \\
+\hline
+ Beta  & \fakeverb{\bfseries\ \#\%} \\
+\hline
+\end{tabularx}
+\end{demohigh}
+
+Here is another example of using \verb!\fakeverb! commands inside \verb|\fbox| command:
+
+\begin{demohigh}[language=latex/latex2]
+Hello\fbox{\fakeverb{$\left\\\{A\right.$\#}}Verb!
+\end{demohigh}
 
 \chapter{The Source Code}
 
