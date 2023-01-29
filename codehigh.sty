@@ -600,6 +600,40 @@
   }
 
 %%% -------------------------------------------------------
+%%> \section{Fake Verbatim Command}
+%%% -------------------------------------------------------
+
+\tl_new:N \l__codehigh_fake_code_tl
+
+\NewDocumentCommand \fakeverb { +m }
+  {
+    \group_begin:
+    \tl_set:Nn \l__codehigh_fake_code_tl {#1}
+    \__codehigh_fake_verb:N \l__codehigh_fake_code_tl
+    \group_end:
+  }
+
+\cs_new_protected:Npn \__codehigh_fake_verb:N #1
+  {
+    \regex_replace_all:nnN { \c{\\} } { \\ } #1
+    % use \cO to avoid errors of unmatched braces
+    \regex_replace_all:nnN { \c{\{} } { \cO\{ } #1
+    \regex_replace_all:nnN { \c{\}} } { \cO\} } #1
+    % use \cO to avoid doubled hash characters
+    \regex_replace_all:nnN { \c{\#} } { \cO\# } #1
+    % need to escape ^ because ^^ and ^^^^ are special
+    \regex_replace_all:nnN { \c{\^} } { \^ } #1
+    % why we can not use \c{\ } instead of \c{\h}?
+    \regex_replace_all:nnN { \c{\h} } { \  } #1
+    \regex_replace_all:nnN { \c{\%} } { \% } #1
+    % remove spaces after control words
+    \regex_replace_all:nnN { . } { \c{string}\0 } #1
+    \tl_set:Ne #1 { #1 }
+    %\tl_log:N #1
+    \ttfamily \tl_to_str:N #1
+  }
+
+%%% -------------------------------------------------------
 %%> \section{Tracing CodeHigh}
 %%% -------------------------------------------------------
 

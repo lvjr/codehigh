@@ -1,0 +1,53 @@
+\documentclass{article}
+\usepackage[b5paper,margin=1cm]{geometry}
+\pagestyle{empty}
+
+\input{regression-test}
+
+\usepackage{codehigh}
+\usepackage{tabularray}
+\SetTblrTracing{none}
+
+\begin{document}
+
+\START
+\hrule\bigskip
+
+\BEGINTEST{\fakeverb: unescaped characters}
+Hello\fakeverb{\abc{}$&#^_ uvw123}Verb!
+\ENDTEST
+
+\bigskip\hrule\bigskip
+
+\BEGINTEST{\fakeverb: escaped characters}
+Hello\fakeverb{\\\{\}\#\^\ \%}Verb!
+\ENDTEST
+
+\bigskip\hrule\bigskip
+
+\BEGINTEST{\fakeverb: more characters}
+Hello\fakeverb{a--b---c<|>d``e''f?`g!`h}Verb!
+\ENDTEST
+
+\bigskip\hrule\bigskip
+
+
+\BEGINTEST{\fakeverb: control sequences}
+Hello\fakeverb{\textbf{abc}\ttfamily \ttfamily\ \ttfamily\ \ \!abc\! uvw}Verb!
+\ENDTEST
+
+\bigskip\hrule\bigskip
+
+\BEGINTEST{\fakeverb: nesting inside commands}
+Hello\fbox{\fakeverb{\\\{\}\#\^\ \%}}Verb!
+\ENDTEST
+
+\bigskip\hrule\bigskip
+
+\BEGINTEST{\fakeverb: nesting inside tabularray tables}
+\begin{tblr}{colspec=|l|l|}
+Hello & Hello\fakeverb{#&$\#\%{^_^}}Hello
+\end{tblr}
+\ENDTEST
+
+\end{document}
