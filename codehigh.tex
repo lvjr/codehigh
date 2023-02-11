@@ -2,7 +2,7 @@
 \documentclass[oneside]{book}
 \usepackage[a4paper,margin=2cm]{geometry}
 
-\newcommand*{\myversion}{2023@}
+\newcommand*{\myversion}{2023A}
 \newcommand*{\mydate}{Version \myversion\ (\the\year-\mylpad\month-\mylpad\day)}
 \newcommand*{\mylpad}[1]{\ifnum#1<10 0\the#1\else\the#1\fi}
 
@@ -196,19 +196,19 @@ before typesetting its content:
 Input           & Result        & Remark \\
 \midrule
 \fakeverb{\\\\} & \fakeverb{\\} &
-  Only needed to be escaped when typesetting other control symbols in this table \\
+  Need to be escaped only when typesetting other control symbols in this table \\
 \fakeverb{\\\{}	& \fakeverb{\{} &
-  Only needed to be escaped when left and right curly braces are unmatched \\
+  Need to be escaped only when left and right curly braces are unmatched \\
 \fakeverb{\\\}}	& \fakeverb{\}} &
-  Only needed to be escaped when left and right curly braces are unmatched \\
+  Need to be escaped only when left and right curly braces are unmatched \\
 \fakeverb{\\\#}	& \fakeverb{\#} &
-  Always needed to be escaped \\
+  Always need to be escaped \\
 \fakeverb{\\\^}	& \fakeverb{\^} &
-  Only needed to be escaped when there are more than one in a row \\
+  Need to be escaped only when there are more than one in a row \\
 \texttt{\textbackslash\textvisiblespace} & \texttt{\textvisiblespace} &
-  Only needed to be escaped when more than one in a row or after control words \\
+  Need to be escaped only when more than one in a row or after control words \\
 \fakeverb{\\\%}	& \fakeverb{\%} &
-  Always needed to be escaped \\
+  Always need to be escaped \\
 \bottomrule
 \end{tabularx}
 \end{center}
