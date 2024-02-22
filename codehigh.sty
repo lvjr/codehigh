@@ -603,34 +603,25 @@
 %%> \section{Fake Verbatim Command}
 %%% -------------------------------------------------------
 
-\tl_new:N \l__codehigh_fake_code_tl
+\tl_const:Nn \c__codehigh_fake_escape_tl { \\\{\}\#\^\ \% }
 
 \NewDocumentCommand \fakeverb { +m }
   {
     \group_begin:
-    \tl_set:Nn \l__codehigh_fake_code_tl {#1}
-    \__codehigh_fake_verb:N \l__codehigh_fake_code_tl
+    \group_align_safe_begin:
+    \ttfamily \frenchspacing
+    \tl_analysis_map_inline:nn {#1}
+      {
+        \int_compare:nNnTF {##2} = { -1 }
+          {
+            \exp_args:NNo \tl_if_in:NnTF \c__codehigh_fake_escape_tl {##1}
+              { \exp_after:wN \cs_to_str:N ##1 }
+              { \exp_after:wN \token_to_str:N ##1 }
+          }
+          { \exp_after:wN \token_to_str:N ##1 }
+      }
+    \group_align_safe_end:
     \group_end:
-  }
-
-\cs_new_protected:Npn \__codehigh_fake_verb:N #1
-  {
-    \regex_replace_all:nnN { \c{\\} } { \\ } #1
-    % use \cO to avoid errors of unmatched braces
-    \regex_replace_all:nnN { \c{\{} } { \cO\{ } #1
-    \regex_replace_all:nnN { \c{\}} } { \cO\} } #1
-    % use \cO to avoid doubled hash characters
-    \regex_replace_all:nnN { \c{\#} } { \cO\# } #1
-    % need to escape ^ because ^^ and ^^^^ are special
-    \regex_replace_all:nnN { \c{\^} } { \^ } #1
-    % why we can not use \c{\ } instead of \c{\h}?
-    \regex_replace_all:nnN { \c{\h} } { \  } #1
-    \regex_replace_all:nnN { \c{\%} } { \% } #1
-    % remove spaces after control words
-    \regex_replace_all:nnN { . } { \c{string}\0 } #1
-    \tl_set:Ne #1 { #1 }
-    %\tl_log:N #1
-    \ttfamily \frenchspacing \tl_to_str:N #1
   }
 
 %%% -------------------------------------------------------
