@@ -32,7 +32,7 @@ jobs:
     - name: Test codehigh with ppmcheckpdf
       run: |
         export PATH=${{github.workspace}}/tmp/texlive/bin/x86_64-linux:$PATH
-        texlua buildend.lua
+        ppmcheckpdf check
   build-windows:
     runs-on: windows-latest
     steps:
@@ -57,7 +57,7 @@ jobs:
     - name: Test codehigh with ppmcheckpdf
       run: |
         ${env:PATH} = "${{github.workspace}}\tmp\texlive\bin\windows;" + ${env:PATH}
-        texlua buildend.lua
+        ppmcheckpdf check
     - name: Upload png and md5
       uses: actions/upload-artifact@v3
       with:
