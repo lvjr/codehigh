@@ -20,7 +20,7 @@ jobs:
         tar -xzf install-tl-unx.tar.gz
         cd install-tl-20*
         ./install-tl --profile ../.github/workflows/texlive.profile --repository=${{env.TLCurrent}}
-        echo $(cat ${{github.workspace}}/.github/workflows/texlive.package) | xargs tlmgr install
+        echo $(cat ${{github.workspace}}/.github/workflows/texlive-package.txt) | xargs tlmgr install
         tlmgr update --self --all --no-auto-install --repository=${{env.TLCurrent}}
     - name: Test codehigh with l3build
       run: |

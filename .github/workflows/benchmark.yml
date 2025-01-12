@@ -1,0 +1,32 @@
+name: Run benchmark tests in TeX Live
+
+on: push
+
+jobs:
+  run-ubuntu:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [2023, 2024]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install TeX Live
+      uses: teatimeguest/setup-texlive-action@v3
+      with:
+        version: ${{matrix.version}}
+        package-file: .github/workflows/texlive-package.txt
+        packages: ppmcheckpdf
+        update-all-packages: true
+    - name: Run benchmark tests for codehigh package
+      run: |
+        cd benchmark
+        texlua benchmark.lua ${{matrix.version}}
+    - name: Store benchmark result
+      uses: benchmark-action/github-action-benchmark@v1
+      with:
+        name: Codehigh Benchmark in TeX Live ${{matrix.version}}
+        tool: "customSmallerIsBetter"
+        output-file-path: benchmarks/output-${{matrix.version}}.txt
+        benchmark-data-dir-path: benchmark/${{matrix.version}}
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        auto-push: true

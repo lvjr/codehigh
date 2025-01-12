@@ -1,0 +1,58 @@
+\documentclass{article}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{codehigh}
+\usepackage{hyperref}
+\usepackage{l3benchmark}
+\ExplSyntaxOn
+\int_set:Nn \l_iow_line_count_int {140} % default to 78
+\let \replicate = \prg_replicate:nn
+\AtBeginDocument{\benchmark_tic:}
+\AtEndDocument{
+  \benchmark_toc:
+  \fp_log:n \g_benchmark_time_fp
+}
+\ExplSyntaxOff
+\NewDocumentCommand\mylipsum{O{1}}{%
+  \replicate{#1}{The quick brown fox jumps over the lazy dog. }%
+}
+\begin{document}
+
+\mylipsum[32]
+
+\begin{codehigh}
+%  -*- coding: utf-8 -*-
+\documentclass{article}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{codehigh}
+\usepackage{hyperref}
+\newcommand*{\myversion}{2021C}
+\newcommand*{\mydate}{Version \myversion\ (\the\year-\mylpad\month-\mylpad\day)}
+\newcommand*{\mylpad}[1]{\ifnum#1<10 0\the#1\else\the#1\fi}
+\setlength{\abc}{1}
+\begin{document}
+% some comment
+\section{Section Name}
+\subsection*{Suction Name}
+Math $a+b$.
+\end{document}
+\end{codehigh}
+
+\mylipsum[32]
+
+\begin{demohigh}[language=latex/table]
+\begin{tabular}{lccr}
+\hline
+ Alpha   & Beta  & Gamma  & Delta \\
+\hline
+ Epsilon & Zeta  & Eta    & Theta \\
+\hline
+ Iota    & Kappa & Lambda & Mu    \\
+\hline
+\end{tabular}
+\end{demohigh}
+
+\mylipsum[32]
+
+\dochighinput[language=latex/latex3]{codehigh.sty}
+
+\end{document}

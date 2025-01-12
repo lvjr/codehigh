@@ -7,7 +7,7 @@ set pkgs=
 
 :: the maximum length of the command line string is 8191 characters
 
-for /f "tokens=*" %%A in (%~dp0texlive.package) do (
+for /f "tokens=*" %%A in (%~dp0texlive-package.txt) do (
     set /a j=j+1
     rem echo !j!
     set pkgs=!pkgs! %%A
