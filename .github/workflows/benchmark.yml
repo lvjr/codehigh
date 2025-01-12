@@ -26,7 +26,7 @@ jobs:
       with:
         name: Codehigh Benchmark in TeX Live ${{matrix.version}}
         tool: "customSmallerIsBetter"
-        output-file-path: benchmarks/output-${{matrix.version}}.txt
+        output-file-path: benchmark/output-${{matrix.version}}.txt
         benchmark-data-dir-path: benchmark/${{matrix.version}}
         github-token: ${{secrets.GITHUB_TOKEN}}
         auto-push: true

@@ -42,8 +42,8 @@ local function fileDelete(fname)
 end
 
 local warmupruns = 1
-local benchruns = 4
-local programs = {"pdflatex", "xelatex", "lualatex"}
+local benchruns = 2
+local programs = {"pdflatex", "lualatex"}
 local optn = "--interaction=nonstopmode"
 local isquiet = true
 
