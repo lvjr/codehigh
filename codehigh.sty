@@ -258,8 +258,6 @@
     \tl_set_eq:NN #1 \g__codehigh_code_tl
     \regex_replace_once:nnN {^ \r} {} #1
     \regex_replace_once:nnN {\r $} {} #1
-    \regex_replace_all:nnN { . } { \c{string} \0 } #1
-    \tl_set:Nx #1 { #1 }
     \__codehigh_tracing:nn {code} {\__codehigh_log:N #1}
   }
 
