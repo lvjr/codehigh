@@ -107,9 +107,9 @@ local count = 0
 
 local function PrintCode(style, code)
   count = count + 1
-  local name = "l__codehigh_parse_code_" .. count .. "_tl"
+  local name = "l__cdhh_parse_code_" .. count .. "_tl"
   PrintCommand(name, code)
-  name = "l__codehigh_parse_style_" .. count .. "_tl"
+  name = "l__cdhh_parse_style_" .. count .. "_tl"
   PrintCommand(name, style)
 end
 
@@ -130,7 +130,7 @@ function ParseCode(lang, code)
       code = code:sub(e)
     end
   end
-  local name = "l__codehigh_parse_code_count_tl"
+  local name = "l__cdhh_parse_code_count_tl"
   tex.sprint("\\expandafter\\gdef\\csname " .. name .. "\\endcsname{" .. count .. "}")
 end
 

@@ -24,13 +24,13 @@
 \RequirePackage{iftex}
 \legacy_if:nT {LuaTeX} {\RequirePackage{luatexbase}}
 
-\int_new:N \l__codehigh_a_int
-\int_new:N \l__codehigh_b_int
-\tl_new:N \l__codehigh_a_tl
-\tl_new:N \l__codehigh_b_tl
-\tl_new:N \l__codehigh_c_tl
-\tl_new:N \l__codehigh_d_tl
-\tl_new:N \l__codehigh_m_tl
+\int_new:N \l__cdhh_a_int
+\int_new:N \l__cdhh_b_int
+\tl_new:N \l__cdhh_a_tl
+\tl_new:N \l__cdhh_b_tl
+\tl_new:N \l__cdhh_c_tl
+\tl_new:N \l__cdhh_d_tl
+\tl_new:N \l__cdhh_m_tl
 
 \cs_generate_variant:Nn \regex_set:Nn {cn}
 \cs_generate_variant:Nn \seq_set_split:Nnn {NVV}
@@ -45,17 +45,17 @@
 
 \group_begin:
   \obeylines
-  \tl_gset:Nn \g__codehigh_eol_tl {^^M}
-  \tl_gset:Nn \g__codehigh_eol_eol_tl {^^M^^M}
+  \tl_gset:Nn \g__cdhh_eol_tl {^^M}
+  \tl_gset:Nn \g__cdhh_eol_eol_tl {^^M^^M}
 \group_end:
 
 %%% -------------------------------------------------------
 %%> \section{Set CodeHigh Options}
 %%% -------------------------------------------------------
 
-\bool_new:N \l__codehigh_lite_bool
-\bool_new:N \l__codehigh_long_bool
-\bool_new:N \l__codehigh_demo_bool
+\bool_new:N \l__cdhh_lite_bool
+\bool_new:N \l__cdhh_long_bool
+\bool_new:N \l__cdhh_demo_bool
 
 \NewDocumentCommand \CodeHigh {O{} m}
   {
@@ -64,9 +64,9 @@
 
 \keys_define:nn {codehigh}
   {
-    lite .bool_set:N = \l__codehigh_lite_bool,
-    long .bool_set:N = \l__codehigh_long_bool,
-    demo .bool_set:N = \l__codehigh_demo_bool,
+    lite .bool_set:N = \l__cdhh_lite_bool,
+    long .bool_set:N = \l__cdhh_long_bool,
+    demo .bool_set:N = \l__cdhh_demo_bool,
   }
 
 %%% -------------------------------------------------------
@@ -81,51 +81,51 @@
       {
         %% it is \^^M but not `\^^M
         \char_set_catcode_active:N \^^M
-        \__codehigh_begin:nw {#2}
+        \__cdhh_begin:nw {#2}
       }
     \exp_args:Nc \NewDocumentCommand {end#1} {}
       {
-        \__codehigh_end:
+        \__cdhh_end:
       }
   }
 
 %% Now we need to replace each ^^M with a space character
-\NewDocumentCommand \__codehigh_begin:nw {mO{}}
+\NewDocumentCommand \__cdhh_begin:nw {mO{}}
   {
     \char_set_catcode_end_line:N \^^M
     \tl_set:Nn \l_tmpa_tl {#1,#2}
-    \__codehigh_replace_endlines:N \l_tmpa_tl
+    \__cdhh_replace_endlines:N \l_tmpa_tl
     \keys_set:nV {codehigh} \l_tmpa_tl
-    \tl_set:Ne \__codehigh_collect_end_tl
+    \tl_set:Ne \__cdhh_collect_end_tl
       {
         \c_backslash_str end \c_left_brace_str \@currenvir \c_right_brace_str
       }
     \exp_last_unbraced:NNNNo
-    \cs_set:Npn \__codehigh_collect:w ##1 \__codehigh_collect_end_tl
+    \cs_set:Npn \__cdhh_collect:w ##1 \__cdhh_collect_end_tl
       {
-        \__codehigh_store:n {##1}
+        \__cdhh_store:n {##1}
         \exp_args:No \end \@currenvir
       }
     \group_begin:
-    \__codehigh_do_specials:
-    \__codehigh_collect:w
+    \__cdhh_do_specials:
+    \__cdhh_collect:w
   }
 
-\cs_new_protected:Npn \__codehigh_end:
+\cs_new_protected:Npn \__cdhh_end:
   {
     \group_end:
-    \__codehigh_typeset:
+    \__cdhh_typeset:
   }
 
 \group_begin:
   \char_set_catcode_active:N \^^M
-  \cs_new_protected:Npn \__codehigh_replace_endlines:N #1
+  \cs_new_protected:Npn \__cdhh_replace_endlines:N #1
     {
       \tl_replace_all:Nnn #1 {^^M} {~}
     }
 \group_end:
 
-\cs_new_protected:Npn \__codehigh_do_specials:
+\cs_new_protected:Npn \__cdhh_do_specials:
   {
     \cs_set_eq:NN \do \char_set_catcode_other:N
     \dospecials
@@ -133,25 +133,25 @@
     \obeyspaces
   }
 
-\tl_new:N \g__codehigh_code_tl
+\tl_new:N \g__cdhh_code_tl
 
-\cs_new_protected:Npn \__codehigh_store:n #1
+\cs_new_protected:Npn \__cdhh_store:n #1
   {
-    \tl_gset:Nn \g__codehigh_code_tl { #1 }
-    \__codehigh_tracing:nn {code} {\__codehigh_log:N \g__codehigh_code_tl}
+    \tl_gset:Nn \g__cdhh_code_tl { #1 }
+    \__cdhh_tracing:nn {code} {\__cdhh_log:N \g__cdhh_code_tl}
   }
 
-\cs_new_protected:Npn \__codehigh_typeset:
+\cs_new_protected:Npn \__cdhh_typeset:
   {
-    \bool_if:NTF \l__codehigh_demo_bool
-      {\__codehigh_typeset_demo:} {\__codehigh_typeset_code:}
+    \bool_if:NTF \l__cdhh_demo_bool
+      {\__cdhh_typeset_demo:} {\__cdhh_typeset_code:}
   }
 
 \NewCodeHighEnv {codehigh} {}
 \NewCodeHighEnv {demohigh} {demo}
 
-\tl_new:N \l__codehigh_input_tl
-\seq_new:N \l__codehigh_input_seq
+\tl_new:N \l__cdhh_input_tl
+\seq_new:N \l__cdhh_input_seq
 
 \NewDocumentCommand \NewCodeHighInput {mm}
   {
@@ -159,55 +159,55 @@
       {
         \group_begin:
         \keys_set:nn {codehigh} {#2, ##1}
-        \CatchFileDef \l__codehigh_input_tl {##2} {\__codehigh_do_specials:}
+        \CatchFileDef \l__cdhh_input_tl {##2} {\__cdhh_do_specials:}
         \setlength \parskip {0pt plus 1pt}
-        \__codehigh_typeset_input:N \l__codehigh_input_tl
+        \__cdhh_typeset_input:N \l__cdhh_input_tl
         \group_end:
       }
   }
 
-\cs_new_protected:Npn \__codehigh_typeset_input:N #1
+\cs_new_protected:Npn \__cdhh_typeset_input:N #1
   {
-    \seq_set_split:NVV \l__codehigh_input_seq \g__codehigh_eol_eol_tl #1
-    \seq_map_inline:Nn \l__codehigh_input_seq
+    \seq_set_split:NVV \l__cdhh_input_seq \g__cdhh_eol_eol_tl #1
+    \seq_map_inline:Nn \l__cdhh_input_seq
       {
-        \tl_gset:Nn \g__codehigh_code_tl {##1}
-        \__codehigh_typeset_comment:N \g__codehigh_code_tl
-        \tl_if_blank:VF \g__codehigh_code_tl
+        \tl_gset:Nn \g__cdhh_code_tl {##1}
+        \__cdhh_typeset_comment:N \g__cdhh_code_tl
+        \tl_if_blank:VF \g__cdhh_code_tl
           {
-            \__codehigh_typeset_code:
+            \__cdhh_typeset_code:
             \par
             \medskip
           }
       }
   }
 
-\regex_const:Nn \l__codehigh_comment_regex { ^ \% \% ( [\%>] ) ( [^\r]+ ) \r }
-\tl_new:N \l__codehigh_comment_tl % comment lines that need to be typeset
-\bool_new:N \l__codehigh_comment_bool
+\regex_const:Nn \l__cdhh_comment_regex { ^ \% \% ( [\%>] ) ( [^\r]+ ) \r }
+\tl_new:N \l__cdhh_comment_tl % comment lines that need to be typeset
+\bool_new:N \l__cdhh_comment_bool
 
 %% remove lines starting with %%%, and typeset lines starting with %%>
-\cs_new_protected:Npn \__codehigh_typeset_comment:N #1
+\cs_new_protected:Npn \__cdhh_typeset_comment:N #1
   {
     \tl_set_eq:NN \l_tmpa_tl #1
-    \tl_put_right:NV \l_tmpa_tl \g__codehigh_eol_tl
-    \tl_clear:N \l__codehigh_comment_tl
-    \bool_set_false:N \l__codehigh_comment_bool
-    \bool_do_until:Nn \l__codehigh_comment_bool
+    \tl_put_right:NV \l_tmpa_tl \g__cdhh_eol_tl
+    \tl_clear:N \l__cdhh_comment_tl
+    \bool_set_false:N \l__cdhh_comment_bool
+    \bool_do_until:Nn \l__cdhh_comment_bool
       {
         %% Unfortunately we need both \regex_extract_once and \regex_replace_once
-        \regex_extract_once:NVNTF \l__codehigh_comment_regex \l_tmpa_tl \l_tmpa_seq
+        \regex_extract_once:NVNTF \l__cdhh_comment_regex \l_tmpa_tl \l_tmpa_seq
           {
-            \regex_replace_once:NnN \l__codehigh_comment_regex {} \l_tmpa_tl
+            \regex_replace_once:NnN \l__cdhh_comment_regex {} \l_tmpa_tl
             \str_if_eq:enT { \seq_item:Nn \l_tmpa_seq {2} } {>}
               {
-                \tl_put_right:Nx \l__codehigh_comment_tl
+                \tl_put_right:Nx \l__cdhh_comment_tl
                   { \seq_item:Nn \l_tmpa_seq {3} }
               }
           }
-          { \bool_set_true:N \l__codehigh_comment_bool }
+          { \bool_set_true:N \l__cdhh_comment_bool }
       }
-    \exp_args:NV \scantokens \l__codehigh_comment_tl
+    \exp_args:NV \scantokens \l__cdhh_comment_tl
     \tl_gset_eq:NN #1 \l_tmpa_tl
   }
 
@@ -217,53 +217,53 @@
 %%> \section{Typeset CodeHigh Code}
 %%% -------------------------------------------------------
 
-\dim_new:N \l__codehigh_main_boxsep_dim
+\dim_new:N \l__cdhh_main_boxsep_dim
 
 \keys_define:nn {codehigh}
   {
-    boxsep .dim_set:N = \l__codehigh_main_boxsep_dim,
+    boxsep .dim_set:N = \l__cdhh_main_boxsep_dim,
     boxsep .initial:n = 3pt,
   }
 
-\box_new:N \g__codehigh_code_box
+\box_new:N \g__cdhh_code_box
 
-\cs_new_protected:Npn \__codehigh_typeset_code:
+\cs_new_protected:Npn \__cdhh_typeset_code:
   {
     \par\addvspace{0.5em}\noindent
-    \bool_if:NTF \l__codehigh_long_bool
-      {\__codehigh_typeset_code_text:} {\__codehigh_typeset_code_box:}
+    \bool_if:NTF \l__cdhh_long_bool
+      {\__cdhh_typeset_code_text:} {\__cdhh_typeset_code_box:}
     \par\addvspace{0.5em}
   }
 
-\cs_new_protected:Npn \__codehigh_typeset_code_text:
+\cs_new_protected:Npn \__cdhh_typeset_code_text:
   {
-    \__codehigh_prepare_code:N \l_tmpa_tl
-    \__codehigh_get_code_text:n \l_tmpa_tl
+    \__cdhh_prepare_code:N \l_tmpa_tl
+    \__cdhh_get_code_text:n \l_tmpa_tl
   }
 
-\cs_new_protected:Npn \__codehigh_typeset_code_box:
+\cs_new_protected:Npn \__cdhh_typeset_code_box:
   {
-    \__codehigh_build_code:
-    \__codehigh_put_code_box:
+    \__cdhh_build_code:
+    \__cdhh_put_code_box:
   }
 
-\cs_new_protected:Npn \__codehigh_build_code:
+\cs_new_protected:Npn \__cdhh_build_code:
   {
-    \__codehigh_prepare_code:N \l_tmpa_tl
-    \__codehigh_get_code_box:nN \l_tmpa_tl \g__codehigh_code_box
+    \__cdhh_prepare_code:N \l_tmpa_tl
+    \__cdhh_get_code_box:nN \l_tmpa_tl \g__cdhh_code_box
   }
 
-\cs_new_protected:Npn \__codehigh_prepare_code:N #1
+\cs_new_protected:Npn \__cdhh_prepare_code:N #1
   {
-    \tl_set_eq:NN #1 \g__codehigh_code_tl
+    \tl_set_eq:NN #1 \g__cdhh_code_tl
     \regex_replace_once:nnN {^ \r} {} #1
     \regex_replace_once:nnN {\r $} {} #1
-    \__codehigh_tracing:nn {code} {\__codehigh_log:N #1}
+    \__cdhh_tracing:nn {code} {\__cdhh_log:N #1}
   }
 
-\cs_new_protected:Npn \__codehigh_put_code_box:
+\cs_new_protected:Npn \__cdhh_put_code_box:
   {
-    \setlength \fboxsep {\l__codehigh_main_boxsep_dim}
+    \setlength \fboxsep {\l__cdhh_main_boxsep_dim}
     \GetCodeHighStyle{main}
     \colorbox{codehigh@bg}
       {
@@ -271,32 +271,32 @@
           {
             \GetCodeHighStyle{code}
             \colorbox{codehigh@bg}
-              {\box_use:N \g__codehigh_code_box}
+              {\box_use:N \g__cdhh_code_box}
             \hfill
           }
       }
   }
 
 %% #1: text to parse; #2: resulting box
-\cs_new_protected:Npn \__codehigh_get_code_box:nN #1 #2
+\cs_new_protected:Npn \__cdhh_get_code_box:nN #1 #2
   {
     \hbox_gset:Nn #2
       {
         \begin{varwidth}{\linewidth}
-          \__codehigh_get_code_text:n {#1}
+          \__cdhh_get_code_text:n {#1}
         \end{varwidth}
       }
   }
 
-\cs_new_protected:Npn \__codehigh_get_code_text:n #1
+\cs_new_protected:Npn \__cdhh_get_code_text:n #1
   {
     \group_begin:
       \setlength \parindent {0pt}
       \linespread {1}
       \ttfamily
-      \bool_if:NTF \l__codehigh_lite_bool
-        {\__codehigh_parse_code_lite:N #1}
-        {\__codehigh_parse_code:VN \l__codehigh_language_name_tl #1}
+      \bool_if:NTF \l__cdhh_lite_bool
+        {\__cdhh_parse_code_lite:N #1}
+        {\__cdhh_parse_code:VN \l__cdhh_language_name_tl #1}
     \group_end:
   }
 
@@ -304,18 +304,18 @@
 %%> \section{Typeset CodeHigh Demo}
 %%% -------------------------------------------------------
 
-\box_new:N \g__codehigh_demo_box
+\box_new:N \g__cdhh_demo_box
 
-\cs_new_protected:Npn \__codehigh_typeset_demo:
+\cs_new_protected:Npn \__cdhh_typeset_demo:
   {
-    \__codehigh_build_code:
-    \__codehigh_build_demo:
-    \dim_set:Nn \l_tmpa_dim { \box_wd:N \g__codehigh_code_box }
-    \dim_set:Nn \l_tmpb_dim { \box_wd:N \g__codehigh_demo_box }
-    \__codehigh_tracing:nn {demo}
+    \__cdhh_build_code:
+    \__cdhh_build_demo:
+    \dim_set:Nn \l_tmpa_dim { \box_wd:N \g__cdhh_code_box }
+    \dim_set:Nn \l_tmpb_dim { \box_wd:N \g__cdhh_demo_box }
+    \__cdhh_tracing:nn {demo}
       { \tl_log:x { \dim_use:N \l_tmpa_dim + \dim_use:N \l_tmpb_dim } }
     \par\addvspace{0.5em}\noindent
-    \setlength \fboxsep {\l__codehigh_main_boxsep_dim}
+    \setlength \fboxsep {\l__cdhh_main_boxsep_dim}
     \GetCodeHighStyle{main}
     \colorbox{codehigh@bg}
       {
@@ -325,45 +325,45 @@
               {
                 \dim_set:Nn \hsize {\linewidth-2\fboxsep}
                 \noindent\GetCodeHighStyle{code}
-                \colorbox{codehigh@bg}{\box_use:N \g__codehigh_code_box}
+                \colorbox{codehigh@bg}{\box_use:N \g__cdhh_code_box}
                 \par
                 \noindent\GetCodeHighStyle{demo}
-                \colorbox{codehigh@bg}{\box_use:N \g__codehigh_demo_box}
+                \colorbox{codehigh@bg}{\box_use:N \g__cdhh_demo_box}
               }
           }
           {
           \hbox_to_wd:nn {\linewidth-2\fboxsep}
               {
                 \GetCodeHighStyle{code}
-                \colorbox{codehigh@bg}{\box_use:N \g__codehigh_code_box}
+                \colorbox{codehigh@bg}{\box_use:N \g__cdhh_code_box}
                 \hfill
                 \GetCodeHighStyle{demo}
-                \colorbox{codehigh@bg}{\box_use:N \g__codehigh_demo_box}
+                \colorbox{codehigh@bg}{\box_use:N \g__cdhh_demo_box}
               }
           }
       }
     \par\addvspace{0.5em}
   }
 
-\cs_new_protected:Npn \__codehigh_build_demo:
+\cs_new_protected:Npn \__cdhh_build_demo:
   {
-    \tl_set_eq:NN \l_tmpb_tl \g__codehigh_code_tl
+    \tl_set_eq:NN \l_tmpb_tl \g__cdhh_code_tl
     \tl_set_rescan:NnV \l_tmpb_tl
       {
         \catcode `\% = 14 \relax
         \catcode `\^^M = 10 \relax
       }
       \l_tmpb_tl
-    \__codehigh_tracing:nn {demo} { \tl_log:N \l_tmpb_tl }
-    \__codehigh_get_demo_box:nN \l_tmpb_tl \g__codehigh_demo_box
+    \__cdhh_tracing:nn {demo} { \tl_log:N \l_tmpb_tl }
+    \__cdhh_get_demo_box:nN \l_tmpb_tl \g__cdhh_demo_box
   }
 
 %% #1: text to typeset; #2: resulting box
-\cs_new_protected:Npn \__codehigh_get_demo_box:nN #1 #2
+\cs_new_protected:Npn \__cdhh_get_demo_box:nN #1 #2
   {
     \hbox_gset:Nn #2
       {
-        \dim_set:Nn \linewidth {\linewidth-4\l__codehigh_main_boxsep_dim}
+        \dim_set:Nn \linewidth {\linewidth-4\l__cdhh_main_boxsep_dim}
         \begin{varwidth}{\linewidth}
           \setlength { \parindent } { 0pt }
           \linespread {1}
@@ -378,22 +378,22 @@
 
 \keys_define:nn {codehigh}
   {
-    language .tl_set:N = \l__codehigh_language_name_tl,
+    language .tl_set:N = \l__cdhh_language_name_tl,
     language .initial:n = latex,
   }
 
 %% #1: language name; #2: rule type; #3: rule name; #4: rule regex
 \NewDocumentCommand \AddCodeHighRule {O{latex} m m m}
   {
-    \int_if_exist:cF {l__codehigh_#1_rule_count_int}
-      {\int_new:c {l__codehigh_#1_rule_count_int}}
-    \int_incr:c {l__codehigh_#1_rule_count_int}
+    \int_if_exist:cF {l__cdhh_#1_rule_count_int}
+      {\int_new:c {l__cdhh_#1_rule_count_int}}
+    \int_incr:c {l__cdhh_#1_rule_count_int}
     \tl_set:cn
-      {l__codehigh_#1_ \int_use:c {l__codehigh_#1_rule_count_int} _type_tl} {#2}
+      {l__cdhh_#1_ \int_use:c {l__cdhh_#1_rule_count_int} _type_tl} {#2}
     \tl_set:cn
-      {l__codehigh_#1_ \int_use:c {l__codehigh_#1_rule_count_int} _name_tl} {#3}
+      {l__cdhh_#1_ \int_use:c {l__cdhh_#1_rule_count_int} _name_tl} {#3}
     \regex_set:cn
-      {l__codehigh_#1_ \int_use:c {l__codehigh_#1_rule_count_int} _regex} {#4}
+      {l__cdhh_#1_ \int_use:c {l__cdhh_#1_rule_count_int} _regex} {#4}
   }
 
 \AddCodeHighRule[latex]{1}{Package}   {\\(documentclass|usepackage)}
@@ -448,7 +448,7 @@
 
 \keys_define:nn {codehigh}
   {
-    theme .tl_set:N = \l__codehigh_theme_name_tl,
+    theme .tl_set:N = \l__cdhh_theme_name_tl,
     theme .initial:n = default,
     style/main .code:n = \SetCodeHighStyle{main}{#1},
     style/code .code:n = \SetCodeHighStyle{code}{#1},
@@ -458,12 +458,12 @@
 %% #1: theme name; #2: rule type; #3: sytles
 \NewDocumentCommand \SetCodeHighStyle {O{default} m m}
   {
-    \tl_set:cn {l__codehigh_style_#1_#2_tl} {#3}
+    \tl_set:cn {l__cdhh_style_#1_#2_tl} {#3}
   }
 
 \NewDocumentCommand \GetCodeHighStyle {O{default} m}
   {
-    \colorlet{codehigh@bg}{\tl_use:c {l__codehigh_style_#1_#2_tl}}
+    \colorlet{codehigh@bg}{\tl_use:c {l__cdhh_style_#1_#2_tl}}
   }
 
 \SetCodeHighStyle[default]{main}{gray9}
@@ -485,73 +485,73 @@
 %%> \section{Parse and Highlight Code}
 %%% -------------------------------------------------------
 
-\int_new:N \l__codehigh_item_count_int
-\tl_new:N \l__codehigh_code_to_parse_tl
-\tl_new:N \l__codehigh_regex_match_type_tl
-\tl_new:N \l__codehigh_regex_match_text_tl
-\tl_new:N \l__codehigh_regex_before_text_tl
+\int_new:N \l__cdhh_item_count_int
+\tl_new:N \l__cdhh_code_to_parse_tl
+\tl_new:N \l__cdhh_regex_match_type_tl
+\tl_new:N \l__cdhh_regex_match_text_tl
+\tl_new:N \l__cdhh_regex_before_text_tl
 
-\cs_new_protected:Npn \__codehigh_parse_code:nN #1 #2
+\cs_new_protected:Npn \__cdhh_parse_code:nN #1 #2
   {
     \legacy_if:nTF {LuaTeX}
-       { \__codehigh_parse_code_luatex:nN {#1} #2 }
-       { \__codehigh_parse_code_normal:nN {#1} #2 }
+       { \__cdhh_parse_code_luatex:nN {#1} #2 }
+       { \__cdhh_parse_code_normal:nN {#1} #2 }
   }
-\cs_generate_variant:Nn \__codehigh_parse_code:nN {VN}
+\cs_generate_variant:Nn \__cdhh_parse_code:nN {VN}
 
-\cs_new_protected:Npn \__codehigh_parse_code_normal:nN #1 #2
+\cs_new_protected:Npn \__cdhh_parse_code_normal:nN #1 #2
   {
-    \tl_set_eq:NN \l__codehigh_code_to_parse_tl #2
-    \bool_do_until:nn {\tl_if_empty_p:N \l__codehigh_code_to_parse_tl}
+    \tl_set_eq:NN \l__cdhh_code_to_parse_tl #2
+    \bool_do_until:nn {\tl_if_empty_p:N \l__cdhh_code_to_parse_tl}
       {
-        \__codehigh_parse_code_once:nN {#1} \l__codehigh_code_to_parse_tl
-        \int_compare:nNnTF {\l__codehigh_item_count_int} = {-1}
+        \__cdhh_parse_code_once:nN {#1} \l__cdhh_code_to_parse_tl
+        \int_compare:nNnTF {\l__cdhh_item_count_int} = {-1}
           {
-            \__codehigh_typeset_text:nN {0} \l__codehigh_code_to_parse_tl
-            \tl_clear:N \l__codehigh_code_to_parse_tl
+            \__cdhh_typeset_text:nN {0} \l__cdhh_code_to_parse_tl
+            \tl_clear:N \l__cdhh_code_to_parse_tl
           }
           {
-            \tl_concat:NNN \l__codehigh_a_tl
-              \l__codehigh_regex_before_text_tl \l__codehigh_regex_match_text_tl
-            \str_remove_once:NV \l__codehigh_code_to_parse_tl \l__codehigh_a_tl
-            \__codehigh_tracing:nn {parser}
-              {\tl_log:N \l__codehigh_code_to_parse_tl}
-            \__codehigh_typeset_text:nN {0}
-              \l__codehigh_regex_before_text_tl
-            \__codehigh_typeset_text:VN \l__codehigh_regex_match_type_tl
-              \l__codehigh_regex_match_text_tl
+            \tl_concat:NNN \l__cdhh_a_tl
+              \l__cdhh_regex_before_text_tl \l__cdhh_regex_match_text_tl
+            \str_remove_once:NV \l__cdhh_code_to_parse_tl \l__cdhh_a_tl
+            \__cdhh_tracing:nn {parser}
+              {\tl_log:N \l__cdhh_code_to_parse_tl}
+            \__cdhh_typeset_text:nN {0}
+              \l__cdhh_regex_before_text_tl
+            \__cdhh_typeset_text:VN \l__cdhh_regex_match_type_tl
+              \l__cdhh_regex_match_text_tl
           }
       }
   }
 
-\cs_new_protected:Npn \__codehigh_parse_code_once:nN #1 #2
+\cs_new_protected:Npn \__cdhh_parse_code_once:nN #1 #2
   {
-    \int_set:Nn \l__codehigh_item_count_int { -1 }
-    \tl_clear:N \l__codehigh_regex_match_text_tl
-    \tl_clear:N \l__codehigh_regex_before_text_tl
-    \int_step_inline:nn {\cs:w l__codehigh_#1_rule_count_int \cs_end:}
+    \int_set:Nn \l__cdhh_item_count_int { -1 }
+    \tl_clear:N \l__cdhh_regex_match_text_tl
+    \tl_clear:N \l__cdhh_regex_before_text_tl
+    \int_step_inline:nn {\cs:w l__cdhh_#1_rule_count_int \cs_end:}
       {
-        \regex_extract_once:cVNT {l__codehigh_#1_##1_regex} #2 \l_tmpa_seq
+        \regex_extract_once:cVNT {l__cdhh_#1_##1_regex} #2 \l_tmpa_seq
           {
-            \seq_get:NN \l_tmpa_seq \l__codehigh_m_tl
-            \regex_split:cVNT { l__codehigh_#1_##1_regex } #2 \l_tmpb_seq
+            \seq_get:NN \l_tmpa_seq \l__cdhh_m_tl
+            \regex_split:cVNT { l__cdhh_#1_##1_regex } #2 \l_tmpb_seq
               {
-                \seq_get:NN \l_tmpb_seq \l__codehigh_b_tl
-                \tl_set:Nx \l__codehigh_c_tl {\str_count:N \l__codehigh_b_tl}
+                \seq_get:NN \l_tmpb_seq \l__cdhh_b_tl
+                \tl_set:Nx \l__cdhh_c_tl {\str_count:N \l__cdhh_b_tl}
                 \bool_lazy_or:nnT
-                  { \int_compare_p:nNn {\l__codehigh_item_count_int} = {-1} }
+                  { \int_compare_p:nNn {\l__cdhh_item_count_int} = {-1} }
                   {
                     \int_compare_p:nNn
-                      {\l__codehigh_item_count_int} > {\l__codehigh_c_tl}
+                      {\l__cdhh_item_count_int} > {\l__cdhh_c_tl}
                   }
                   {
-                    \int_set:Nn \l__codehigh_item_count_int {\l__codehigh_c_tl}
-                    \tl_set_eq:NN \l__codehigh_regex_before_text_tl
-                      \l__codehigh_b_tl
-                    \tl_set_eq:NN \l__codehigh_regex_match_text_tl
-                      \l__codehigh_m_tl
-                    \tl_set_eq:Nc \l__codehigh_regex_match_type_tl
-                      {l__codehigh_#1_##1_type_tl}
+                    \int_set:Nn \l__cdhh_item_count_int {\l__cdhh_c_tl}
+                    \tl_set_eq:NN \l__cdhh_regex_before_text_tl
+                      \l__cdhh_b_tl
+                    \tl_set_eq:NN \l__cdhh_regex_match_text_tl
+                      \l__cdhh_m_tl
+                    \tl_set_eq:Nc \l__cdhh_regex_match_type_tl
+                      {l__cdhh_#1_##1_type_tl}
                   }
               }
           }
@@ -560,38 +560,38 @@
 
 \legacy_if:nT {LuaTeX} { \directlua{require("codehigh.lua")} }
 
-\cs_new_protected:Npn \__codehigh_parse_code_luatex:nN #1 #2
+\cs_new_protected:Npn \__cdhh_parse_code_luatex:nN #1 #2
   {
     \directlua{ParseCode(token.scan_argument(), token.scan_argument())}{#1}{#2}
-    \__codehigh_tracing:nn {parser}
-      {\tl_log:N \l__codehigh_parse_code_count_tl}
-    \int_step_inline:nn {\l__codehigh_parse_code_count_tl}
+    \__cdhh_tracing:nn {parser}
+      {\tl_log:N \l__cdhh_parse_code_count_tl}
+    \int_step_inline:nn {\l__cdhh_parse_code_count_tl}
       {
-        \__codehigh_typeset_text:vc
-          {l__codehigh_parse_style_##1_tl} {l__codehigh_parse_code_##1_tl}
+        \__cdhh_typeset_text:vc
+          {l__cdhh_parse_style_##1_tl} {l__cdhh_parse_code_##1_tl}
       }
   }
 
 %% #1: rule type, #2: text
-\cs_new_protected:Npn \__codehigh_typeset_text:nN #1 #2
+\cs_new_protected:Npn \__cdhh_typeset_text:nN #1 #2
   {
-    \__codehigh_tracing:nn {parser} { \tl_log:e { type: #1; ~ text: #2 } }
+    \__cdhh_tracing:nn {parser} { \tl_log:e { type: #1; ~ text: #2 } }
     \group_begin:
       \regex_replace_all:nnN { \r } { \c{par} \c{leavevmode} } #2
       \legacy_if:nF {LuaTeX}
         { \regex_replace_all:nnN { \  } { \c{leavevmode} \c{space} } #2 }
-      \color{\tl_use:c {l__codehigh_style_ \l__codehigh_theme_name_tl _#1_tl}}
+      \color{\tl_use:c {l__cdhh_style_ \l__cdhh_theme_name_tl _#1_tl}}
       %\obeyspaces
       #2
     \group_end:
   }
-\cs_generate_variant:Nn \__codehigh_typeset_text:nN { VN, vc }
+\cs_generate_variant:Nn \__cdhh_typeset_text:nN { VN, vc }
 
 %%% -------------------------------------------------------
 %%> \section{Don't Highlight Code}
 %%% -------------------------------------------------------
 
-\cs_new_protected:Npn \__codehigh_parse_code_lite:N #1
+\cs_new_protected:Npn \__cdhh_parse_code_lite:N #1
   {
     \regex_replace_all:nnN { \r } { \c{par} \c{leavevmode} } #1
     \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #1
@@ -602,7 +602,7 @@
 %%> \section{Fake Verbatim Command}
 %%% -------------------------------------------------------
 
-\tl_const:Nn \c__codehigh_fake_escape_tl { \\\{\}\#\^\ \% }
+\tl_const:Nn \c__cdhh_fake_escape_tl { \\\{\}\#\^\ \% }
 
 \NewDocumentCommand \fakeverb { +m }
   {
@@ -613,7 +613,7 @@
       {
         \int_compare:nNnTF {##2} = { -1 }
           {
-            \exp_args:NNo \tl_if_in:NnTF \c__codehigh_fake_escape_tl {##1}
+            \exp_args:NNo \tl_if_in:NnTF \c__cdhh_fake_escape_tl {##1}
               { \exp_after:wN \cs_to_str:N ##1 }
               { \exp_after:wN \token_to_str:N ##1 }
           }
@@ -633,44 +633,44 @@
     \keys_set:nn { codehigh-set-tracing } {#1}
   }
 
-\bool_new:N \g__codehigh_tracing_code_bool
-\bool_new:N \g__codehigh_tracing_demo_bool
-\bool_new:N \g__codehigh_tracing_parser_bool
+\bool_new:N \g__cdhh_tracing_code_bool
+\bool_new:N \g__cdhh_tracing_demo_bool
+\bool_new:N \g__cdhh_tracing_parser_bool
 
 \keys_define:nn { codehigh-set-tracing }
   {
-    +code .code:n = \bool_gset_true:N  \g__codehigh_tracing_code_bool,
-    -code .code:n = \bool_gset_false:N \g__codehigh_tracing_code_bool,
-    +demo .code:n = \bool_gset_true:N  \g__codehigh_tracing_demo_bool,
-    -demo .code:n = \bool_gset_false:N \g__codehigh_tracing_demo_bool,
-    +parser .code:n = \bool_gset_true:N  \g__codehigh_tracing_parser_bool,
-    -parser .code:n = \bool_gset_false:N \g__codehigh_tracing_parser_bool,
-    all .code:n  = \__codehigh_enable_all_tracings:,
-    none .code:n = \__codehigh_disable_all_tracings:,
+    +code .code:n = \bool_gset_true:N  \g__cdhh_tracing_code_bool,
+    -code .code:n = \bool_gset_false:N \g__cdhh_tracing_code_bool,
+    +demo .code:n = \bool_gset_true:N  \g__cdhh_tracing_demo_bool,
+    -demo .code:n = \bool_gset_false:N \g__cdhh_tracing_demo_bool,
+    +parser .code:n = \bool_gset_true:N  \g__cdhh_tracing_parser_bool,
+    -parser .code:n = \bool_gset_false:N \g__cdhh_tracing_parser_bool,
+    all .code:n  = \__cdhh_enable_all_tracings:,
+    none .code:n = \__cdhh_disable_all_tracings:,
   }
 
-\cs_new_protected_nopar:Npn \__codehigh_enable_all_tracings:
+\cs_new_protected_nopar:Npn \__cdhh_enable_all_tracings:
   {
-    \bool_gset_true:N \g__codehigh_tracing_code_bool
-    \bool_gset_true:N \g__codehigh_tracing_demo_bool
-    \bool_gset_true:N \g__codehigh_tracing_parser_bool
+    \bool_gset_true:N \g__cdhh_tracing_code_bool
+    \bool_gset_true:N \g__cdhh_tracing_demo_bool
+    \bool_gset_true:N \g__cdhh_tracing_parser_bool
   }
 
-\cs_new_protected_nopar:Npn \__codehigh_disable_all_tracings:
+\cs_new_protected_nopar:Npn \__cdhh_disable_all_tracings:
   {
-    \bool_gset_false:N \g__codehigh_tracing_code_bool
-    \bool_gset_false:N \g__codehigh_tracing_demo_bool
-    \bool_gset_false:N \g__codehigh_tracing_parser_bool
+    \bool_gset_false:N \g__cdhh_tracing_code_bool
+    \bool_gset_false:N \g__cdhh_tracing_demo_bool
+    \bool_gset_false:N \g__cdhh_tracing_parser_bool
   }
 
-\cs_new_protected:Npn \__codehigh_tracing:nn #1 #2
+\cs_new_protected:Npn \__cdhh_tracing:nn #1 #2
   {
-    \bool_if:cT { g__codehigh_tracing_ #1 _bool } {#2}
+    \bool_if:cT { g__cdhh_tracing_ #1 _bool } {#2}
   }
 
 \group_begin:
   \char_set_catcode_active:N \^^M
-  \cs_new_protected:Npn \__codehigh_log:N #1
+  \cs_new_protected:Npn \__cdhh_log:N #1
     {
       \tl_replace_all:Nnn #1 {^^M} {^^J}
       \tl_log:N #1

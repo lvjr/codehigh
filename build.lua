@@ -1,7 +1,11 @@
 
 module = "codehigh"
 
-sourcefiles = {"codehigh.sty"}
+-- will be moved from current folder to build/unpacked folder
+sourcefiles = {"codehigh.sty", "codehigh.lua"}
+
+-- will be moved from build/unpacked folder to build/test folder
+installfiles = {"*.sty", "*.lua"}
 
 checkengines = {"pdftex","luatex"}
 checkruns = 2
