@@ -35,7 +35,9 @@
 \cs_generate_variant:Nn \regex_set:Nn {cn}
 \cs_generate_variant:Nn \seq_set_split:Nnn {NVV}
 \cs_generate_variant:Nn \str_remove_once:Nn {NV}
+\cs_generate_variant:Nn \tl_greplace_all:Nnn {NV}
 \cs_generate_variant:Nn \tl_log:n {e}
+\cs_generate_variant:Nn \tl_replace_all:Nnn {NV}
 \cs_generate_variant:Nn \tl_set:Nn {Ne}
 \cs_generate_variant:Nn \tl_set_rescan:Nnn {NnV}
 
@@ -45,9 +47,10 @@
 
 \group_begin:
   \obeylines
-  \tl_gset:Nn \g__cdhh_eol_tl {^^M}
-  \tl_gset:Nn \g__cdhh_eol_eol_tl {^^M^^M}
+  \tl_const:Nn \c__cdhh_el_tl {^^M}
 \group_end:
+\tl_const:Nn \c__cdhh_nl_tl {^^J}
+\tl_const:Nn \c__cdhh_nl_nl_tl {^^J^^J}
 
 %%% -------------------------------------------------------
 %%> \section{Set CodeHigh Options}
@@ -138,6 +141,7 @@
 \cs_new_protected:Npn \__cdhh_store:n #1
   {
     \tl_gset:Nn \g__cdhh_code_tl { #1 }
+    \tl_greplace_all:NVn \g__cdhh_code_tl \c__cdhh_el_tl {^^J}
     \__cdhh_tracing:nn {code} {\__cdhh_log:N \g__cdhh_code_tl}
   }
 
@@ -160,6 +164,7 @@
         \group_begin:
         \keys_set:nn {codehigh} {#2, ##1}
         \CatchFileDef \l__cdhh_input_tl {##2} {\__cdhh_do_specials:}
+        \tl_replace_all:NVn \l__cdhh_input_tl \c__cdhh_el_tl {^^J}
         \setlength \parskip {0pt plus 1pt}
         \__cdhh_typeset_input:N \l__cdhh_input_tl
         \group_end:
@@ -168,7 +173,7 @@
 
 \cs_new_protected:Npn \__cdhh_typeset_input:N #1
   {
-    \seq_set_split:NVV \l__cdhh_input_seq \g__cdhh_eol_eol_tl #1
+    \seq_set_split:NVV \l__cdhh_input_seq \c__cdhh_nl_nl_tl #1
     \seq_map_inline:Nn \l__cdhh_input_seq
       {
         \tl_gset:Nn \g__cdhh_code_tl {##1}
@@ -182,7 +187,7 @@
       }
   }
 
-\regex_const:Nn \l__cdhh_comment_regex { ^ \% \% ( [\%>] ) ( [^\r]+ ) \r }
+\regex_const:Nn \l__cdhh_comment_regex { ^ \% \% ( [\%>] ) ( [^\n]+ ) \n }
 \tl_new:N \l__cdhh_comment_tl % comment lines that need to be typeset
 \bool_new:N \l__cdhh_comment_bool
 
@@ -190,7 +195,7 @@
 \cs_new_protected:Npn \__cdhh_typeset_comment:N #1
   {
     \tl_set_eq:NN \l_tmpa_tl #1
-    \tl_put_right:NV \l_tmpa_tl \g__cdhh_eol_tl
+    \tl_put_right:NV \l_tmpa_tl \c__cdhh_nl_tl
     \tl_clear:N \l__cdhh_comment_tl
     \bool_set_false:N \l__cdhh_comment_bool
     \bool_do_until:Nn \l__cdhh_comment_bool
@@ -256,8 +261,8 @@
 \cs_new_protected:Npn \__cdhh_prepare_code:N #1
   {
     \tl_set_eq:NN #1 \g__cdhh_code_tl
-    \regex_replace_once:nnN {^ \r} {} #1
-    \regex_replace_once:nnN {\r $} {} #1
+    \regex_replace_once:nnN {^ \n} {} #1
+    \regex_replace_once:nnN {\n $} {} #1
     \__cdhh_tracing:nn {code} {\__cdhh_log:N #1}
   }
 
@@ -350,6 +355,8 @@
     \tl_set_eq:NN \l_tmpb_tl \g__cdhh_code_tl
     \tl_set_rescan:NnV \l_tmpb_tl
       {
+        %% \tl_set_rescan has set \newlinechar = \endlinechar
+        \newlinechar = `\^^J
         \catcode `\% = 14 \relax
         \catcode `\^^M = 10 \relax
       }
@@ -404,7 +411,7 @@
 \AddCodeHighRule[latex]{2}{Command}   {\\[A-Za-z]+}
 \AddCodeHighRule[latex]{7}{Brace}     {[\{\}]}
 \AddCodeHighRule[latex]{8}{MathMode}  {\$}
-\AddCodeHighRule[latex]{9}{Comment}   {\%.*?\r}
+\AddCodeHighRule[latex]{9}{Comment}   {\%.*?\n}
 
 \AddCodeHighRule[latex/math]{6}{LeftRight}  {\\(left|right)}
 \AddCodeHighRule[latex/math]{2}{Command}    {\\[A-Za-z]+}
@@ -414,7 +421,7 @@
 \AddCodeHighRule[latex/math]{1}{Brace}      {[\{\}]}
 \AddCodeHighRule[latex/math]{7}{Bracket}    {[\[\]]}
 \AddCodeHighRule[latex/math]{3}{Parenthesis}{[\(\)]}
-\AddCodeHighRule[latex/math]{9}{Comment}    {\%.*?\r}
+\AddCodeHighRule[latex/math]{9}{Comment}    {\%.*?\n}
 
 \AddCodeHighRule[latex/table]{8}{Newline}  {\\\\}
 \AddCodeHighRule[latex/table]{1}{Alignment}{\&}
@@ -422,7 +429,7 @@
 \AddCodeHighRule[latex/table]{4}{Command}  {\\[A-Za-z]+}
 \AddCodeHighRule[latex/table]{2}{Brace}    {[\{\}]}
 \AddCodeHighRule[latex/table]{3}{Bracket}  {[\[\]]}
-\AddCodeHighRule[latex/table]{9}{Comment}  {\%.*?\r}
+\AddCodeHighRule[latex/table]{9}{Comment}  {\%.*?\n}
 
 \AddCodeHighRule[latex/latex2]{1}{Argument}  {\#+\d}
 \AddCodeHighRule[latex/latex2]{6}{NewCommand}{\\(|e|g|x)def}
@@ -431,7 +438,7 @@
 \AddCodeHighRule[latex/latex2]{3}{Command}   {\\[A-Za-z]+}
 \AddCodeHighRule[latex/latex2]{2}{Brace}     {[\{\}]}
 \AddCodeHighRule[latex/latex2]{7}{Bracket}   {[\[\]]}
-\AddCodeHighRule[latex/latex2]{9}{Comment}   {\%.*?\r}
+\AddCodeHighRule[latex/latex2]{9}{Comment}   {\%.*?\n}
 
 \AddCodeHighRule[latex/latex3]{1}{Argument}  {\#+\d}
 \AddCodeHighRule[latex/latex3]{2}{PrivateVar}{\\[cgl]__[A-Za-z_:@]+}
@@ -440,7 +447,7 @@
 \AddCodeHighRule[latex/latex3]{6}{PublicFun} {\\[A-Za-z_:@]+}
 \AddCodeHighRule[latex/latex3]{8}{Brace}     {[\{\}]}
 \AddCodeHighRule[latex/latex3]{3}{Bracket}   {[\[\]]}
-\AddCodeHighRule[latex/latex3]{9}{Comment}   {\%.*?\r}
+\AddCodeHighRule[latex/latex3]{9}{Comment}   {\%.*?\n}
 
 %%% -------------------------------------------------------
 %%> \section{Add CodeHigh Themes}
@@ -577,7 +584,7 @@
   {
     \__cdhh_tracing:nn {parser} { \tl_log:e { type: #1; ~ text: #2 } }
     \group_begin:
-      \regex_replace_all:nnN { \r } { \c{par} \c{leavevmode} } #2
+      \regex_replace_all:nnN { \n } { \c{par} \c{leavevmode} } #2
       \legacy_if:nF {LuaTeX}
         { \regex_replace_all:nnN { \  } { \c{leavevmode} \c{space} } #2 }
       \color{\tl_use:c {l__cdhh_style_ \l__cdhh_theme_name_tl _#1_tl}}
@@ -593,7 +600,7 @@
 
 \cs_new_protected:Npn \__cdhh_parse_code_lite:N #1
   {
-    \regex_replace_all:nnN { \r } { \c{par} \c{leavevmode} } #1
+    \regex_replace_all:nnN { \n } { \c{par} \c{leavevmode} } #1
     \regex_replace_all:nnN { \  } { \c{relax} \c{space} } #1
     \tl_use:N #1
   }
@@ -668,15 +675,7 @@
     \bool_if:cT { g__cdhh_tracing_ #1 _bool } {#2}
   }
 
-\tl_new:N \l__cdhh_log_tl
-
-\group_begin:
-  \char_set_catcode_active:N \^^M
-  \cs_new_protected:Npn \__cdhh_log:N #1
-    {
-      % The log function should not modify #1
-      \cs_set_eq:NN \l__cdhh_log_tl #1
-      \tl_replace_all:Nnn \l__cdhh_log_tl {^^M} {^^J}
-      \tl_log:N \l__cdhh_log_tl
-    }
-\group_end:
+\cs_new_protected:Npn \__cdhh_log:N #1
+  {
+    \tl_log:N #1
+  }
