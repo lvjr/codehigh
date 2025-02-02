@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1738503557137,
+  "lastUpdate": 1738505063249,
   "repoUrl": "https://github.com/lvjr/codehigh",
   "entries": {
     "Codehigh Benchmark in TeX Live 2023": [
@@ -216,6 +216,42 @@ window.BENCHMARK_DATA = {
             "value": 0.65045981614702,
             "unit": "ratio",
             "extra": "current time : previous time = 5.4027786254883 : 8.3060913085938"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "tolvjr@163.com",
+            "name": "lvjr",
+            "username": "lvjr"
+          },
+          "committer": {
+            "email": "tolvjr@163.com",
+            "name": "lvjr",
+            "username": "lvjr"
+          },
+          "distinct": true,
+          "id": "795861b70a6f16dc0fb7eb9143cacc85653825d5",
+          "message": "add test demo-001",
+          "timestamp": "2025-02-02T21:43:42+08:00",
+          "tree_id": "bd986b3a270acdc6181503af519ed7e04a059f64",
+          "url": "https://github.com/lvjr/codehigh/commit/795861b70a6f16dc0fb7eb9143cacc85653825d5"
+        },
+        "date": 1738505062417,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "compile codehigh with pdflatex",
+            "value": 0.92095296920378,
+            "unit": "ratio",
+            "extra": "current time : previous time = 186.76500701904 : 202.79537963867"
+          },
+          {
+            "name": "compile codehigh with lualatex",
+            "value": 0.64841249436427,
+            "unit": "ratio",
+            "extra": "current time : previous time = 5.3106384277344 : 8.1902160644531"
           }
         ]
       }
