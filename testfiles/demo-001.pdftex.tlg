@@ -1,0 +1,29 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: demohigh: language=latex
+============================================================
+Package varwidth Warning: Failed to reprocess entire contents on input line ....
+Package varwidth Warning: Failed to reprocess entire contents on input line ....
+============================================================
+============================================================
+TEST 2: demohigh: language=latex/latex2
+============================================================
+Package varwidth Warning: Failed to reprocess entire contents on input line ....
+Package varwidth Warning: Failed to reprocess entire contents on input line ....
+\c@choice=\count...
+============================================================
+============================================================
+TEST 3: demohigh: language=latex/math
+============================================================
+Package varwidth Warning: Failed to reprocess entire contents on input line ....
+Package varwidth Warning: Failed to reprocess entire contents on input line ....
+============================================================
+============================================================
+TEST 4: demohigh: language=latex/table
+============================================================
+Package varwidth Warning: Failed to reprocess entire contents on input line ....
+Package varwidth Warning: Failed to reprocess entire contents on input line ....
+============================================================
+[1
+] (demo-001.aux)

@@ -1,0 +1,86 @@
+\documentclass{article}
+\usepackage[b5paper,margin=1cm]{geometry}
+\pagestyle{empty}
+
+\input{regression-test}
+
+\usepackage{codehigh}
+\usepackage{amsmath}
+
+\begin{document}
+
+\START
+\hrule\bigskip
+
+\BEGINTEST{demohigh: language=latex}
+\begin{demohigh}
+%  -*- coding: utf-8 -*-
+\newcommand*{\myversion}{2021C}
+\newcommand*{\mydate}{Version \myversion\ (\the\year-\mylpad\month-\mylpad\day)}
+\newcommand*{\mylpad}[1]{\ifnum#1<10 0\the#1\else\the#1\fi}
+\setlength{\arraycolsep}{6pt}
+% some comment
+\section{Section Name}
+\subsection*{Subsection Name}
+Math $a+b$.
+\end{demohigh}
+\ENDTEST
+
+\bigskip\hrule\bigskip
+
+\BEGINTEST{demohigh: language=latex/latex2}
+\begin{demohigh}[language=latex/latex2]
+\def\abcd#1#2{%
+  % some comment
+  \newcounter{#1}%
+  \setcounter{#1}{#2}%
+  \thechoice
+}
+\abcd{choice}{1}
+\end{demohigh}
+\ENDTEST
+
+%\bigskip\hrule\bigskip
+%
+%\BEGINTEST{demohigh: language=latex/latex3}
+%\begin{demohigh}[language=latex/latex3]
+%\ExplSyntaxOn
+%\cs_new_protected:Npn \__my_dimen_demo:Nn #1 #2
+%  {
+%    \dim_set:Nn #1 { \textwidth }
+%    \dim_add:Nn #1 { #2 }
+%    \dim_use:N #1
+%    % more code
+%  }
+%\__my_dimen_demo:Nn \l_tmpa_dim {2em}
+%\ExplSyntaxOff
+%\end{demohigh}
+%\ENDTEST
+
+\bigskip\hrule\bigskip
+
+\BEGINTEST{demohigh: language=latex/math}
+\begin{demohigh}[language=latex/math]
+\begin{align}
+  \pi\left[\frac13z^3\right]\sin(2x+1)_0^4 = \frac{64}{3}\pi
+\end{align}
+\end{demohigh}
+\ENDTEST
+
+\bigskip\hrule\bigskip
+
+\BEGINTEST{demohigh: language=latex/table}
+\begin{demohigh}[language=latex/table]
+\begin{tabular}[b]{|lc|r|}
+\hline
+One   &  Two  & Three \\
+%\hline
+Four  & Five  &   Six \\
+\hline%\hline\hline
+Seven & Eight &  Nine \\
+\hline
+\end{tabular}
+\end{demohigh}
+\ENDTEST
+
+\end{document}
