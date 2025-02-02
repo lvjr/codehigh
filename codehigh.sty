@@ -584,9 +584,9 @@
   {
     \__cdhh_tracing:nn {parser} { \tl_log:e { type: #1; ~ text: #2 } }
     \group_begin:
-      \regex_replace_all:nnN { \n } { \c{par} \c{leavevmode} } #2
+      \tl_replace_all:Nnn #2 { ^^J } { \par \leavevmode }
       \legacy_if:nF {LuaTeX}
-        { \regex_replace_all:nnN { \  } { \c{leavevmode} \c{space} } #2 }
+        { \tl_replace_all:Nnn #2 { ~ } { \leavevmode \space } }
       \color{\tl_use:c {l__cdhh_style_ \l__cdhh_theme_name_tl _#1_tl}}
       %\obeyspaces
       #2
