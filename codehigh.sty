@@ -668,11 +668,15 @@
     \bool_if:cT { g__cdhh_tracing_ #1 _bool } {#2}
   }
 
+\tl_new:N \l__cdhh_log_tl
+
 \group_begin:
   \char_set_catcode_active:N \^^M
   \cs_new_protected:Npn \__cdhh_log:N #1
     {
-      \tl_replace_all:Nnn #1 {^^M} {^^J}
-      \tl_log:N #1
+      % The log function should not modify #1
+      \cs_set_eq:NN \l__cdhh_log_tl #1
+      \tl_replace_all:Nnn \l__cdhh_log_tl {^^M} {^^J}
+      \tl_log:N \l__cdhh_log_tl
     }
 \group_end:
