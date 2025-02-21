@@ -632,23 +632,32 @@
 %%% -------------------------------------------------------
 
 \tl_const:Nn \c__cdhh_fake_escape_tl { \\\{\}\#\^\ \% }
+\tl_new:N \l__cdhh_multibyte_char_tl
 
 \NewDocumentCommand \fakeverb { +m }
   {
     \group_begin:
     \group_align_safe_begin:
     \ttfamily \frenchspacing
+    \tl_clear:N \l__cdhh_multibyte_char_tl
     \tl_analysis_map_inline:nn {#1}
       {
-        \int_compare:nNnTF {##2} = { -1 }
+        \int_compare:nNnTF {##2} > { 127 } % utf8 characters in pdftex
+          { \tl_put_right:Ne \l__cdhh_multibyte_char_tl {##1} }
           {
-            \exp_args:NNo \tl_if_in:NnTF \c__cdhh_fake_escape_tl {##1}
-              { \exp_after:wN \cs_to_str:N ##1 }
+            \tl_use:N \l__cdhh_multibyte_char_tl
+            \tl_clear:N \l__cdhh_multibyte_char_tl
+            \int_compare:nNnTF {##2} = { -1 }
+              {
+                \exp_args:NNo \tl_if_in:NnTF \c__cdhh_fake_escape_tl {##1}
+                  { \exp_after:wN \cs_to_str:N ##1 }
+                  { \exp_after:wN \token_to_str:N ##1 }
+              }
               { \exp_after:wN \token_to_str:N ##1 }
+            \/ % disable ligatures (#17)
           }
-          { \exp_after:wN \token_to_str:N ##1 }
-        \/ % disable ligatures (#17)
       }
+    \tl_use:N \l__cdhh_multibyte_char_tl
     \group_align_safe_end:
     \group_end:
   }
