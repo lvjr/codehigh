@@ -525,7 +525,7 @@
           {
             \tl_concat:NNN \l__cdhh_a_tl
               \l__cdhh_regex_before_text_tl \l__cdhh_regex_match_text_tl
-            \str_remove_once:NV \l__cdhh_code_to_parse_tl \l__cdhh_a_tl
+            \tl_remove_once:NV \l__cdhh_code_to_parse_tl \l__cdhh_a_tl
             \__cdhh_tracing:nn {parser}
               {\tl_log:N \l__cdhh_code_to_parse_tl}
             \__cdhh_typeset_text:nN {0}
