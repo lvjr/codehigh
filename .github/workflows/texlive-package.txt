@@ -19,6 +19,7 @@ cjkpunct
 cjkutils
 cleveref
 cm
+cm-super
 codehigh
 ctablestack
 currfile
@@ -113,6 +114,7 @@ tools
 translator
 trimspaces
 txfonts
+type1cm
 ucharcat
 ulem
 unicode-data
