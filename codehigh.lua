@@ -90,6 +90,10 @@ local function FindMatch(lang, code)
   return b, e, s
 end
 
+---- We can not use "catcodetable@string" because space has catcode 10 with it,
+---- which causes multiple spaces are printed as single space in "tex.tprint".
+-- local cctab = luatexbase.registernumber("catcodetable@string")
+
 ---- We don't have "catcodetable@other" inside source2e
 -- local cctab = luatexbase.registernumber("catcodetable@other")
 ---- Here is the catcodetable from luatexbase package
