@@ -1,0 +1,15 @@
+\documentclass{article}
+\input{regression-test}
+\ExplSyntaxOn
+\sys_if_engine_pdftex:T{\usepackage[T1]{fontenc}}
+\ExplSyntaxOff
+\begin{document}
+
+\START
+\hrule\bigskip
+
+\BEGINTEST{\fakeverb: utf8 characters}
+TEXT: áuçvvčćwžšxŽ. FAKEVERB: \fakeverb{áuçvvčćwžšxŽ}.
+\ENDTEST
+
+\end{document}

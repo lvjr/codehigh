@@ -1,0 +1,33 @@
+\documentclass{article}
+\input{regression-test}
+\ExplSyntaxOn
+\sys_if_engine_pdftex:T{\usepackage[T1]{fontenc}}
+\ExplSyntaxOff
+\begin{document}
+
+\START
+\hrule\bigskip
+
+\BEGINTEST{codehigh: utf8}
+\begin{codehigh}
+áçčćžšŽ \TeX áçčćžšŽ \LaTeX áçčćžšŽ.
+\end{codehigh}
+\ENDTEST
+
+\bigskip\hrule\bigskip
+
+\BEGINTEST{codehigh*: visible space}
+\begin{codehigh*}[language=latex/table]
+\begin{tabular}[b]{|lc|r|}
+\hline
+One   &  Two  & Three \\
+%\hline
+Four  & Five  &   Six \\
+\hline%\hline\hline
+Seven & Eight &  Nine \\
+\hline
+\end{tabular}
+\end{codehigh*}
+\ENDTEST
+
+\end{document}

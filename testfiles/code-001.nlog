@@ -1,32 +1,25 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
 ============================================================
-TEST 1: \fakeverb : unescaped characters
+TEST 1: codehigh: language=latex
 ============================================================
 ============================================================
 ============================================================
-TEST 2: \fakeverb : escaped characters
+TEST 2: codehigh: language=latex/latex2
 ============================================================
 ============================================================
 ============================================================
-TEST 3: \fakeverb : more characters
+TEST 3: codehigh: language=latex/latex3
 ============================================================
 ============================================================
 ============================================================
-TEST 4: \fakeverb : control sequences
+TEST 4: codehigh: language=latex/math
 ============================================================
 ============================================================
 ============================================================
-TEST 5: \fakeverb : nesting inside commands
+TEST 5: codehigh: language=latex/table
 ============================================================
-============================================================
-============================================================
-TEST 6: \fakeverb : nesting inside tabularray tables
-============================================================
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line ....
 ============================================================
 [1
-] (fake-001.aux)
+]
+[2] (code-001.aux)
