@@ -2,7 +2,7 @@
 \documentclass[oneside]{book}
 \usepackage[a4paper,margin=2cm]{geometry}
 
-\newcommand*{\myversion}{2025B}
+\newcommand*{\myversion}{2025C}
 \newcommand*{\mydate}{Version \myversion\ (\the\year-\mylpad\month-\mylpad\day)}
 \newcommand*{\mylpad}[1]{\ifnum#1<10 0\the#1\else\the#1\fi}
 
@@ -117,6 +117,8 @@ Seven & Eight &  Nine \\
 \end{tabular}
 \end{codehigh}
 
+There is also a \texttt{codehigh*} environment which shows each space character as \textvisiblespace{} in the code.
+
 \section{Highlighting Demo}
 
 The followings are typeset by \verb!demohigh! environment with option \verb!language=latex/table!.
@@ -142,6 +144,8 @@ The followings are typeset by \verb!demohigh! environment with option \verb!lang
 \end{demohigh}
 Note that \verb!demohigh! environment will measure the width of source lines.
 When it is too large, the result will be put below.
+
+There is also a \texttt{demohigh*} environment which shows each space character as \textvisiblespace{} in the code.
 
 \section{Highlighting File}
 
