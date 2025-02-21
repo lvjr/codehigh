@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1740105984980,
+  "lastUpdate": 1740110341376,
   "repoUrl": "https://github.com/lvjr/codehigh",
   "entries": {
     "Codehigh Benchmark in TeX Live 2024": [
@@ -432,6 +432,42 @@ window.BENCHMARK_DATA = {
             "value": 1.0029276540023,
             "unit": "ratio",
             "extra": "current time : previous time = 3.6930236816406 : 3.682243347168"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "tolvjr@163.com",
+            "name": "lvjr",
+            "username": "lvjr"
+          },
+          "committer": {
+            "email": "tolvjr@163.com",
+            "name": "lvjr",
+            "username": "lvjr"
+          },
+          "distinct": true,
+          "id": "bf19ff09be775990511264432201efede6da8b6c",
+          "message": "fix unexpected \\textvisiblespace with luatex engine and T1 encoding (#25)",
+          "timestamp": "2025-02-21T11:38:44+08:00",
+          "tree_id": "843db836cc9fb9db470f9b3fb60a5901ac099719",
+          "url": "https://github.com/lvjr/codehigh/commit/bf19ff09be775990511264432201efede6da8b6c"
+        },
+        "date": 1740110340541,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "compile codehigh with pdflatex",
+            "value": 1.0485815310025,
+            "unit": "ratio",
+            "extra": "current time : previous time = 189.40943908691 : 180.63396453857"
+          },
+          {
+            "name": "compile codehigh with lualatex",
+            "value": 1.0386059080706,
+            "unit": "ratio",
+            "extra": "current time : previous time = 3.8441619873047 : 3.7012710571289"
           }
         ]
       }
