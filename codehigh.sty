@@ -613,7 +613,10 @@
         \tl_replace_all:NVn #2
           \c_catcode_other_space_tl { \leavevmode \codehighspace }
       }
-      { \tl_replace_all:Nnn #2 { ~ } { \leavevmode \codehighspace } }
+      {
+        \tl_replace_all:NVn #2
+          \c_catcode_active_space_tl { \leavevmode \codehighspace }
+      }
     \__cdhh_seq_set_split:NnV \l__cdhh_typeset_text_seq {^^J} #2
     \seq_map_indexed_inline:Nn \l__cdhh_typeset_text_seq
       {
