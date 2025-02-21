@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1740111616923,
+  "lastUpdate": 1740122485676,
   "repoUrl": "https://github.com/lvjr/codehigh",
   "entries": {
     "Codehigh Benchmark in TeX Live 2024": [
@@ -504,6 +504,42 @@ window.BENCHMARK_DATA = {
             "value": 1.0253689516129,
             "unit": "ratio",
             "extra": "current time : previous time = 3.8801803588867 : 3.7841796875"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "tolvjr@163.com",
+            "name": "lvjr",
+            "username": "lvjr"
+          },
+          "committer": {
+            "email": "tolvjr@163.com",
+            "name": "lvjr",
+            "username": "lvjr"
+          },
+          "distinct": true,
+          "id": "a133952b39e253fd37aa93dc99c66a4bfe5f2796",
+          "message": "fix utf8 letters in pdftex (#22)",
+          "timestamp": "2025-02-21T15:01:02+08:00",
+          "tree_id": "10137a83447cd83f2fbc1cd0e7bd657fce249109",
+          "url": "https://github.com/lvjr/codehigh/commit/a133952b39e253fd37aa93dc99c66a4bfe5f2796"
+        },
+        "date": 1740122485397,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "compile codehigh with pdflatex",
+            "value": 1.0497890945012,
+            "unit": "ratio",
+            "extra": "current time : previous time = 188.62082672119 : 179.67497253418"
+          },
+          {
+            "name": "compile codehigh with lualatex",
+            "value": 1.0270823779872,
+            "unit": "ratio",
+            "extra": "current time : previous time = 3.7764663696289 : 3.676887512207"
           }
         ]
       }
