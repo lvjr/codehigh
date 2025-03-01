@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1740142305852,
+  "lastUpdate": 1740794699478,
   "repoUrl": "https://github.com/lvjr/codehigh",
   "entries": {
     "Codehigh Benchmark in TeX Live 2024": [
@@ -756,6 +756,42 @@ window.BENCHMARK_DATA = {
             "value": 1.0283223956154,
             "unit": "ratio",
             "extra": "current time : previous time = 3.8434600830078 : 3.7376022338867"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "tolvjr@163.com",
+            "name": "lvjr",
+            "username": "lvjr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "47377d4532d4d3a0ea4bc7a01a4a64af115baeeb",
+          "message": "Merge pull request #26 from atxy-blip/minor-fix\n\nimprove the definition of `\\__cdhh_parse_code:nN`",
+          "timestamp": "2025-03-01T09:44:32+08:00",
+          "tree_id": "3a3b6f28040bff3cb734f06c5b6b6834b318d959",
+          "url": "https://github.com/lvjr/codehigh/commit/47377d4532d4d3a0ea4bc7a01a4a64af115baeeb"
+        },
+        "date": 1740794699045,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "compile codehigh with pdflatex",
+            "value": 0.99334601893955,
+            "unit": "ratio",
+            "extra": "current time : previous time = 190.03118133545 : 191.30411529541"
+          },
+          {
+            "name": "compile codehigh with lualatex",
+            "value": 1.0015262903008,
+            "unit": "ratio",
+            "extra": "current time : previous time = 3.8498306274414 : 3.8439636230469"
           }
         ]
       }
