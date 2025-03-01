@@ -22,7 +22,7 @@
 \RequirePackage{ninecolors}
 \RequirePackage{varwidth}
 \RequirePackage{iftex}
-\legacy_if:nT {LuaTeX} {\RequirePackage{luatexbase}}
+\sys_if_engine_luatex:T {\RequirePackage{luatexbase}}
 
 \int_new:N \l__cdhh_a_int
 \int_new:N \l__cdhh_b_int
@@ -32,6 +32,7 @@
 \tl_new:N \l__cdhh_d_tl
 \tl_new:N \l__cdhh_m_tl
 
+\cs_generate_variant:Nn \cs_new_protected:Npn {Npo}
 \cs_generate_variant:Nn \regex_set:Nn {cn}
 \cs_generate_variant:Nn \seq_set_split:Nnn {NVV}
 \cs_generate_variant:Nn \str_remove_once:Nn {NV}
@@ -503,11 +504,11 @@
 \tl_new:N \l__cdhh_regex_match_text_tl
 \tl_new:N \l__cdhh_regex_before_text_tl
 
-\cs_new_protected:Npn \__cdhh_parse_code:nN #1 #2
+\cs_new_protected:Npo \__cdhh_parse_code:nN
   {
-    \legacy_if:nTF {LuaTeX}
-       { \__cdhh_parse_code_luatex:nN {#1} #2 }
-       { \__cdhh_parse_code_normal:nN {#1} #2 }
+    \sys_if_engine_luatex:TF
+      { \__cdhh_parse_code_luatex:nN }
+      { \__cdhh_parse_code_normal:nN }
   }
 \cs_generate_variant:Nn \__cdhh_parse_code:nN {VN}
 
@@ -570,7 +571,7 @@
       }
   }
 
-\legacy_if:nT {LuaTeX} { \directlua{require("codehigh.lua")} }
+\sys_if_engine_luatex:T { \directlua{require("codehigh.lua")} }
 
 \cs_new_protected:Npn \__cdhh_parse_code_luatex:nN #1 #2
   {
